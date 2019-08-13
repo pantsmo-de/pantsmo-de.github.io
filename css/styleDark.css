@@ -4,9 +4,13 @@ small {
 }
 
 h1{
-	font-size: 100px;
-	color: white;
-	text-shadow: 2px 2px black;
+	background: linear-gradient(to right, #fb3182 0%, #fb5627 55%, #ecc3ca 75%, #082e91 102%);
+	background-clip: text;
+	-webkit-text-fill-color: transparent;
+	text-shadow: 2px 2px 3px rgba(255,255,255,0.5);
+	font-size:50px;
+	letter-spacing: -3px;
+	font-family: 'TT Commons', sans-serif;
 }
 
 body {
