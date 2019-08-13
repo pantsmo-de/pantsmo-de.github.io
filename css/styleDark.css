@@ -16,7 +16,7 @@ h1{
 body {
   text-align: center;
   font-family: 'TT Commons', sans-serif;
-  color: white;
+  color: gray;
   background-color: #2f395c;
   background-image: url("/images/paper.png");
   overflow: hidden;
@@ -29,7 +29,7 @@ q {
 
 a {
 	text-decoration: none;
-	color: #00aeff;
+	color: #125893;
 	font-weight: bold;
 }
 
