@@ -15,8 +15,9 @@ h1{
 
 body {
   text-align: center;
-  font-family: 'Old Standard TT', sans-serif;
-  background-color: #fae7bd;
+  font-family: 'TT Commons', sans-serif;
+  color: black;
+  background-color: #2f395c;
   background-image: url("/images/paper.png");
   overflow: hidden;
 } 
