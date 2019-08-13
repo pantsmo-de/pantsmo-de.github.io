@@ -4,7 +4,7 @@ small {
 }
 
 h1{
-	background: linear-gradient(to right, #fb3182 0%, #fb5627 55%, #ecc3ca 75%, #082e91 102%);
+	background: linear-gradient(to right, #53102b 0%, #531c0c 55%, #57484a 75%, #051c58 102%);
 	background-clip: text;
 	-webkit-text-fill-color: transparent;
 	text-shadow: 2px 2px 3px rgba(255,255,255,0.5);
@@ -17,7 +17,7 @@ body {
   text-align: center;
   font-family: 'TT Commons', sans-serif;
   color: gray;
-  background-color: #2f395c;
+  background-color: #03101b;
   background-image: url("/images/paper.png");
   overflow: hidden;
 } 
@@ -29,7 +29,7 @@ q {
 
 a {
 	text-decoration: none;
-	color: #125893;
+	color: #004e90;
 	font-weight: bold;
 }
 
