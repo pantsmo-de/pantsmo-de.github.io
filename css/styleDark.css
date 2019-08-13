@@ -1,0 +1,59 @@
+	
+small {
+  color: gray;
+}
+
+h1{
+	background: linear-gradient(to right, #fb3182 0%, #fb5627 55%, #ecc3ca 75%, #082e91 102%);
+	background-clip: text;
+	-webkit-text-fill-color: transparent;
+	text-shadow: 2px 2px 3px rgba(255,255,255,0.5);
+	font-size:50px;
+	letter-spacing: -3px;
+	font-family: 'Old Standard TT', sans-serif;
+}
+
+body {
+  text-align: center;
+  font-family: 'Old Standard TT', sans-serif;
+  color: white;
+  background-color: #2f395c;
+  background-image: url("/images/paper.png");
+} 
+
+q {
+  text-align: center;
+  font-family: 'Old Standard TT', serif;
+} 
+
+a {
+  text-decoration: none;
+  color: #00aeff;
+  font-weight: bold;
+  font-family: 'Old Standard TT', sans-serif;
+}
+
+li {
+  list-style-type: none;
+}
+
+#test {
+	margin-top: 25px;
+	animation: fadein 2s;
+}
+@keyframes fadein {
+	from {
+		opacity:0;
+	}
+	to {
+		opacity:1;
+	}
+}
+
+.vertical-center {
+  position: absolute;
+  top: 45%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  margin: 30%;
+}

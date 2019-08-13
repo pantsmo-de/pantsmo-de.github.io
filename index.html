@@ -1,111 +1,22 @@
 <html>
 	<head>
-		<!-- imports Barlow and IM Fell English -->
 		<link href="https://fonts.googleapis.com/css?family=Barlow&display=swap" rel="stylesheet">
 		<link href="https://fonts.googleapis.com/css?family=IM+Fell+English&display=swap" rel="stylesheet">
-		<link href="/fonts/TT-Commons" rel="stylesheet">
-		<!-- site-specific css -->
-		<style type="text/css">
-		
-		@font-face {
-			font-family: "TT Commons";
-			src: url("/fonts/TTCommons-Regular.ttf");
-		}
-		
-		small {
-		  color: gray;
-		}
-
-		h1{
-			background: linear-gradient(to right, #fb3182 0%, #fb5627 55%, #ecc3ca 75%, #082e91 102%);
-			background-clip: text;
-			-webkit-text-fill-color: transparent;
-			text-shadow: 2px 2px 3px rgba(255,255,255,0.5);
-			font-size:50px;
-			letter-spacing: -3px;
-			font-family: 'TT Commons', sans-serif;
-		}
-
-		body {
-		  text-align: center;
-		  font-family: 'TT Commons', sans-serif;
-		  background-color: #fae7bd;
-		  background-image: url("/images/paper.png");
-		} 
-		
-		quote {
-		  text-align: center;
-		  font-family: 'IM Fell English';
-		} 
-		
-		a {
-		  text-decoration: none;
-		  color: #00aeff;
-		  font-weight: bold;
-		  font-family: 'TT Commons', sans-serif;
-		}
-		
-		li {
-		  list-style-type: none;
-		}
-		
-		#test {
-			margin-top: 25px;
-			animation: fadein 2s;
-			-moz-animation: fadein 2s; /* Firefox */
-			-webkit-animation: fadein 2s; /* Safari and Chrome */
-			-o-animation: fadein 2s; /* Opera */
-		}
-		@keyframes fadein {
-			from {
-				opacity:0;
-			}
-			to {
-				opacity:1;
-			}
-		}
-		@-moz-keyframes fadein { /* Firefox */
-			from {
-				opacity:0;
-			}
-			to {
-				opacity:1;
-			}
-		}
-		@-webkit-keyframes fadein { /* Safari and Chrome */
-			from {
-				opacity:0;
-			}
-			to {
-				opacity:1;
-			}
-		}
-		@-o-keyframes fadein { /* Opera */
-			from {
-				opacity:0;
-			}
-			to {
-				opacity: 1;
-			}
-		}
-		.vertical-center {
-		  position: absolute;
-		  top: 45%;
-		  -ms-transform: translateY(-50%);
-		  transform: translateY(-50%);
-		  margin: 30%;
-		}
-		
-		</style>
+		<link href="https://fonts.googleapis.com/css?family=Old+Standard+TT&display=swap" rel="stylesheet">
+		<link rel="stylesheet" id="pagestyle" href="css/styleLight.css">
+		<script src="themeSwitch.js"></script>
 	</head>
-	<body><div id="test" class="vertical-center">  
+	<body>
+	<div id="test" class="vertical-center">  
+		<input type="checkbox" id="darkMode" onclick="switchTheme()">dark mode
 		<h1><a href="https://pantsmo.de/">pantsmo.de</a></h1>
 		
-		<quote><i>In the end, it's about skilful expression, not the exploration of the ego. 
+		<q><i>In the end, it's about skilful expression, not the exploration of the ego. 
 		Don't aim for the absolute best because you'll crave for it, you'll cling to it, attach to it, create suffering from it. 
-		Some artists fall too deep into the way of the ego, now they suffer from jealousy, anger, the need for conflict and gossip, all sorts... If you aspire for wealth, to be loved by whom you love, to influence others in a negative light, to be revered by others at your feet, <b>then stop there.</b><br><br>Aspire for wisdom, the greater good, the unfolding of your own nature...<br><br><b>the expression.</b></i></quote>
+		Some artists fall too deep into the way of the ego, now they suffer from jealousy, anger, the need for conflict and gossip, all sorts... If you aspire for wealth, to be loved by whom you love, to influence others in a negative light, to be revered by others at your feet, <b>then stop there.</b><br><br>Aspire for wisdom, the greater good, the unfolding of your own nature...<br><br><b>the expression.</b></i></q>
 		<br><br>- <a href="https://pantsmo.de/@groobpoob/">@groobpoob</a><br><br>
 		
 		We are currently under construction, and will open for beta testing soon enough. &#10084;
-	</div></body>
+	</div>
+	</body>
 </html>
