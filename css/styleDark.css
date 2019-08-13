@@ -15,7 +15,7 @@ h1{
 
 body {
   text-align: center;
-  font-family: 'Old Standard TT', sans-serif;
+  font-family: 'TT Commons', sans-serif;
   color: white;
   background-color: #2f395c;
   background-image: url("/images/paper.png");
@@ -28,10 +28,9 @@ q {
 } 
 
 a {
-  text-decoration: none;
-  color: #00aeff;
-  font-weight: bold;
-  font-family: 'Old Standard TT', sans-serif;
+	text-decoration: none;
+	color: #00aeff;
+	font-weight: bold;
 }
 
 li {
