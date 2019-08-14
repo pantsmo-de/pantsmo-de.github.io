@@ -1,6 +1,6 @@
 	
 small {
-  color: gray;
+	color: gray;
 }
 
 h1{
@@ -14,18 +14,18 @@ h1{
 }
 
 body {
-  text-align: center;
-  font-family: 'TT Commons', sans-serif;
-  color: gray;
-  background-color: #03101b;
-  overflow: hidden;
+	text-align: center;
+	font-family: 'TT Commons', sans-serif;
+	color: gray;
+	background-color: #03101b;
+	overflow: hidden;
 } 
 
 q {
-  text-align: center;
-  font-family: 'Old Standard TT', serif;
-  display: inline-block;
-  max-width: 700px;
+	text-align: center;
+	font-family: 'Old Standard TT', serif;
+	display: inline-block;
+	max-width: 700px;
 } 
 
 a {
@@ -35,7 +35,7 @@ a {
 }
 
 li {
-  list-style-type: none;
+	list-style-type: none;
 }
 
 #test {
@@ -51,9 +51,9 @@ li {
 }
 
 .vertical-center {
-  position: center relative;
-  top: 45%;
-  vertical-align: middle;
+	position: center relative;
+	top: 45%;
+	vertical-align: middle;
 }
 
 .projectBox {
