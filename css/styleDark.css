@@ -9,6 +9,7 @@ h1{
 	-webkit-text-fill-color: transparent;
 	text-shadow: 2px 2px 3px rgba(255,255,255,0.5);
 	font-size:50px;
+	display: inline-block;
 	letter-spacing: -3px;
 	font-family: url("pantsmode.github.io/fonts/TTCommons-Regular.ttf"), sans-serif;
 }

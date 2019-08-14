@@ -8,6 +8,7 @@ h1{
 	-webkit-background-clip: text;
 	-webkit-text-fill-color: transparent;
 	font-size:50px;
+	display: inline-block;
 	letter-spacing: -3px;
 	font-family: 'TT Commons', sans-serif;
 	text-shadow: 2px 2px 3px rgba(255,255,255,0.5);
