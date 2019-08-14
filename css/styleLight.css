@@ -5,13 +5,13 @@ small {
 
 h1{
 	background: linear-gradient(to right, #fb3182 0%, #fb5627 55%, #ecc3ca 75%, #082e91 102%);
+	display: inline-block;
 	-webkit-background-clip: text;
 	-webkit-text-fill-color: transparent;
 	font-size:50px;
 	letter-spacing: -3px;
 	font-family: 'TT Commons', sans-serif;
 	text-shadow: 2px 2px 3px rgba(255,255,255,0.5);
-	
 }
 
 body {
@@ -19,13 +19,14 @@ body {
   font-family: 'TT Commons', sans-serif;
   color: black;
   background-color: #e2dabe;
-  background-image: url("/images/paper.png");
   overflow: hidden;
 } 
 
 q {
   text-align: center;
   font-family: 'Old Standard TT', serif;
+  display: inline-block;
+  max-width: 700px;
 } 
 
 a {
@@ -39,17 +40,13 @@ li {
 }
 
 #test {
-	margin-top: 25px;
 	animation: fadein 2s;
 }
 
-
 .vertical-center {
-  position: absolute;
+  position: center relative;
   top: 45%;
-  -ms-transform: translateY(-50%);
-  transform: translateY(-50%);
-  margin: 30%;
+  vertical-align: middle;
 }
 
 .projectBox {
@@ -71,5 +68,3 @@ li {
 		opacity:1;
 	}
 }
-
-

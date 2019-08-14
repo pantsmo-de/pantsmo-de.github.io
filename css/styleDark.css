@@ -5,12 +5,13 @@ small {
 
 h1{
 	background: linear-gradient(to right, #53102b 0%, #531c0c 55%, #57484a 75%, #051c58 102%);
+	display: inline-block;
 	-webkit-background-clip: text;
 	-webkit-text-fill-color: transparent;
 	text-shadow: 2px 2px 3px rgba(255,255,255,0.5);
 	font-size:50px;
 	letter-spacing: -3px;
-	font-family: 'TT Commons', sans-serif;
+	font-family: url("pantsmode.github.io/fonts/TTCommons-Regular.ttf"), sans-serif;
 }
 
 body {
@@ -18,13 +19,14 @@ body {
   font-family: 'TT Commons', sans-serif;
   color: gray;
   background-color: #03101b;
-  background-image: url("/images/paper.png");
   overflow: hidden;
 } 
 
 q {
   text-align: center;
   font-family: 'Old Standard TT', serif;
+  display: inline-block;
+  max-width: 700px;
 } 
 
 a {
@@ -38,7 +40,6 @@ li {
 }
 
 #test {
-	margin-top: 25px;
 	animation: fadein 2s;
 }
 @keyframes fadein {
@@ -51,11 +52,9 @@ li {
 }
 
 .vertical-center {
-  position: absolute;
+  position: center relative;
   top: 45%;
-  -ms-transform: translateY(-50%);
-  transform: translateY(-50%);
-  margin: 30%;
+  vertical-align: middle;
 }
 
 .projectBox {
