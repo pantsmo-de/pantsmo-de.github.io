@@ -5,7 +5,6 @@ small {
 
 h1{
 	background: linear-gradient(to right, #fb3182 0%, #fb5627 55%, #ecc3ca 75%, #082e91 102%);
-	display: inline-block;
 	-webkit-background-clip: text;
 	-webkit-text-fill-color: transparent;
 	font-size:50px;
