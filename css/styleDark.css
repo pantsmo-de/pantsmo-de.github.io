@@ -67,3 +67,8 @@ li {
 .projectBox:hover {
 	transform: scale(1.05);
 }
+
+#navigation a {
+	color: white;
+	text-decoration: underline;
+}
