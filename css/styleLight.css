@@ -61,7 +61,7 @@ li {
 }
 
 @keyframes fadein {
-	from {
+	from {	
 		opacity:0;
 	}
 	to {
