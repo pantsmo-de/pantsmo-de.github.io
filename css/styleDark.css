@@ -102,6 +102,24 @@ li {
 	padding: 10px;
 }
 
+
+.error {
+	display: inline-block;
+}
+
+#error1 {
+	animation: float 1s ease-in-out infinite alternate;
+}
+
+#error2 {
+	animation: float 1.05s ease-in-out infinite alternate;
+}
+
+#error3 {
+	animation: float 1.1s ease-in-out infinite alternate;
+}
+
+
 @keyframes fadein {
 	from {	
 		transform: translateY(-5px);
@@ -110,5 +128,14 @@ li {
 	to {
 		transform: translateY(0px);
 		opacity:1;
+	}
+}
+
+@keyframes float {
+	from {
+		transform: translateY(-5px);
+	}
+	to {
+		transform: translateY(0px);
 	}
 }
