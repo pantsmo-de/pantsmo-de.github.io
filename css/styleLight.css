@@ -11,12 +11,20 @@ small {
 	color: gray;
 }
 
-h1 {
-	color: #ff5467;
+h1:not(404) {
+	color: #e2dabe;
 	font-size: 7vw;
-	text-shadow: 0px 3px #d0c9af;
-	font-weight: bold;
 	margin: 0px;
+}
+
+h1 {
+	background: -webkit-linear-gradient(left, #fb3182 0%, #fb5627 55%, #ecc3ca 75%, #082e91 100%);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	font-size: 7vw;
+	margin: 0px;
+	letter-spacing: -3pt;
+	display: inline-block;
 }
 
 h2 {
@@ -52,6 +60,8 @@ li {
 #content {
 	animation: fadein 1s;
 }
+
+/* And now back to your regularily scheduled program */
 
 .vertical-center {
 	position: center relative;

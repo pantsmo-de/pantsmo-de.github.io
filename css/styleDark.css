@@ -17,6 +17,7 @@ h1 {
 	-webkit-text-fill-color: transparent; /* Will override color (regardless of order) */
 	font-size: 7vw;
 	text-shadow: 0px 3px #181e29;
+	letter-spacing: -3pt;
 	font-weight: bold;
 	margin: 0px;
 }
