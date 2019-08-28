@@ -99,10 +99,6 @@ li {
 }
 
 #themeSwitcher {
-	position: absolute;
-	top: 0px;
-	right: 0px;
-	margin: 5px;
 	border-style: none;
 	border-radius: 3px;
 	background: white;
@@ -110,6 +106,17 @@ li {
 	padding: 10px;
 }
 
+#logIn {
+	border-style: none;
+	border-radius: 3px;
+	background: white;
+	color: #212938;
+	padding: 10px;
+}
+
+#logInButton{
+	color: #212938;
+}
 
 @keyframes fadein {
 	from {	
