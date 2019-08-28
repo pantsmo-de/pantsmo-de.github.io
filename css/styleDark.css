@@ -52,10 +52,6 @@ li {
 	list-style-type: none;
 }
 
-#content {
-	animation: fadein 1s;
-}
-
 .vertical-center {
 	position: center relative;
 	top: 45%;
@@ -81,6 +77,16 @@ li {
 	margin: 10px;
 }
 
+#content {
+	animation: fadein 1s;
+}
+
+#error {
+	font-size: 7vw;
+	font-weight: bolder;
+	color: white;
+}
+
 #navigation {
 	margin: 10px;
 }
@@ -101,23 +107,6 @@ li {
 	background: white;
 	color: #212938;
 	padding: 10px;
-}
-
-
-.error {
-	display: inline-block;
-}
-
-#error1 {
-	animation: float 1s ease-in-out infinite alternate;
-}
-
-#error2 {
-	animation: float 1.05s ease-in-out infinite alternate;
-}
-
-#error3 {
-	animation: float 1.1s ease-in-out infinite alternate;
 }
 
 

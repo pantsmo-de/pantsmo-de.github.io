@@ -11,20 +11,13 @@ small {
 	color: gray;
 }
 
-h1:not(404) {
-	color: #e2dabe;
-	font-size: 7vw;
-	margin: 0px;
-}
-
 h1 {
-	background: -webkit-linear-gradient(left, #fb3182 0%, #fb5627 55%, #ecc3ca 75%, #082e91 100%);
+	background: -webkit-linear-gradient(left, #fb3182 30%, #fb5627 55%, #ecc3ca 60%, #082e91 75%);
 	-webkit-background-clip: text;
 	-webkit-text-fill-color: transparent;
 	font-size: 7vw;
 	margin: 0px;
 	letter-spacing: -3pt;
-	display: inline-block;
 }
 
 h2 {
@@ -57,11 +50,6 @@ li {
 	list-style-type: none;
 }
 
-#content {
-	animation: fadein 1s;
-}
-
-/* And now back to your regularily scheduled program */
 
 .vertical-center {
 	position: center relative;
@@ -88,6 +76,16 @@ li {
 	margin: 10px;
 }
 
+#content {
+	animation: fadein 1s;
+}
+
+#error {
+	font-size: 7vw;
+	font-weight: bolder;
+	color: #ff5467;
+}
+
 #navigation {
 	margin: 10px;
 }
@@ -109,24 +107,6 @@ li {
 	color: white;
 	padding: 10px;
 }
-
-
-.error {
-	display: inline-block;
-}
-
-#error1 {
-	animation: float 1s ease-in-out infinite alternate;
-}
-
-#error2 {
-	animation: float 1.05s ease-in-out infinite alternate;
-}
-
-#error3 {
-	animation: float 1.1s ease-in-out infinite alternate;
-}
-
 
 @keyframes fadein {
 	from {	
