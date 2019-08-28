@@ -85,6 +85,7 @@ li {
 	font-size: 7vw;
 	font-weight: bolder;
 	color: white;
+	user-select: none;
 }
 
 #navigation {
