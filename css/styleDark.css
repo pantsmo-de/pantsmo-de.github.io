@@ -106,13 +106,7 @@ button {
 	font-size: 20px;
 }
 
-#themeSwitcher {
-	border-style: none;
-	border-radius: 3px;
-	background: white;
-	color: #212938;
-	padding: 10px;
-}
+
 
 @keyframes fadein {
 	from {	
