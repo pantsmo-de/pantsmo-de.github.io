@@ -55,8 +55,8 @@ li {
 button {
 	border-style: none;
 	border-radius: 3px;
-	background: #ff5467;
-	color: white;
+	background: white;
+	color: #212938;
 	padding: 10px;
 }
 
@@ -105,8 +105,6 @@ button {
 	font-weight: lighter;
 	font-size: 20px;
 }
-
-
 
 @keyframes fadein {
 	from {	
