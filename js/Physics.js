@@ -1,6569 +1,2066 @@
 /**
- * PhysicsJS v0.5.2 - 2013-11-20
- * A modular, extendable, and easy-to-use physics engine for javascript
- * http://wellcaffeinated.net/PhysicsJS
+ * Original Code (PhysicsJS) (c) 2013 Jasper Palfree <jasper@wellcaffeinated.net>
+ * Licensed MIT (http://wellcaffeinated.net/PhysicsJS)
  *
- * Copyright (c) 2013 Jasper Palfree <jasper@wellcaffeinated.net>
- * Licensed MIT
+ * Modifications by the Pantsmo.de Team
+ * https://pantsmo.de/
  * 
  * IMPORTED FROM http://wellcaffeinated.net/PhysicsJS/examples/physicsjs-full.js
  */
 
-// ---
-// inside: src/intro.js
-
-(function (root, factory) {
-    if (typeof exports === 'object') {
-        // Node. 
-        module.exports = factory.call(root);
-    } else if (typeof define === 'function' && define.amd) {
-        // AMD. Register as an anonymous module.
-        define(function(){ return factory.call(root) });
-    } else {
-        // Browser globals (root is window)
-        root.Physics = factory.call(root);
-    }
-}(this, function () {
-
-'use strict';
-
-var Physics = function Physics(){
-
-    return Physics.world.apply(Physics, arguments);
-};
-
-Physics.util = {};
-
-
-// ---
-// inside: lib/lodash.js
-
-/**
- * @license
- * Lo-Dash 2.2.1 (Custom Build) lodash.com/license | Underscore.js 1.5.2 underscorejs.org/LICENSE
- * Build: `lodash exports="none" iife="(function(window){%output%;lodash.extend(Physics.util, lodash);}(this));" include="isObject,isFunction,isArray,isPlainObject,uniqueId,each,random,extend,clone,throttle,bind,sortedIndex,shuffle" --minify --output lib/lodash.js`
- */
-;!function(n){function t(n){return typeof n.toString!="function"&&typeof(n+"")=="string"}function e(){}function r(n){n.length=0,O.length<A&&O.push(n)}function o(n,t,e){t||(t=0),typeof e=="undefined"&&(e=n?n.length:0);var r=-1;e=e-t||0;for(var o=Array(0>e?0:e);++r<e;)o[r]=n[t+r];return o}function a(){}function u(n,e,a,i,l){if(a){var c=a(n);if(typeof c!="undefined")return c}if(!v(n))return n;var f=at.call(n);if(!$[f]||!mt.nodeClass&&t(n))return n;var s=bt[f];switch(f){case T:case B:return new s(+n);case L:case M:return new s(n);
-case W:return c=s(n.source,S.exec(n)),c.lastIndex=n.lastIndex,c}if(f=Et(n),e){var p=!i;i||(i=O.pop()||[]),l||(l=O.pop()||[]);for(var g=i.length;g--;)if(i[g]==n)return l[g];c=f?s(n.length):{}}else c=f?o(n):At({},n);return f&&(tt.call(n,"index")&&(c.index=n.index),tt.call(n,"input")&&(c.input=n.input)),e?(i.push(n),l.push(c),(f?_t:Ct)(n,function(n,t){c[t]=u(n,e,a,i,l)}),p&&(r(i),r(l)),c):c}function i(n,t,e){if(typeof n!="function")return j;if(typeof t=="undefined")return n;var r=n.__bindData__||mt.funcNames&&!n.name;
-if(typeof r=="undefined"){var o=P&&Z.call(n);mt.funcNames||!o||C.test(o)||(r=!0),(mt.funcNames||!r)&&(r=!mt.funcDecomp||P.test(o),jt(n,r))}if(true!==r&&r&&1&r[1])return n;switch(e){case 1:return function(e){return n.call(t,e)};case 2:return function(e,r){return n.call(t,e,r)};case 3:return function(e,r,o){return n.call(t,e,r,o)};case 4:return function(e,r,o,a){return n.call(t,e,r,o,a)}}return d(n,t)}function l(n,e,o,a,u,i){if(o){var c=o(n,e);if(typeof c!="undefined")return!!c}if(n===e)return 0!==n||1/n==1/e;
-if(n===n&&!(n&&G[typeof n]||e&&G[typeof e]))return!1;if(null==n||null==e)return n===e;var f=at.call(n),s=at.call(e);if(f==F&&(f=R),s==F&&(s=R),f!=s)return!1;switch(f){case T:case B:return+n==+e;case L:return n!=+n?e!=+e:0==n?1/n==1/e:n==+e;case W:case M:return n==e+""}if(s=f==I,!s){if(tt.call(n,"__wrapped__")||tt.call(e,"__wrapped__"))return l(n.__wrapped__||n,e.__wrapped__||e,o,a,u,i);if(f!=R||!mt.nodeClass&&(t(n)||t(e)))return!1;var f=!mt.argsObject&&g(n)?Object:n.constructor,p=!mt.argsObject&&g(e)?Object:e.constructor;
-if(f!=p&&!(y(f)&&f instanceof f&&y(p)&&p instanceof p))return!1}for(p=!u,u||(u=O.pop()||[]),i||(i=O.pop()||[]),f=u.length;f--;)if(u[f]==n)return i[f]==e;var v=0,c=!0;if(u.push(n),i.push(e),s){if(f=n.length,v=e.length,c=v==n.length,!c&&!a)return c;for(;v--;)if(s=f,p=e[v],a)for(;s--&&!(c=l(n[s],p,o,a,u,i)););else if(!(c=l(n[v],p,o,a,u,i)))break;return c}return St(e,function(t,e,r){return tt.call(r,e)?(v++,c=tt.call(n,e)&&l(n[e],t,o,a,u,i)):void 0}),c&&!a&&St(n,function(n,t,e){return tt.call(e,t)?c=-1<--v:void 0
-}),p&&(r(u),r(i)),c}function c(n,t,e,r,o,a){var u=1&t,i=2&t,l=4&t,f=8&t,p=16&t,g=32&t,h=n;if(!i&&!y(n))throw new TypeError;p&&!e.length&&(t&=-17,p=e=!1),g&&!r.length&&(t&=-33,g=r=!1);var b=n&&n.__bindData__;if(b)return!u||1&b[1]||(b[4]=o),!u&&1&b[1]&&(t|=8),!l||4&b[1]||(b[5]=a),p&&rt.apply(b[2]||(b[2]=[]),e),g&&rt.apply(b[3]||(b[3]=[]),r),b[1]|=t,c.apply(null,b);if(!u||i||l||g||!(mt.fastBind||lt&&p))m=function(){var y=arguments,b=u?o:this;return(l||p||g)&&(y=vt.call(y),p&&ut.apply(y,e),g&&rt.apply(y,r),l&&y.length<a)?(t|=16,c(n,f?t:-4&t,y,null,o,a)):(i&&(n=b[h]),this instanceof m?(b=s(n.prototype),y=n.apply(b,y),v(y)?y:b):n.apply(b,y))
-};else{if(p){var d=[o];rt.apply(d,e)}var m=p?lt.apply(n,d):lt.call(n,o)}return jt(m,vt.call(arguments)),m}function f(){q.h=D,q.b=q.c=q.g=q.i="",q.e="t",q.j=!0;for(var n,t=0;n=arguments[t];t++)for(var e in n)q[e]=n[e];t=q.a,q.d=/^[^,]+/.exec(t)[0],n=Function,t="return function("+t+"){",e=q;var r="var n,t="+e.d+",E="+e.e+";if(!t)return E;"+e.i+";";e.b?(r+="var u=t.length;n=-1;if("+e.b+"){",mt.unindexedChars&&(r+="if(s(t)){t=t.split('')}"),r+="while(++n<u){"+e.g+";}}else{"):mt.nonEnumArgs&&(r+="var u=t.length;n=-1;if(u&&p(t)){while(++n<u){n+='';"+e.g+";}}else{"),mt.enumPrototypes&&(r+="var G=typeof t=='function';"),mt.enumErrorProps&&(r+="var F=t===k||t instanceof Error;");
-var o=[];if(mt.enumPrototypes&&o.push('!(G&&n=="prototype")'),mt.enumErrorProps&&o.push('!(F&&(n=="message"||n=="name"))'),e.j&&e.f)r+="var C=-1,D=B[typeof t]&&v(t),u=D?D.length:0;while(++C<u){n=D[C];",o.length&&(r+="if("+o.join("&&")+"){"),r+=e.g+";",o.length&&(r+="}"),r+="}";else if(r+="for(n in t){",e.j&&o.push("m.call(t, n)"),o.length&&(r+="if("+o.join("&&")+"){"),r+=e.g+";",o.length&&(r+="}"),r+="}",mt.nonEnumShadows){for(r+="if(t!==A){var i=t.constructor,r=t===(i&&i.prototype),f=t===J?I:t===k?j:L.call(t),x=y[f];",k=0;7>k;k++)r+="n='"+e.h[k]+"';if((!(r&&x[n])&&m.call(t,n))",e.j||(r+="||(!x[n]&&t[n]!==A[n])"),r+="){"+e.g+"}";
-r+="}"}return(e.b||mt.nonEnumArgs)&&(r+="}"),r+=e.c+";return E",n("d,j,k,m,o,p,q,s,v,A,B,y,I,J,L",t+r+"}")(i,N,V,tt,_,g,Et,h,q.f,Q,G,dt,M,U,at)}function s(n){return v(n)?ct(n):{}}function p(n){var e,r;return!n||at.call(n)!=R||(e=n.constructor,y(e)&&!(e instanceof e))||!mt.argsClass&&g(n)||!mt.nodeClass&&t(n)?!1:mt.ownLast?(St(n,function(n,t,e){return r=tt.call(e,t),!1}),false!==r):(St(n,function(n,t){r=t}),typeof r=="undefined"||tt.call(n,r))}function g(n){return n&&typeof n=="object"&&typeof n.length=="number"&&at.call(n)==F||!1
-}function y(n){return typeof n=="function"}function v(n){return!(!n||!G[typeof n])}function h(n){return typeof n=="string"||at.call(n)==M}function b(n,t,e){if(t&&typeof e=="undefined"&&Et(n)){e=-1;for(var r=n.length;++e<r&&false!==t(n[e],e,n););}else _t(n,t,e);return n}function d(n,t){return 2<arguments.length?c(n,17,vt.call(arguments,2),null,t):c(n,1,null,null,t)}function m(n,t,e){var r,o,a,u,i,l,c,f=0,s=!1,p=!0;if(!y(n))throw new TypeError;if(t=pt(0,t)||0,true===e)var g=!0,p=!1;else v(e)&&(g=e.leading,s="maxWait"in e&&(pt(t,e.maxWait)||0),p="trailing"in e?e.trailing:p);
-var h=function(){var e=t-(et()-u);0<e?l=setTimeout(h,e):(o&&clearTimeout(o),e=c,o=l=c=w,e&&(f=et(),a=n.apply(i,r)))},b=function(){l&&clearTimeout(l),o=l=c=w,(p||s!==t)&&(f=et(),a=n.apply(i,r))};return function(){if(r=arguments,u=et(),i=this,c=p&&(l||!g),false===s)var e=g&&!l;else{o||g||(f=u);var y=s-(u-f);0<y?o||(o=setTimeout(b,y)):(o&&(o=clearTimeout(o)),f=u,a=n.apply(i,r))}return l||t===s||(l=setTimeout(h,t)),e&&(a=n.apply(i,r)),a}}function j(n){return n}function E(n,t,e){var r=null==n,o=null==t;return null==e&&(typeof n=="boolean"&&o?(e=n,n=1):o||typeof t!="boolean"||(e=t,o=!0)),r&&o&&(t=1),n=+n||0,o?(t=n,n=0):t=+t||0,r=yt(),e||n%1||t%1?gt(n+r*(t-n+parseFloat("1e-"+((r+"").length-1))),t):n+Y(r*(t-n+1))
-}var w,O=[],x=0,_={},A=40,S=/\w*$/,C=/^function[ \n\r\t]+\w/,P=/\bthis\b/,D="constructor hasOwnProperty isPrototypeOf propertyIsEnumerable toLocaleString toString valueOf".split(" "),F="[object Arguments]",I="[object Array]",T="[object Boolean]",B="[object Date]",N="[object Error]",L="[object Number]",R="[object Object]",W="[object RegExp]",M="[object String]",$={"[object Function]":!1};$[F]=$[I]=$[T]=$[B]=$[L]=$[R]=$[W]=$[M]=!0;var z={leading:!1,maxWait:0,trailing:!1},K={configurable:!1,enumerable:!1,value:null,writable:!1},q={a:"",b:null,c:"",d:"",e:"",v:null,g:"",h:null,support:null,i:"",j:!1},G={"boolean":!1,"function":!0,object:!0,number:!1,string:!1,undefined:!1},J=G[typeof n]&&n||this,H=[],V=Error.prototype,Q=Object.prototype,U=String.prototype,X=RegExp("^"+(Q.valueOf+"").replace(/[.*+?^${}()|[\]\\]/g,"\\$&").replace(/valueOf|for [^\]]+/g,".+?")+"$"),Y=Math.floor,Z=Function.prototype.toString,nt=X.test(nt=Object.getPrototypeOf)&&nt,tt=Q.hasOwnProperty,et=X.test(et=Date.now)&&et||function(){return+new Date
-},rt=H.push,ot=Q.propertyIsEnumerable,at=Q.toString,ut=H.unshift,it=function(){try{var n={},t=X.test(t=Object.defineProperty)&&t,e=t(n,n,n)&&t}catch(r){}return e}(),lt=X.test(lt=at.bind)&&lt,ct=X.test(ct=Object.create)&&ct,ft=X.test(ft=Array.isArray)&&ft,st=X.test(st=Object.keys)&&st,pt=Math.max,gt=Math.min,yt=Math.random,vt=H.slice;n=X.test(J.attachEvent);var ht=lt&&!/\n|true/.test(lt+n),bt={};bt[I]=Array,bt[T]=Boolean,bt[B]=Date,bt["[object Function]"]=Function,bt[R]=Object,bt[L]=Number,bt[W]=RegExp,bt[M]=String;
-var dt={};dt[I]=dt[B]=dt[L]={constructor:!0,toLocaleString:!0,toString:!0,valueOf:!0},dt[T]=dt[M]={constructor:!0,toString:!0,valueOf:!0},dt[N]=dt["[object Function]"]=dt[W]={constructor:!0,toString:!0},dt[R]={constructor:!0},function(){for(var n=D.length;n--;){var t,e=D[n];for(t in dt)tt.call(dt,t)&&!tt.call(dt[t],e)&&(dt[t][e]=!1)}}();var mt=a.support={};!function(){var n=function(){this.x=1},t={0:1,length:1},e=[];n.prototype={valueOf:1,y:1};for(var r in new n)e.push(r);for(r in arguments);mt.argsClass=at.call(arguments)==F,mt.argsObject=arguments.constructor==Object&&!(arguments instanceof Array),mt.enumErrorProps=ot.call(V,"message")||ot.call(V,"name"),mt.enumPrototypes=ot.call(n,"prototype"),mt.fastBind=lt&&!ht,mt.funcDecomp=!X.test(J.WinRTError)&&P.test(function(){return this
-}),mt.funcNames=typeof Function.name=="string",mt.nonEnumArgs=0!=r,mt.nonEnumShadows=!/valueOf/.test(e),mt.ownLast="x"!=e[0],mt.spliceObjects=(H.splice.call(t,0,1),!t[0]),mt.unindexedChars="xx"!="x"[0]+Object("x")[0];try{mt.nodeClass=!(at.call(document)==R&&!({toString:0}+""))}catch(o){mt.nodeClass=!0}}(1),ct||(s=function(n){if(v(n)){e.prototype=n;var t=new e;e.prototype=null}return t||{}});var jt=it?function(n,t){K.value=t,it(n,"__bindData__",K)}:e;mt.argsClass||(g=function(n){return n&&typeof n=="object"&&typeof n.length=="number"&&tt.call(n,"callee")||!1
-});var Et=ft||function(n){return n&&typeof n=="object"&&typeof n.length=="number"&&at.call(n)==I||!1},wt=f({a:"z",e:"[]",i:"if(!(B[typeof z]))return E",g:"E.push(n)"}),Ot=st?function(n){return v(n)?mt.enumPrototypes&&typeof n=="function"||mt.nonEnumArgs&&n.length&&g(n)?wt(n):st(n):[]}:wt,ft={a:"g,e,K",i:"e=e&&typeof K=='undefined'?e:d(e,K,3)",b:"typeof u=='number'",v:Ot,g:"if(e(t[n],n,g)===false)return E"};n={a:"z,H,l",i:"var a=arguments,b=0,c=typeof l=='number'?2:a.length;while(++b<c){t=a[b];if(t&&B[typeof t]){",v:Ot,g:"if(typeof E[n]=='undefined')E[n]=t[n]",c:"}}"};
-var xt={i:"if(!B[typeof t])return E;"+ft.i,b:!1},_t=f(ft),At=f(n,{i:n.i.replace(";",";if(c>3&&typeof a[c-2]=='function'){var e=d(a[--c-1],a[c--],2)}else if(c>2&&typeof a[c-1]=='function'){e=a[--c]}"),g:"E[n]=e?e(E[n],t[n]):t[n]"}),St=f(ft,xt,{j:!1}),Ct=f(ft,xt);y(/x/)&&(y=function(n){return typeof n=="function"&&"[object Function]"==at.call(n)}),ft=nt?function(n){if(!n||at.call(n)!=R||!mt.argsClass&&g(n))return!1;var t=n.valueOf,e=typeof t=="function"&&(e=nt(t))&&nt(e);return e?n==e||nt(n)==e:p(n)
-}:p,a.assign=At,a.bind=d,a.createCallback=function(n,t,e){var r=typeof n;if(null==n||"function"==r)return i(n,t,e);if("object"!=r)return function(t){return t[n]};var o=Ot(n),a=o[0],u=n[a];return 1!=o.length||u!==u||v(u)?function(t){for(var e=o.length,r=!1;e--&&(r=l(t[o[e]],n[o[e]],null,!0)););return r}:function(n){return n=n[a],u===n&&(0!==u||1/u==1/n)}},a.debounce=m,a.forEach=b,a.forIn=St,a.forOwn=Ct,a.keys=Ot,a.shuffle=function(n){var t=-1,e=n?n.length:0,r=Array(typeof e=="number"?e:0);return b(n,function(n){var e=E(++t);
-r[t]=r[e],r[e]=n}),r},a.throttle=function(n,t,e){var r=!0,o=!0;if(!y(n))throw new TypeError;return false===e?r=!1:v(e)&&(r="leading"in e?e.leading:r,o="trailing"in e?e.trailing:o),z.leading=r,z.maxWait=t,z.trailing=o,m(n,t,z)},a.each=b,a.extend=At,a.clone=function(n,t,e,r){return typeof t!="boolean"&&null!=t&&(r=e,e=t,t=!1),u(n,t,typeof e=="function"&&i(e,r,1))},a.identity=j,a.isArguments=g,a.isArray=Et,a.isFunction=y,a.isObject=v,a.isPlainObject=ft,a.isString=h,a.random=E,a.sortedIndex=function(n,t,e,r){var o=0,u=n?n.length:o;
-for(e=e?a.createCallback(e,r,1):j,t=e(t);o<u;)r=o+u>>>1,e(n[r])<t?o=r+1:u=r;return o},a.uniqueId=function(n){var t=++x;return(null==n?"":n)+""+t},a.VERSION="2.2.1",a.extend(Physics.util,a)}(this);
-
-// ---
-// inside: src/util/decorator.js
-
-/**
- * Facilitates creation of decorator service functions
- *
- * @example
- * 
- * var service = Decorator('service', {
- *      // prototype methods...
- *      method: function( args ){
- *      }
- * });
- *
- * // define
- * service( 'name', (optional)'parent-name', function decorator( parent ){
- *
- *      // extend further...
- *      return {
- *          // overrides
- *          init: function( cfg ){
- *              parent.init.call(this, cfg);
- *          }
- *      };
- * });
- * 
- * // instantiate
- * var options = { key: 'val' };
- * var instance = service( 'name', options );
- */
-var Decorator = Physics.util.decorator = function Decorator( type, baseProto ){
-
-    var registry = {}
-        ,proto = {}
-        ;
-
-    // extend callback that only extends functions
-    var copyFn = function copyFn( a, b ){
-
-        return Physics.util.isFunction( b ) ? b : a;
+! function(t, e) {
+    "object" == typeof exports ? module.exports = e.call(t) : "function" == typeof define && define.amd ? define(function() {
+        return e.call(t)
+    }) : t.Physics = e.call(t)
+}(this, function() {
+    "use strict";
+    var t = function t() {
+        return t.world.apply(t, arguments)
     };
-
-    // http://ejohn.org/blog/objectgetprototypeof/
-    /* jshint -W103 */
-    var getProto = Object.getPrototypeOf;
-    if ( typeof getProto !== 'function' ) {
-        if ( typeof 'test'.__proto__ === 'object' ) {
-            getProto = function(object){
-                return object.__proto__;
-            };
-        } else {
-            getProto = function(object){
-                // May break if the constructor has been tampered with
-                return object.constructor.prototype;
-            };
-        }
-    }
-    /* jshint +W103 */
-
-    var objectCreate = Object.create;
-    if (typeof objectCreate !== 'function') {
-        objectCreate = function (o) {
-            function F() {}
-            F.prototype = o;
-            return new F();
-        };
-    }
-
-    /**
-     * Apply mixin methods to decorator base
-     * @param  {String|Object} key The method name. OR object with many key: fn pairs.
-     * @param  {Function} val The function to assign
-     * @return {void}
-     */
-    var mixin = function mixin( key, val ){
-
-        if ( typeof key === 'object' ){
-            proto = Physics.util.extend(proto, key, copyFn);
-            proto.type = type;
-            return;
-        }
-
-        if ( key !== 'type' && Physics.util.isFunction( val ) ){
-            proto[ key ] = val;
-        }
-    };
-
-    // @TODO: not sure of the best way to make the constructor names
-    // transparent and readable in debug consoles...
-    mixin( baseProto );
-
-    /**
-     * Factory function for definition and instantiation of subclasses.
-     * If class with "name" is not defined, the "decorator" parameter is required to define it first.
-     * @param  {String} name       The class name
-     * @param  {String} parentName (optional) The name of parent class to extend
-     * @param  {Function} decorator (optional) The decorator function that should define and return methods to extend (decorate) the base class
-     * @param  {Object} cfg        (optional) The configuration to pass to the class initializer
-     * @return {void|Object}       If defining without the "cfg" parameter, void will be returned. Otherwise the class instance will be returned
-     */
-    var factory = function factory( name, parentName, decorator, cfg ){
-
-        var instance
-            ,result
-            ,parent = proto
-            ,tmp
-            ;
-
-        // set parent if specified
-        if ( typeof parentName !== 'string' ){
-
-            // ... otherwise reassign parameters
-            cfg = decorator;
-            decorator = parentName;
-
-        } else {
-
-            // extend the specified module
-            parent = registry[ parentName ];
-
-            if ( !parent ){
-
-                throw 'Error: "' + parentName + '" ' + type + ' not defined';
+    t.util = {},
+        function(e) {
+            function n(t) {
+                return "function" != typeof t.toString && "string" == typeof(t + "")
             }
 
-            parent = parent.prototype;
-        }
+            function i() {}
 
-        if ( typeof decorator === 'function' ){
+            function o(t) {
+                t.length = 0, A.length < P && A.push(t)
+            }
 
-            result = registry[ name ];
+            function r() {}
 
-            if ( result ){
+            function s(t, e, i, r, a) {
+                if (i) {
+                    var c = i(t);
+                    if (void 0 !== c) return c
+                }
+                if (!v(t)) return t;
+                var l = rt.call(t);
+                if (!R[l] || !mt.nodeClass && n(t)) return t;
+                var u = bt[l];
+                switch (l) {
+                    case O:
+                    case T:
+                        return new u(+t);
+                    case W:
+                    case H:
+                        return new u(t);
+                    case z:
+                        return (c = u(t.source, j.exec(t))).lastIndex = t.lastIndex, c
+                }
+                if (l = xt(t), e) {
+                    var h = !r;
+                    r || (r = A.pop() || []), a || (a = A.pop() || []);
+                    for (var d = r.length; d--;)
+                        if (r[d] == t) return a[d];
+                    c = l ? u(t.length) : {}
+                } else c = l ? function(t, e, n) {
+                    e || (e = 0), void 0 === n && (n = t ? t.length : 0);
+                    var i = -1;
+                    n = n - e || 0;
+                    for (var o = Array(0 > n ? 0 : n); ++i < n;) o[i] = t[e + i];
+                    return o
+                }(t) : kt({}, t);
+                return l && (et.call(t, "index") && (c.index = t.index), et.call(t, "input") && (c.input = t.input)), e ? (r.push(t), a.push(c), (l ? Bt : jt)(t, function(t, n) {
+                    c[n] = s(t, e, i, r, a)
+                }), h && (o(r), o(a)), c) : c
+            }
 
-                result.prototype = Physics.util.extend(result.prototype, decorator( getProto(result.prototype) ), copyFn);
-                
-            } else {
-                // newly defined
-                // store the new class
-                result = registry[ name ] = function constructor( opts ){
-                    if (this.init){
-                        this.init( opts );
+            function a(t, e, n) {
+                if ("function" != typeof t) return _;
+                if (void 0 === e) return t;
+                var i = t.__bindData__ || mt.funcNames && !t.name;
+                if (void 0 === i) {
+                    var o = S && Z.call(t);
+                    mt.funcNames || !o || I.test(o) || (i = !0), (mt.funcNames || !i) && (i = !mt.funcDecomp || S.test(o), _t(t, i))
+                }
+                if (!0 !== i && i && 1 & i[1]) return t;
+                switch (n) {
+                    case 1:
+                        return function(n) {
+                            return t.call(e, n)
+                        };
+                    case 2:
+                        return function(n, i) {
+                            return t.call(e, n, i)
+                        };
+                    case 3:
+                        return function(n, i, o) {
+                            return t.call(e, n, i, o)
+                        };
+                    case 4:
+                        return function(n, i, o, r) {
+                            return t.call(e, n, i, o, r)
+                        }
+                }
+                return y(t, e)
+            }
+
+            function c(t, e, i, r, s, a) {
+                if (i && void 0 !== (v = i(t, e))) return !!v;
+                if (t === e) return 0 !== t || 1 / t == 1 / e;
+                if (t == t && !(t && $[typeof t] || e && $[typeof e])) return !1;
+                if (null == t || null == e) return t === e;
+                var l = rt.call(t),
+                    u = rt.call(e);
+                if (l == E && (l = L), u == E && (u = L), l != u) return !1;
+                switch (l) {
+                    case O:
+                    case T:
+                        return +t == +e;
+                    case W:
+                        return t != +t ? e != +e : 0 == t ? 1 / t == 1 / e : t == +e;
+                    case z:
+                    case H:
+                        return t == e + ""
+                }
+                if (!(u = l == F)) {
+                    if (et.call(t, "__wrapped__") || et.call(e, "__wrapped__")) return c(t.__wrapped__ || t, e.__wrapped__ || e, i, r, s, a);
+                    if (l != L || !mt.nodeClass && (n(t) || n(e))) return !1;
+                    l = !mt.argsObject && f(t) ? Object : t.constructor;
+                    var h = !mt.argsObject && f(e) ? Object : e.constructor;
+                    if (l != h && !(p(l) && l instanceof l && p(h) && h instanceof h)) return !1
+                }
+                for (h = !s, s || (s = A.pop() || []), a || (a = A.pop() || []), l = s.length; l--;)
+                    if (s[l] == t) return a[l] == e;
+                var d = 0,
+                    v = !0;
+                if (s.push(t), a.push(e), u) {
+                    if (l = t.length, d = e.length, !(v = d == t.length) && !r) return v;
+                    for (; d--;)
+                        if (u = l, h = e[d], r)
+                            for (; u-- && !(v = c(t[u], h, i, r, s, a)););
+                        else if (!(v = c(t[d], h, i, r, s, a))) break;
+                    return v
+                }
+                return Pt(e, function(e, n, o) {
+                    return et.call(o, n) ? (d++, v = et.call(t, n) && c(t[n], e, i, r, s, a)) : void 0
+                }), v && !r && Pt(t, function(t, e, n) {
+                    return et.call(n, e) ? v = -1 < --d : void 0
+                }), h && (o(s), o(a)), v
+            }
+
+            function l(t, e, n, i, o, r) {
+                var s = 1 & e,
+                    a = 2 & e,
+                    c = 4 & e,
+                    u = 8 & e,
+                    d = 16 & e,
+                    f = 32 & e,
+                    g = t;
+                if (!a && !p(t)) throw new TypeError;
+                d && !n.length && (e &= -17, d = n = !1), f && !i.length && (e &= -33, f = i = !1);
+                var b = t && t.__bindData__;
+                if (b) return !s || 1 & b[1] || (b[4] = o), !s && 1 & b[1] && (e |= 8), !c || 4 & b[1] || (b[5] = r), d && it.apply(b[2] || (b[2] = []), n), f && it.apply(b[3] || (b[3] = []), i), b[1] |= e, l.apply(null, b);
+                if (!s || a || c || f || !(mt.fastBind || ct && d)) m = function() {
+                    var p = arguments,
+                        b = s ? o : this;
+                    return (c || d || f) && (p = vt.call(p), d && st.apply(p, n), f && it.apply(p, i), c && p.length < r) ? (e |= 16, l(t, u ? e : -4 & e, p, null, o, r)) : (a && (t = b[g]), this instanceof m ? (b = h(t.prototype), v(p = t.apply(b, p)) ? p : b) : t.apply(b, p))
+                };
+                else {
+                    if (d) {
+                        var y = [o];
+                        it.apply(y, n)
                     }
+                    var m = d ? ct.apply(t, y) : ct.call(t, o)
+                }
+                return _t(m, vt.call(arguments)), m
+            }
+
+            function u() {
+                V.h = M, V.b = V.c = V.g = V.i = "", V.e = "t", V.j = !0;
+                for (var t, e = 0; t = arguments[e]; e++)
+                    for (var n in t) V[n] = t[n];
+                e = V.a, V.d = /^[^,]+/.exec(e)[0], t = Function, e = "return function(" + e + "){";
+                var i = "var n,t=" + (n = V).d + ",E=" + n.e + ";if(!t)return E;" + n.i + ";";
+                n.b ? (i += "var u=t.length;n=-1;if(" + n.b + "){", mt.unindexedChars && (i += "if(s(t)){t=t.split('')}"), i += "while(++n<u){" + n.g + ";}}else{") : mt.nonEnumArgs && (i += "var u=t.length;n=-1;if(u&&p(t)){while(++n<u){n+='';" + n.g + ";}}else{"), mt.enumPrototypes && (i += "var G=typeof t=='function';"), mt.enumErrorProps && (i += "var F=t===k||t instanceof Error;");
+                var o = [];
+                if (mt.enumPrototypes && o.push('!(G&&n=="prototype")'), mt.enumErrorProps && o.push('!(F&&(n=="message"||n=="name"))'), n.j && n.f) i += "var C=-1,D=B[typeof t]&&v(t),u=D?D.length:0;while(++C<u){n=D[C];", o.length && (i += "if(" + o.join("&&") + "){"), i += n.g + ";", o.length && (i += "}"), i += "}";
+                else if (i += "for(n in t){", n.j && o.push("m.call(t, n)"), o.length && (i += "if(" + o.join("&&") + "){"), i += n.g + ";", o.length && (i += "}"), i += "}", mt.nonEnumShadows) {
+                    for (i += "if(t!==A){var i=t.constructor,r=t===(i&&i.prototype),f=t===J?I:t===k?j:L.call(t),x=y[f];", k = 0; 7 > k; k++) i += "n='" + n.h[k] + "';if((!(r&&x[n])&&m.call(t,n))", n.j || (i += "||(!x[n]&&t[n]!==A[n])"), i += "){" + n.g + "}";
+                    i += "}"
+                }
+                return (n.b || mt.nonEnumArgs) && (i += "}"), t("d,j,k,m,o,p,q,s,v,A,B,y,I,J,L", e + (i += n.c + ";return E") + "}")(a, q, U, et, B, f, xt, g, V.f, Y, $, yt, H, G, rt)
+            }
+
+            function h(t) {
+                return v(t) ? lt(t) : {}
+            }
+
+            function d(t) {
+                var e, i;
+                return !(!(t && rt.call(t) == L && (e = t.constructor, !p(e) || e instanceof e)) || !mt.argsClass && f(t) || !mt.nodeClass && n(t)) && (mt.ownLast ? (Pt(t, function(t, e, n) {
+                    return i = et.call(n, e), !1
+                }), !1 !== i) : (Pt(t, function(t, e) {
+                    i = e
+                }), void 0 === i || et.call(t, i)))
+            }
+
+            function f(t) {
+                return t && "object" == typeof t && "number" == typeof t.length && rt.call(t) == E || !1
+            }
+
+            function p(t) {
+                return "function" == typeof t
+            }
+
+            function v(t) {
+                return !(!t || !$[typeof t])
+            }
+
+            function g(t) {
+                return "string" == typeof t || rt.call(t) == H
+            }
+
+            function b(t, e, n) {
+                if (e && void 0 === n && xt(t)) {
+                    n = -1;
+                    for (var i = t.length; ++n < i && !1 !== e(t[n], n, t););
+                } else Bt(t, e, n);
+                return t
+            }
+
+            function y(t, e) {
+                return 2 < arguments.length ? l(t, 17, vt.call(arguments, 2), null, e) : l(t, 1, null, null, e)
+            }
+
+            function m(t, e, n) {
+                var i, o, r, s, a, c, l, u = 0,
+                    h = !1,
+                    d = !0;
+                if (!p(t)) throw new TypeError;
+                if (e = dt(0, e) || 0, !0 === n) {
+                    var f = !0;
+                    d = !1
+                } else v(n) && (f = n.leading, h = "maxWait" in n && (dt(e, n.maxWait) || 0), d = "trailing" in n ? n.trailing : d);
+                var g = function() {
+                        var n = e - (nt() - s);
+                        0 < n ? c = setTimeout(g, n) : (o && clearTimeout(o), n = l, o = c = l = w, n && (u = nt(), r = t.apply(a, i)))
+                    },
+                    b = function() {
+                        c && clearTimeout(c), o = c = l = w, (d || h !== e) && (u = nt(), r = t.apply(a, i))
+                    };
+                return function() {
+                    if (i = arguments, s = nt(), a = this, l = d && (c || !f), !1 === h) var n = f && !c;
+                    else {
+                        o || f || (u = s);
+                        var p = h - (s - u);
+                        0 < p ? o || (o = setTimeout(b, p)) : (o && (o = clearTimeout(o)), u = s, r = t.apply(a, i))
+                    }
+                    return c || e === h || (c = setTimeout(g, e)), n && (r = t.apply(a, i)), r
+                }
+            }
+
+            function _(t) {
+                return t
+            }
+
+            function x(t, e, n) {
+                var i = null == t,
+                    o = null == e;
+                return null == n && ("boolean" == typeof t && o ? (n = t, t = 1) : o || "boolean" != typeof e || (n = e, o = !0)), i && o && (e = 1), t = +t || 0, o ? (e = t, t = 0) : e = +e || 0, i = pt(), n || t % 1 || e % 1 ? ft(t + i * (e - t + parseFloat("1e-" + ((i + "").length - 1))), e) : t + X(i * (e - t + 1))
+            }
+            var w, A = [],
+                C = 0,
+                B = {},
+                P = 40,
+                j = /\w*$/,
+                I = /^function[ \n\r\t]+\w/,
+                S = /\bthis\b/,
+                M = "constructor hasOwnProperty isPrototypeOf propertyIsEnumerable toLocaleString toString valueOf".split(" "),
+                E = "[object Arguments]",
+                F = "[object Array]",
+                O = "[object Boolean]",
+                T = "[object Date]",
+                q = "[object Error]",
+                W = "[object Number]",
+                L = "[object Object]",
+                z = "[object RegExp]",
+                H = "[object String]",
+                R = {
+                    "[object Function]": !1
                 };
-
-                result.prototype = objectCreate( parent );
-                result.prototype = Physics.util.extend(result.prototype, decorator( parent ), copyFn);
-            }
-
-            result.prototype.type = type;
-            result.prototype.name = name;
-            
-        } else {
-
-            cfg = decorator || {};
-            result = registry[ name ];
-            if (!result){
-
-                throw 'Error: "' + name + '" ' + type + ' not defined';
-            }
-        }
-
-        if ( cfg ) {
-
-            // create a new instance from the provided decorator
-            return new result( cfg );
-        }
-    };
-
-    factory.mixin = mixin;
-
-    return factory;
-};
-
-// ---
-// inside: src/util/noconflict.js
-
-(function( window ){
-
-    var _Physics = window.Physics;
-
-    /**
-     * Restore the original reference to the global window.Physics variable.
-     * Does nothing if PhysicsJS doesn't have a reference in global scope
-     * @return {Physics} The PhysicsJS reference
-     */
-    Physics.noConflict = function(){
-
-        if ( window.Physics === Physics ) {
-            window.Physics = _Physics;
-        }
-        
-        return Physics;
-    };
-
-})( this );
-
-// ---
-// inside: src/util/pubsub.js
-
-(function(){
-
-    /**
-     * PubSub implementation (fast)
-     */
-    var PubSub = function PubSub( defaultScope ){
-
-        if (!(this instanceof PubSub)){
-            return new PubSub( defaultScope );
-        }
-
-        this.initPubsub( defaultScope );
-    };
-
-    PubSub.prototype = {
-
-        /**
-         * Initialize
-         * @param  {Object} defaultScope Default scope to bind events to
-         * @return {void}
-         */
-        initPubsub: function( defaultScope ){
-            this._topics = {};
-            this._defaultScope = defaultScope || this;
-        },
-
-        /**
-         * Subscribe a callback (or callbacks) to a topic (topics).
-         * 
-         * @param  {String|Object}   topic The topic name, or a config with key/value pairs of { topic: callbackFn, ... }
-         * @param  {Function} fn The callback function (if not using Object as previous argument)
-         * @param  {Object}   scope (optional) The scope to bind callback to
-         * @param  {Number}   priority (optional) The priority of the callback (higher = earlier)
-         * @return {this}
-         */
-        subscribe: function( topic, fn, scope, priority ){
-
-            var listeners = this._topics[ topic ] || (this._topics[ topic ] = [])
-                ,orig = fn
-                ,idx
-                ;
-
-            // check if we're subscribing to multiple topics
-            // with an object
-            if ( Physics.util.isObject( topic ) ){
-
-                for ( var t in topic ){
-                    
-                    this.subscribe( t, topic[ t ], fn, scope );
-                }
-
-                return this;
-            }
-
-            if ( Physics.util.isObject( scope ) ){
-                
-                fn = Physics.util.bind( fn, scope );
-                fn._bindfn_ = orig;
-
-            } else if (!priority) {
-
-                priority = scope;
-            }
-
-            fn._priority_ = priority;
-
-            idx = Physics.util.sortedIndex( listeners, fn, '_priority_' );
-
-            listeners.splice( idx, 0, fn );
-            return this;
-        },
-
-        /**
-         * Unsubscribe function from topic.
-         * @param  {String}   topic Topic name OR true to remove all listeners on all topics
-         * @param  {Function} fn The original callback function OR true to remove all listeners
-         * @return {this}
-         */
-        unsubscribe: function( topic, fn ){
-
-            if ( topic === true ){
-                this._topics = {};
-                return this;
-            }
-
-            var listeners = this._topics[ topic ]
-                ,listn
-                ;
-
-            if (!listeners){
-                return this;
-            }
-
-            if ( fn === true ){
-                this._topics[ topic ] = [];
-                return this;
-            }
-
-            for ( var i = 0, l = listeners.length; i < l; i++ ){
-                
-                listn = listeners[ i ];
-
-                if ( listn._bindfn_ === fn || listn === fn ){
-                    listeners.splice(i, 1);
-                    break;
-                }
-            }
-
-            return this;
-        },
-
-        /**
-         * Publish data to a topic
-         * @param  {Object|String} data
-         * @param  {Object} scope The scope to be included in the data argument passed to callbacks
-         * @return {this}
-         */
-        publish: function( data, scope ){
-
-            if (typeof data !== 'object'){
-                data = { topic: data };
-            }
-
-            var topic = data.topic
-                ,listeners = this._topics[ topic ]
-                ,l = listeners && listeners.length
-                ;
-
-            if ( !topic ){
-                throw 'Error: No topic specified in call to world.publish()';
-            }
-
-            if ( !l ){
-                return this;
-            }
-            
-            data.scope = data.scope || this._defaultScope;
-
-            while ( l-- ){
-                
-                data.handler = listeners[ l ];
-                data.handler( data );
-            }
-
-            return this;
-        }
-    };
-    
-    Physics.util.pubsub = PubSub;
-})();
-
-// ---
-// inside: src/util/request-anim-frame.js
-
-// http://paulirish.com/2011/requestanimationframe-for-smart-animating/
-// http://my.opera.com/emoller/blog/2011/12/20/requestanimationframe-for-smart-er-animating
- 
-// requestAnimationFrame polyfill by Erik Moller
-// fixes from Paul Irish and Tino Zijdel
- 
-(function(window) {
-    var lastTime = 0;
-    var vendors = ['ms', 'moz', 'webkit', 'o'];
-    for(var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
-        window.requestAnimationFrame = window[vendors[x]+'RequestAnimationFrame'];
-        window.cancelAnimationFrame = window[vendors[x]+'CancelAnimationFrame'] || window[vendors[x]+'CancelRequestAnimationFrame'];
-    }
- 
-    if (!window.requestAnimationFrame){
-        window.requestAnimationFrame = function(callback, element) {
-            var currTime = new Date().getTime();
-            var timeToCall = Math.max(0, 16 - (currTime - lastTime));
-            var id = window.setTimeout(function() { callback(currTime + timeToCall); }, 
-              timeToCall);
-            lastTime = currTime + timeToCall;
-            return id;
-        };
-    }
- 
-    if (!window.cancelAnimationFrame){
-        window.cancelAnimationFrame = function(id) {
-            clearTimeout(id);
-        };
-    }
-}(this));
-
-// ---
-// inside: src/util/scratchpad.js
-
-/**
- * scratchpad
- * thread-safe management of temporary (voletile)
- * objects for use in calculations
- */
-(function(){
-
-    // constants
-    var SCRATCH_MAX_SCRATCHES = 100; // maximum number of scratches
-    var SCRATCH_MAX_INDEX = 10; // maximum number of any type of temp objects
-    var SCRATCH_USAGE_ERROR = 'Error: Scratchpad used after .done() called. (Could it be unintentionally scoped?)';
-    var SCRATCH_INDEX_OUT_OF_BOUNDS = 'Error: Scratchpad usage space out of bounds. (Did you forget to call .done()?)';
-    var SCRATCH_MAX_REACHED = 'Error: Too many scratchpads created. (Did you forget to call .done()?)';
-
-    // cache previously created scratches
-    var scratches = [];
-    var numScratches = 0;
-
-    var ScratchCls = function ScratchCls(){
-
-        // private variables
-        this.objIndex = 0;
-        this.arrayIndex = 0;
-        this.vectorIndex = 0;
-        this.aabbIndex = 0;
-        this.transformIndex = 0;
-        this.objectStack = [];
-        this.arrayStack = [];
-        this.vectorStack = [];
-        this.aabbStack = [];
-        this.transformStack = [];
-
-        if (++numScratches >= SCRATCH_MAX_SCRATCHES){
-            throw SCRATCH_MAX_REACHED;
-        }
-    };
-
-    ScratchCls.prototype = {
-
-        /**
-         * Declare that your work is finished. Release temp objects for use elsewhere. Must be called when immediate work is done.
-         */
-        done: function(){
-
-            this._active = false;
-            this.objIndex = this.arrayIndex = this.vectorIndex = this.aabbIndex = this.transformIndex = 0;
-            // add it back to the scratch stack for future use
-            scratches.push(this);
-        },
-
-        /**
-         * Get a temporary object (dirty)
-         * @return {Object} The temporary (dirty) object
-         */
-        object: function(){
-
-            var stack = this.objectStack;
-
-            if (!this._active){
-                throw SCRATCH_USAGE_ERROR;
-            }
-
-            if (this.objIndex >= SCRATCH_MAX_INDEX){
-                throw SCRATCH_INDEX_OUT_OF_BOUNDS;
-            }
-
-            return stack[ this.objIndex++ ] || stack[ stack.push({}) - 1 ];
-        },
-
-        /**
-         * Get a temporary array.
-         * @return {Array} Temporary (dirty) array
-         */
-        array: function(){
-
-            var stack = this.arrayStack;
-
-            if (!this._active){
-                throw SCRATCH_USAGE_ERROR;
-            }
-
-            if (this.arrIndex >= SCRATCH_MAX_INDEX){
-                throw SCRATCH_INDEX_OUT_OF_BOUNDS;
-            }
-
-            return stack[ this.arrIndex++ ] || stack[ stack.push([]) - 1 ];
-        },
-
-        /**
-         * Get a temporary Vector
-         * @return {Vector} The temporary (dirty) vector.
-         */
-        vector: function(){
-
-            var stack = this.vectorStack;
-
-            if (!this._active){
-                throw SCRATCH_USAGE_ERROR;
-            }
-
-            if (this.vectorIndex >= SCRATCH_MAX_INDEX){
-                throw SCRATCH_INDEX_OUT_OF_BOUNDS;
-            }
-
-            return stack[ this.vectorIndex++ ] || stack[ stack.push(Physics.vector()) - 1 ];
-        },
-
-        /**
-         * Get a temporary AABB
-         * @return {AABB} The temporary (dirty) AABB
-         */
-        aabb: function(){
-
-            var stack = this.aabbStack;
-
-            if (!this._active){
-                throw SCRATCH_USAGE_ERROR;
-            }
-
-            if (this.aabbIndex >= SCRATCH_MAX_INDEX){
-                throw SCRATCH_INDEX_OUT_OF_BOUNDS;
-            }
-
-            return stack[ this.aabbIndex++ ] || stack[ stack.push(Physics.aabb()) - 1 ];
-        },
-
-        /**
-         * Get a temporary Transform
-         * @return {Transform} The temporary (dirty) transform
-         */
-        transform: function(){
-
-            var stack = this.transformStack;
-
-            if (!this._active){
-                throw SCRATCH_USAGE_ERROR;
-            }
-
-            if (this.transformIndex >= SCRATCH_MAX_INDEX){
-                throw SCRATCH_INDEX_OUT_OF_BOUNDS;
-            }
-
-            return stack[ this.transformIndex++ ] || stack[ stack.push(Physics.transform()) - 1 ];
-        }
-    };
-    
-    /**
-     * Get a new scratchpad to work from. Call .done() when finished.
-     * @return {ScratchCls} The scratchpad
-     */
-    Physics.scratchpad = function(){
-
-        var scratch = scratches.pop() || new ScratchCls();
-        scratch._active = true;
-        return scratch;
-    };
-
-})();
-
-// ---
-// inside: src/util/ticker.js
-
-/**
- * The Ticker singleton for easily binding callbacks to requestAnimationFrame
- */
-(function(window){
-        
-    var lastTime = 0
-        ,active = false
-        ,listeners = []
-        ;
-
-    /**
-     * Publish a tick to subscribed callbacks
-     * @private
-     * @param  {Number} time The current time
-     * @return {void}
-     */
-    function step( time ){
-
-        var fns = listeners;
-
-        if (!active){
-            return;
-        }
-
-        window.requestAnimationFrame( step );
-        
-        for ( var i = 0, l = fns.length; i < l; ++i ){
-            
-            fns[ i ]( time, time - lastTime );
-        }
-
-        lastTime = time;
-    }
-
-    /**
-     * Start the ticker
-     * @return {this}
-     */
-    function start(){
-        
-        lastTime = (new Date()).getTime();
-        active = true;
-        step();
-
-        return this;
-    }
-
-    /**
-     * Stop the ticker
-     * @return {this}
-     */
-    function stop(){
-
-        active = false;
-        return this;
-    }
-
-    /**
-     * Subscribe a callback to the ticker
-     * @param  {Function} listener The callback function
-     * @return {this}
-     */
-    function subscribe( listener ){
-
-        // if function and not already in listeners...
-        if ( typeof listener === 'function' ){
-
-            for ( var i = 0, l = listeners.length; i < l; ++i ){
-                
-                if (listener === listeners[ i ]){
-                    return this;
-                }
-            }
-
-            // add it
-            listeners.push( listener );
-        }
-        
-        return this;
-    }
-
-    /**
-     * Unsubscribe a callback from the ticker
-     * @param  {Function} listener Original callback added
-     * @return {this}
-     */
-    function unsubscribe( listener ){
-
-        var fns = listeners;
-
-        for ( var i = 0, l = fns.length; i < l; ++i ){
-            
-            if ( fns[ i ] === listener ){
-
-                // remove it
-                fns.splice( i, 1 );
-                return this;
-            }
-        }
-
-        return this;
-    }
-
-    /**
-     * Determine if ticker is currently running
-     * @return {Boolean} True if running
-     */
-    function isActive(){
-
-        return !!active;
-    }
-
-    // API
-    Physics.util.ticker = {
-        start: start,
-        stop: stop,
-        subscribe: subscribe,
-        unsubscribe: unsubscribe,
-        isActive: isActive
-    };
-
-}(this));
-
-// ---
-// inside: src/math/aabb.js
-
-(function(){
-
-    /**
-     * Axis Aligned Bounding Box implementation
-     * @param {Object|Number} minX Either an object with the aabb values, or the minimum x value
-     * @param {Number} minY Minimum y value
-     * @param {Number} maxX Maximum x value
-     * @param {Number} maxY Maximum y value
-     */
-    var AABB = function AABB( minX, minY, maxX, maxY ){
-
-        // enforce instantiation
-        if ( !(this instanceof AABB) ){
-
-            return new AABB( minX, minY, maxX, maxY );
-        }
-
-        this._pos = Physics.vector();
-        
-        this.set( minX, minY, maxX, maxY );
-    };
-
-    /**
-     * Set the aabb values
-     * @param {Object|Number} minX Either an object with the aabb values, or the minimum x value
-     * @param {Number} minY Minimum y value
-     * @param {Number} maxX Maximum x value
-     * @param {Number} maxY Maximum y value
-     * @return {this}
-     */
-    AABB.prototype.set = function set( minX, minY, maxX, maxY ){
-
-        if ( Physics.util.isObject(minX) ){
-
-            this._pos.clone( minX.pos );
-            this._hw = minX.halfWidth;
-            this._hh = minX.halfHeight;
-            
-            return this;
-        }
-
-        this._pos.set( 0.5 * (maxX + minX), 0.5 * (maxY + minY) );
-        this._hw = 0.5 * (maxX - minX);
-        this._hh = 0.5 * (maxY - minY);
-        return this;
-    };
-
-    /**
-     * Get the aabb values as a plain object
-     * @return {Object} The aabb values
-     */
-    AABB.prototype.get = function get(){
-
-        var hw = this.halfWidth()
-            ,hh = this.halfHeight()
-            ;
-
-        return {
-            pos: this._pos.values(),
-            halfWidth: hw,
-            halfHeight: hh,
-            // useful for vector operations
-            x: hw,
-            y: hh
-        };
-    };
-
-    /**
-     * Get the half-width measurement of the aabb
-     * @return {Number} The half-width
-     */
-    AABB.prototype.halfWidth = function halfWidth(){
-
-        return this._hw;
-    };
-
-    /**
-     * Get the half-height measurement of the aabb
-     * @return {Number} The half-height
-     */
-    AABB.prototype.halfHeight = function halfHeight(){
-
-        return this._hh;
-    };
-
-    /**
-     * Check if point is inside bounds
-     * @param  {Vectorish} pt The point to check
-     * @return {Boolean}    True if point is inside aabb
-     */
-    AABB.prototype.contains = function contains( pt ){
-
-        var x = pt.x !== undefined ? pt.x : pt.get(0)
-            ,y = pt.y !== undefined ? pt.y : pt.get(1)
-            ;
-
-        return  (x > (this._pos.get(0) - this._hw)) && 
-                (x < (this._pos.get(0) + this._hw)) &&
-                (y > (this._pos.get(1) - this._hh)) &&
-                (y < (this._pos.get(1) + this._hh));
-    };
-
-    /**
-     * Apply a transformation to the aabb
-     * @param  {Transform} trans The transformation
-     * @return {this}
-     */
-    AABB.prototype.transform = function transform( trans ){
-
-        var hw = this._hw
-            ,hh = this._hh
-            ,scratch = Physics.scratchpad()
-            ,bottomRight = scratch.vector().set( hw, hh )
-            ,topRight = scratch.vector().set( hw, -hh )
-            ;
-
-        // translate the center
-        this._pos.translate( trans );
-
-        // rotate the corners
-        bottomRight.rotate( trans );
-        topRight.rotate( trans );
-
-        // we need to keep the box oriented with the axis, but expand it to
-        // accomodate the rotation
-        this._hw = Math.max( Math.abs(bottomRight.get(0)), Math.abs(topRight.get(0)) );
-        this._hh = Math.max( Math.abs(bottomRight.get(1)), Math.abs(topRight.get(1)) );
-
-        scratch.done();
-        return this;
-    };
-
-    // Static methods
-    /**
-     * Check if a point is inside an aabb
-     * @param  {AABB|Object} aabb The aabb instance or aabb values
-     * @param  {Vectorish} pt   The point to check
-     * @return {Boolean}      True if point is inside aabb
-     */
-    AABB.contains = function( aabb, pt ){
-
-        var x = pt.x !== undefined ? pt.x : pt.get(0)
-            ,y = pt.y !== undefined ? pt.y : pt.get(1)
-            ;
-
-        aabb = aabb.get ? aabb.get() : aabb;
-
-        return  (x > (aabb.pos.x - aabb.halfWidth)) && 
-                (x < (aabb.pos.x + aabb.halfWidth)) &&
-                (y > (aabb.pos.y - aabb.halfHeight)) &&
-                (y < (aabb.pos.y + aabb.halfHeight));
-    };
-
-    Physics.aabb = AABB;
-}());
-
-// ---
-// inside: src/math/gjk.js
-
-/**
- * Gilbert–Johnson–Keerthi object collison algorithm
- * For general information about GJK see: 
- *  - http://www.codezealot.org/archives/88
- *  - http://mollyrocket.com/849
- */
-(function(){
-
-    // the algorithm doesn't always converge for curved shapes.
-    // need these constants to dictate how accurate we want to be.
-    var gjkAccuracy = 0.0001;
-    var gjkMaxIterations = 100;
-
-    // get the next search direction from two simplex points
-    var getNextSearchDir = function getNextSearchDir( ptA, ptB, dir ){
-
-        var ABdotB = ptB.normSq() - ptB.dot( ptA )
-            ,ABdotA = ptB.dot( ptA ) - ptA.normSq()
-            ;
-
-        // if the origin is farther than either of these points
-        // get the direction from one of those points to the origin
-        if ( ABdotB < 0 ){
-
-            return dir.clone( ptB ).negate();
-
-        } else if ( ABdotA > 0 ){
-
-            return dir.clone( ptA ).negate();
-
-        // otherwise, use the perpendicular direction from the simplex
-        } else {
-
-            // dir = AB = B - A
-            dir.clone( ptB ).vsub( ptA );
-            // if (left handed coordinate system) 
-            // A cross AB < 0 then get perpendicular counter clockwise 
-            return dir.perp( (ptA.cross( dir ) < 0) );
-        }
-    };
-
-    /**
-     * Figure out the closest points on the original objects
-     * from the last two entries of the simplex
-     * @param  {Array} simplex
-     * @return {Object}
-     */
-    var getClosestPoints = function getClosestPoints( simplex ){
-
-        // see http://www.codezealot.org/archives/153
-        // for algorithm details
-
-        // we know that the position of the last point 
-        // is very close to the previous. (by nature of the distance test)
-        // this won't give great results for the closest
-        // points algorithm, so let's use the previous two
-        var len = simplex.length
-            ,last = simplex[ len - 2 ]
-            ,prev = simplex[ len - 3 ]
-            ,scratch = Physics.scratchpad()
-            ,A = scratch.vector().clone( last.pt )
-            // L = B - A
-            ,L = scratch.vector().clone( prev.pt ).vsub( A )
-            ,lambdaB
-            ,lambdaA
-            ;
-
-        if ( L.equals(Physics.vector.zero) ){
-
-            // oh.. it's a zero vector. So A and B are both the closest.
-            // just use one of them
-            scratch.done();
-            return {
-
-                a: last.a,
-                b: last.b
-            };
-        }
-
-        lambdaB = - L.dot( A ) / L.normSq();
-        lambdaA = 1 - lambdaB;
-
-        if ( lambdaA <= 0 ){
-            // woops.. that means the closest simplex point
-            // isn't on the line it's point B itself
-            scratch.done();
-            return {
-                a: prev.a,
-                b: prev.b
-            };
-        } else if ( lambdaB <= 0 ){
-            // vice versa
-            scratch.done();
-            return {
-                a: last.a,
-                b: last.b
-            };
-        }
-
-        // guess we'd better do the math now...
-        var ret = {
-            // a closest = lambdaA * Aa + lambdaB * Ba
-            a: A.clone( last.a ).mult( lambdaA ).vadd( L.clone( prev.a ).mult( lambdaB ) ).values(),
-            // b closest = lambdaA * Ab + lambdaB * Bb
-            b: A.clone( last.b ).mult( lambdaA ).vadd( L.clone( prev.b ).mult( lambdaB ) ).values()
-        };
-
-        scratch.done();
-        return ret;
-    };
-
-    /**
-     * Implementation agnostic GJK function.
-     * @param  {Function} support The support function. Must return an object containing 
-     *                            the witness points (.a, .b) and the support point (.pt).
-     *                            Recommended to use simple objects. Eg: return { a: {x: 1, y:2}, b: {x: 3, y: 4}, pt: {x: 2, y: 2} }
-     *                            Signature: function(<Physics.vector> axis).
-     *                            axis: The axis to use
-     * @param {Physics.vector} seed The starting direction for the simplex
-     * @return {Object} The algorithm information containing properties: .overlap (bool), and .simplex (Array)
-     */
-    var gjk = function gjk( support, seed, checkOverlapOnly, debugFn ){
-
-        var overlap = false
-            ,noOverlap = false // if we're sure we're not overlapping
-            ,distance = false
-            ,simplex = []
-            ,simplexLen = 1
-            // setup a scratchpad of temporary cheap objects
-            ,scratch = Physics.scratchpad()
-            // use seed as starting direction or use x axis
-            ,dir = scratch.vector().clone(seed || Physics.vector.axis[ 0 ])
-            ,last = scratch.vector()
-            ,lastlast = scratch.vector()
-            // some temp vectors
-            ,v1 = scratch.vector()
-            ,v2 = scratch.vector()
-            ,ab
-            ,ac
-            ,sign
-            ,tmp
-            ,iterations = 0
-            ;
-
-        // get the first Minkowski Difference point
-        tmp = support( dir );
-        simplexLen = simplex.push( tmp );
-        last.clone( tmp.pt );
-        // negate d for the next point
-        dir.negate();
-
-        // start looping
-        while ( ++iterations ) {
-
-            // swap last and lastlast, to save on memory/speed
-            last.swap(lastlast);
-            // push a new point to the simplex because we haven't terminated yet
-            tmp = support( dir );
-            simplexLen = simplex.push( tmp );
-            last.clone( tmp.pt );
-
-            if ( debugFn ){
-                debugFn( simplex );
-            }
-
-            if ( last.equals(Physics.vector.zero) ){
-                // we happened to pick the origin as a support point... lucky.
-                overlap = true;
-                break;
-            }
-            
-            // check if the last point we added actually passed the origin
-            if ( !noOverlap && last.dot( dir ) <= 0.0 ) {
-                // if the point added last was not past the origin in the direction of d
-                // then the Minkowski difference cannot possibly contain the origin since
-                // the last point added is on the edge of the Minkowski Difference
-
-                // if we just need the overlap...
-                if ( checkOverlapOnly ){
-                    break;
-                }
-
-                noOverlap = true;
-            }
-
-            // if it's a line...
-            if ( simplexLen === 2 ){
-
-                // otherwise we need to determine if the origin is in
-                // the current simplex and act accordingly
-
-                dir = getNextSearchDir( last, lastlast, dir );
-                // continue...
-
-            // if it's a triangle... and we're looking for the distance
-            } else if ( noOverlap ){
-
-                // if we know there isn't any overlap and
-                // we're just trying to find the distance...
-                // make sure we're getting closer to the origin
-                dir.normalize();
-                tmp = lastlast.dot( dir );
-                if ( Math.abs(tmp - last.dot( dir )) < gjkAccuracy ){
-
-                    distance = -tmp;
-                    break;
-                }
-
-                // if we are still getting closer then only keep
-                // the points in the simplex that are closest to
-                // the origin (we already know that last is closer
-                // than the previous two)
-                // the norm is the same as distance(origin, a)
-                // use norm squared to avoid the sqrt operations
-                if (lastlast.normSq() < v1.clone(simplex[ 0 ].pt).normSq()) {
-                    
-                    simplex.shift();
-
-                } else {
-                    
-                    simplex.splice(1, 1);
-                }
-
-                dir = getNextSearchDir( v1.clone(simplex[ 1 ].pt), v2.clone(simplex[ 0 ].pt), dir );
-                // continue...
-
-            // if it's a triangle
-            } else {
-
-                // we need to trim the useless point...
-
-                ab = ab || scratch.vector();
-                ac = ac || scratch.vector();
-
-                // get the edges AB and AC
-                ab.clone( lastlast ).vsub( last );
-                ac.clone( simplex[ 0 ].pt ).vsub( last );
-
-                // here normally people think about this as getting outward facing
-                // normals and checking dot products. Since we're in 2D
-                // we can be clever...
-                sign = ab.cross( ac ) > 0;
-                
-                if ( sign ^ (last.cross( ab ) > 0) ){
-
-                    // ok... so there's an XOR here... don't freak out
-                    // remember last = A = -AO
-                    // if AB cross AC and AO cross AB have the same sign
-                    // then the origin is along the outward facing normal of AB
-                    // so if AB cross AC and A cross AB have _different_ (XOR) signs
-                    // then this is also the case... so we proceed...
-
-                    // point C is dead to us now...
-                    simplex.shift();
-
-                    // if we haven't deduced that we've enclosed the origin
-                    // then we know which way to look...
-                    // morph the ab vector into its outward facing normal
-                    ab.perp( sign );
-                    
-                    // swap
-                    dir.swap( ab );
-                    
-                    // continue...
-
-                    // if we get to this if, then it means we can continue to look along
-                    // the other outward normal direction (ACperp)
-                    // if we don't see the origin... then we must have it enclosed
-                } else if ( sign ^ (ac.cross( last ) > 0) ){
-                    // then the origin is along the outward facing normal 
-                    // of AC; (ACperp)
-
-                    // point B is dead to us now...
-                    simplex.splice(1, 1);
-
-                    ac.perp( !sign );
-                    
-                    // swap
-                    dir.swap( ab );
-                    
-                    // continue...
-
-                } else {
-
-                    // we have enclosed the origin!
-                    overlap = true;
-                    // fewf... take a break
-                    break;
-                }
-            }
-
-            // woah nelly... that's a lot of iterations.
-            // Stop it!
-            if (iterations > gjkMaxIterations){
-                scratch.done();
-                return {
-                    simplex: simplex,
-                    iterations: iterations,
-                    distance: 0,
-                    maxIterationsReached: true
-                };
-            }
-        }
-
-        // free workspace
-        scratch.done();
-
-        tmp = {
-            overlap: overlap,
-            simplex: simplex,
-            iterations: iterations
-        };
-
-        if ( distance !== false ){
-
-            tmp.distance = distance;
-            tmp.closest = getClosestPoints( simplex );
-        }
-
-        return tmp;
-    };
-
-    Physics.gjk = gjk;
-
-})();
-
-// ---
-// inside: src/math/transform.js
-
-(function(){
-    
-    /**
-     * Vector Transformations class for rotating and translating vectors
-     * @class Transform
-     */
-
-    /**
-     * Transform Constructor / Factory
-     * @param {Physics.vector|Physics.transform} vect (optional) vector to use for translation or a transform to copy
-     * @param {Number} angle (optional) Angle (radians) to use for rotation
-     * @param {Vectorish} origin (optional) Origin of the rotation
-     */
-    var Transform = function Transform( vect, angle, origin ) {
-
-        if (!(this instanceof Transform)){
-            return new Transform( vect, angle );
-        }
-
-        this.v = Physics.vector();
-        this.o = Physics.vector( origin ); // origin of rotation
-        
-        if ( vect instanceof Transform ){
-
-            this.clone( vect );
-        }
-
-        if (vect){
-            this.setTranslation( vect );
-        }
-
-        this.setRotation( angle || 0 );
-    };
-
-    /**
-     * Set the translation portion of the transform
-     * @param {Physics.vector} vect
-     */
-    Transform.prototype.setTranslation = function( vect ){
-
-        this.v.clone( vect );
-        return this;
-    };
-
-    /**
-     * Set the rotation portion of the transform
-     * @param {Number} angle
-     * @param {Vectorish} origin (optional) Origin of the rotation
-     */
-    Transform.prototype.setRotation = function( angle, origin ){
-
-        this.cosA = Math.cos( angle );
-        this.sinA = Math.sin( angle );
-
-        if ( origin ){
-            this.o.clone( origin );
-        }
-
-        return this;
-    };
-
-    /**
-     * Clone another transform. Or clone self into new transform.
-     * @param  {Physics.transform} t (optional) the transform to clone
-     * @return {Physics.transform|this}
-     */
-    Transform.prototype.clone = function( t ){
-
-        if ( t ){
-
-            this.setTranslation( t.v );
-            this.cosA = t.cosA;
-            this.sinA = t.sinA;
-            this.o.clone( t.o );
-
-            return this;
-        }
-
-        return new Transform( this );
-    };
-
-    Physics.transform = Transform;
-
-})();
-
-// ---
-// inside: src/math/vector.js
-
-(function(window){
-
-    // http://jsperf.com/vector-storage-test/2
-
-    // cached math functions
-    // TODO: might be faster not to do this???
-    var sqrt = Math.sqrt
-        ,min = Math.min
-        ,max = Math.max
-        ,acos = Math.acos
-        ,atan2 = Math.atan2
-        ,TWOPI = Math.PI * 2
-        ,typedArrays = !!window.Float64Array
-        ;
-
-    /**
-     * Vector Constructor / Factory
-     * @param {Number|Physics.vector} x (optional) Either the x coord. Or a vector to copy.
-     * @param {Number} y (optional) The y coord.
-     */
-    var Vector = function Vector(x, y) {
-
-        // enforce instantiation
-        if ( !(this instanceof Vector) ){
-
-            return new Vector( x, y );
-        }
-
-        // arrays to store values
-        // x = _[0]
-        // y = _[1]
-        // norm = _[3]
-        // normsq = _[4]
-        
-
-        if (typedArrays){
-            this._ = new Float64Array(5);
-        } else {
-            this._ = [];
-        }
-
-        if (x && (x.x !== undefined || x._ && x._.length)){
-
-            this.clone( x );
-
-        } else {
-
-            this.recalc = true; //whether or not recalculate norms
-            this.set( x || 0.0, y || 0.0 );
-        }
-    };
-
-    /**
-     * Methods
-     */
-
-    /**
-     * Sets the components of this Vector.
-     */
-    Vector.prototype.set = function(x, y) {
-
-        this.recalc = true;
-
-        this._[0] = x || 0.0;
-        this._[1] = y || 0.0;
-        return this;
-    };
-
-    /**
-     * Get component
-     * @param  {Integer} n The nth component. x is 1, y is 2, ...
-     * @return {Integer} component value
-     */
-    Vector.prototype.get = function( n ){
-
-        return this._[ n ];
-    };
-
-    /**
-     * Add Vector to this
-     */
-    Vector.prototype.vadd = function(v) {
-
-        this.recalc = true;
-
-        this._[0] += v._[0];
-        this._[1] += v._[1];
-        return this;
-    };
-
-    /**
-     * Subtract Vector from this
-     */
-    Vector.prototype.vsub = function(v) {
-
-        this.recalc = true;
-
-        this._[0] -= v._[0];
-        this._[1] -= v._[1];
-        return this;
-    };
-
-    /**
-     * Add scalars to Vector's components
-     */
-    Vector.prototype.add = function(x, y){
-        
-        this.recalc = true;
-
-        this._[0] += x;
-        this._[1] += y === undefined? x : y;
-        return this;
-    };
-
-    /**
-     * Subtract scalars to Vector's components
-     */
-    Vector.prototype.sub = function(x, y){
-        
-        this.recalc = true;
-
-        this._[0] -= x;
-        this._[1] -= y === undefined? x : y;
-        return this;
-    };
-
-    /* 
-     * Multiply by a scalar
-     */
-    Vector.prototype.mult = function(m) {
-        
-        if ( !this.recalc ){
-
-            this._[4] *= m * m;
-            this._[3] *= m;
-        }
-
-        this._[0] *= m;
-        this._[1] *= m;
-        return this;
-    };
-
-    /* 
-     * Get the dot product
-     */
-    Vector.prototype.dot = function(v) {
-
-        return (this._[0] * v._[0]) + (this._[1] * v._[1]);
-    };
-
-    /** 
-     * Get the cross product (in a left handed coordinate system)
-     */
-    Vector.prototype.cross = function(v) {
-
-        return ( - this._[0] * v._[1]) + (this._[1] * v._[0]);
-    };
-
-    /**
-     * Scalar projection of this along v
-     */
-    Vector.prototype.proj = function(v){
-
-        return this.dot( v ) / v.norm();
-    };
-
-
-    /**
-     * Vector project this along v
-     */
-    Vector.prototype.vproj = function(v){
-
-        var m = this.dot( v ) / v.normSq();
-        return this.clone( v ).mult( m );
-    };
-
-    /**
-     * Angle between this and vector. Or this and x axis.
-     * @param  {Vector} v (optional) other vector
-     * @return {Number} Angle in radians
-     */
-    Vector.prototype.angle = function(v){
-
-        var ang;
-
-        if ( this.equals( Vector.zero ) ){
-            
-            if ( v ){
-                return v.angle();
-            } else {
-                return NaN;
-            }
-
-        } else {
-
-            if ( v && !v.equals( Vector.zero ) ){
-                ang = atan2( this._[1] * v._[0] - this._[0] * v._[1], this._[0] * v._[0] + this._[1] * v._[1]);
-            } else {
-                ang = atan2( this._[ 1 ], this._[ 0 ] );    
-            }
-        }
-        
-        while (ang > Math.PI){
-            ang -= TWOPI;
-        }
-
-        while (ang < -Math.PI){
-            ang += TWOPI;
-        }
-
-        return ang;
-    };
-
-    /**
-     * Angle created between three points; left -> this -> right.
-     * @param  {Vector} v (optional) other vector
-     * @return {Number} Angle in radians
-     */
-    Vector.prototype.angle2 = function( left, right ){
-
-        var x1 = left._[0] - this._[0]
-            ,y1 = left._[1] - this._[1]
-            ,x2 = right._[0] - this._[0]
-            ,y2 = right._[1] - this._[1]
-            ,ang = atan2( y1 * x2 - x1 * y2, x1 * x2 + y1 * y2)
-            ;
-
-        while (ang > Math.PI){
-            ang -= TWOPI;
-        }
-
-        while (ang < -Math.PI){
-            ang += TWOPI;
-        }
-
-        return ang;
-    };
-
-    /**
-     * Get the norm (length)
-     */
-    Vector.prototype.norm = function() {
-
-        if (this.recalc){
-            this.recalc = false;
-            this._[4] = (this._[0] * this._[0] + this._[1] * this._[1]);
-            this._[3] = sqrt( this._[4] );
-        }
-        
-        return this._[3];
-    };
-
-    /**
-     * Get the norm squared
-     */
-    Vector.prototype.normSq = function() {
-
-        if (this.recalc){
-            this.recalc = false;
-            this._[4] = (this._[0] * this._[0] + this._[1] * this._[1]);
-            this._[3] = sqrt( this._[4] );
-        }
-
-        return this._[4];
-    };
-
-    /** 
-     * Get distance to other Vector
-     */
-    Vector.prototype.dist = function(v) {
-      
-        var dx, dy;
-        return sqrt(
-            (dx = (v._[0] - this._[0])) * dx + 
-            (dy = (v._[1] - this._[1])) * dy
-        );
-    };
-
-    /**
-     * Get distance squared to other Vector
-     */
-    Vector.prototype.distSq = function(v) {
-
-        var dx, dy;
-        return (
-            (dx = (v._[0] - this._[0])) * dx + 
-            (dy = (v._[1] - this._[1])) * dy
-        );
-    };
-
-    /**
-     * Change vector into a vector perpendicular
-     * @param {Boolean} neg Set to true if want to go in the negative direction
-     * @return {this}
-     */
-    Vector.prototype.perp = function( neg ) {
-
-        var tmp = this._[0]
-            ;
-
-        if ( neg ){
-
-            // x <-> y
-            // negate x
-            this._[0] = -this._[1];
-            this._[1] = tmp;
-            
-        } else {
-
-            // x <-> y
-            // negate y
-            this._[0] = this._[1];
-            this._[1] = -tmp;
-        }
-
-        return this;
-    };
-
-    /**
-     * Normalises this Vector, making it a unit Vector
-     */
-    Vector.prototype.normalize = function() {
-
-        var m = this.norm();
-
-        // means it's a zero Vector
-        if ( m === 0 ){
-            return this;
-        }
-
-        this._[0] /= m;
-        this._[1] /= m;
-
-        this._[3] = 1.0;
-        this._[4] = 1.0;
-
-        return this;
-    };
-
-    /**
-     * Apply a transform to this vector
-     * @param  {Physics.transform} t The transform
-     */
-    Vector.prototype.transform = function( t ){
-
-        return this.set(
-            (this._[ 0 ] - t.o._[ 0 ]) * t.cosA - (this._[ 1 ] - t.o._[ 1 ]) * t.sinA + t.v._[ 0 ] + t.o._[ 0 ], 
-            (this._[ 0 ] - t.o._[ 0 ]) * t.sinA + (this._[ 1 ] - t.o._[ 1 ]) * t.cosA + t.v._[ 1 ] + t.o._[ 1 ]
-        );
-    };
-
-    /**
-     * Apply an inverse transform to this vector
-     * @param  {Physics.transform} t The transform
-     */
-    Vector.prototype.transformInv = function( t ){
-
-        return this.set(
-            (this._[ 0 ] - t.o._[ 0 ]) * t.cosA + (this._[ 1 ] - t.o._[ 1 ]) * t.sinA - t.v._[ 0 ] + t.o._[ 0 ], 
-            -(this._[ 0 ] - t.o._[ 0 ]) * t.sinA + (this._[ 1 ] - t.o._[ 1 ]) * t.cosA - t.v._[ 1 ] + t.o._[ 1 ]
-        );
-    };
-
-    /**
-     * Apply the rotation portion of transform to this vector
-     * @param  {Physics.transform} t The transform
-     */
-    Vector.prototype.rotate = function( t ){
-
-        return this.set(
-            (this._[ 0 ] - t.o._[ 0 ]) * t.cosA - (this._[ 1 ] - t.o._[ 1 ]) * t.sinA + t.o._[ 0 ], 
-            (this._[ 0 ] - t.o._[ 0 ]) * t.sinA + (this._[ 1 ] - t.o._[ 1 ]) * t.cosA + t.o._[ 1 ]
-        );
-    };
-
-    /**
-     * Apply an inverse rotation portion of transform to this vector
-     * @param  {Physics.transform} t The transform
-     */
-    Vector.prototype.rotateInv = function( t ){
-
-        return this.set(
-            (this._[ 0 ] - t.o._[ 0 ]) * t.cosA + (this._[ 1 ] - t.o._[ 1 ]) * t.sinA + t.o._[ 0 ], 
-            -(this._[ 0 ] - t.o._[ 0 ]) * t.sinA + (this._[ 1 ] - t.o._[ 1 ]) * t.cosA + t.o._[ 1 ]
-        );
-    };
-
-    /**
-     * Apply the translation portion of transform to this vector
-     * @param  {Physics.transform} t The transform
-     */
-    Vector.prototype.translate = function( t ){
-
-        return this.vadd( t.v );
-    };
-
-    /**
-     * Apply an inverse translation portion of transform to this vector
-     * @param  {Physics.transform} t The transform
-     */
-    Vector.prototype.translateInv = function( t ){
-
-        return this.vsub( t.v );
-    };
-
-
-    /**
-     * Returns clone of current Vector
-     * Or clones provided Vector to this one
-     */
-    Vector.prototype.clone = function(v) {
-        
-        // http://jsperf.com/vector-storage-test
-
-        if (v){
-
-            if (!v._){
-
-                return this.set( v.x, v.y );
-            }
-            
-            this.recalc = v.recalc;
-
-            if (!v.recalc){
-                this._[3] = v._[3];
-                this._[4] = v._[4];
-            }
-
-            this._[0] = v._[0];
-            this._[1] = v._[1];
-
-            return this;
-        }
-
-        return new Vector( this );
-    };
-
-    /**
-     * Swap values with other vector
-     * @param  {Vector} v
-     * @return {this}
-     */
-    Vector.prototype.swap = function(v){
-
-        var _ = this._;
-        this._ = v._;
-        v._ = _;
-
-        _ = this.recalc;
-        this.recalc = v.recalc;
-        v.recalc = _;
-        return this;
-    };
-
-    /**
-     * Create a litteral object
-     */
-    Vector.prototype.values = function(){
-
-        return {
-            x: this._[0],
-            y: this._[1]
-        };
-    };
-
-
-    /**
-     * Zero the Vector
-     */
-    Vector.prototype.zero = function() {
-
-        this._[3] = 0.0;
-        this._[4] = 0.0;
-
-        this._[0] = 0.0;
-        this._[1] = 0.0;
-        return this;
-    };
-
-    /**
-     * Make this a Vector in the opposite direction
-     */
-    Vector.prototype.negate = function( component ){
-
-        if (component !== undefined){
-
-            this._[ component ] = -this._[ component ];
-            return this;
-        }
-
-        this._[0] = -this._[0];
-        this._[1] = -this._[1];
-        return this;
-    };
-
-    /**
-     * Constrain Vector components to minima and maxima
-     */
-    Vector.prototype.clamp = function(minV, maxV){
-
-        minV = minV.values ? minV.values() : minV;
-        maxV = maxV.values ? maxV.values() : maxV;
-
-        this._[0] = min(max(this._[0], minV.x), maxV.x);
-        this._[1] = min(max(this._[1], minV.y), maxV.y);
-        this.recalc = true;
-        return this;
-    };
-
-    /**
-     * Render string
-     */
-    Vector.prototype.toString = function(){
-
-        return '('+this._[0] + ', ' + this._[1]+')';
-    };
-
-
-    /**
-     * Determine if equal
-     * @param  {Vector} v
-     * @return {boolean}
-     */
-    Vector.prototype.equals = function(v){
-
-        return this._[0] === v._[0] &&
-            this._[1] === v._[1] &&
-            this._[2] === v._[2];
-    };
-
-
-    /**
-     * Static functions
-     */
-
-    /** 
-     * Return sum of two Vectors
-     */
-    Vector.vadd = function(v1, v2) {
-
-        return new Vector( v1._[0] + v2._[0], v1._[1] + v2._[1] );
-    };
-
-    /** 
-     * Subtract v2 from v1
-     */
-    Vector.vsub = function(v1, v2) {
-
-        return new Vector( v1._[0] - v2._[0], v1._[1] - v2._[1] );
-    };
-
-    /**
-     * Multiply v1 by a scalar m
-     */
-    Vector.mult = function(m, v1){
-
-        return new Vector( v1._[0]*m, v1._[1]*m );
-    };
-
-    /** 
-     * Project v1 onto v2
-     */
-    Vector.vproj = function(v1, v2) {
-
-        return Vector.mult( v1.dot(v2) / v2.normSq(), v2 );
-    };
-
-    /**
-     * Axis vectors for general reference
-     * @type {Array}
-     */
-    Vector.axis = [
-        new Vector(1.0, 0.0),
-        new Vector(0.0, 1.0)
-    ];
-
-    /**
-     * Zero vector for reference
-     */
-    Vector.zero = new Vector(0, 0);
-
-    // assign
-    Physics.vector = Vector;
-
-}(this)); // end Vector class
-
-
-// ---
-// inside: src/core/behavior.js
-
-(function(){
-
-    // Service
-    Physics.behavior = Physics.behaviour = Decorator('behavior', {
-
-        /**
-         * Priority for behavior pubsub event
-         * @type {Number}
-         */
-        priority: 0,
-
-        /**
-         * Initialization
-         * @param  {Object} options Config options passed by initializer
-         * @return {void}
-         */
-        init: function(){
-            
-            this.options = {};
-        },
-
-        /**
-         * Connect to world. Automatically called when added to world by the setWorld method
-         * @param  {Object} world The world to connect to
-         * @return {void}
-         */
-        connect: function( world ){
-
-            if (this.behave){
-                world.subscribe('integrate:positions', this.behave, this, this.priority);
-            }
-        },
-
-        /**
-         * Disconnect from world
-         * @param  {Object} world The world to disconnect from
-         * @return {void}
-         */
-        disconnect: function( world ){
-
-            if (this.behave){
-                world.unsubscribe('integrate:positions', this.behave);
-            }
-        },
-
-        /**
-         * Default method run on every world integration
-         * @abstract
-         * @param  {Object} data Object containing event data, including: data.bodies = Array of world bodies to act on, data.dt = the timestep size
-         * @return {void}
-         */
-        behave: null
-    });
-
-}());
-
-// ---
-// inside: src/core/body.js
-
-(function(){
-
-    var defaults = {
-
-        // is the body fixed and imovable?
-        fixed: false,
-        // body mass
-        mass: 1.0,
-        // body restitution. How "bouncy" is it?
-        restitution: 1.0,
-        // what is its coefficient of friction with another surface with COF = 1?
-        cof: 0.8,
-        // what is the view object (mixed) that should be used when rendering?
-        view: null
-    };
-
-    Physics.body = Decorator('body', {
-
-        /**
-         * Initialization
-         * @param  {Object} options Config options passed by initializer
-         * @return {void}
-         */
-        init: function( options ){
-
-            var vector = Physics.vector;
-
-            this.options = Physics.util.extend({}, defaults, options);
-
-            // properties
-            this.fixed = this.options.fixed;
-            this.hidden = this.options.hidden;
-            this.mass = this.options.mass;
-            this.restitution = this.options.restitution;
-            this.cof = this.options.cof;
-
-            // placeholder for renderers
-            this.view = this.options.view;
-
-            // physical properties
-            this.state = {
-                pos: vector( options.x, options.y ),
-                vel: vector( options.vx, options.vy ),
-                acc: vector(),
-                angular: {
-                    pos: options.angle || 0.0,
-                    vel: options.angularVelocity || 0.0,
-                    acc: 0.0
+            R[E] = R[F] = R[O] = R[T] = R[W] = R[L] = R[z] = R[H] = !0;
+            var D = {
+                    leading: !1,
+                    maxWait: 0,
+                    trailing: !1
                 },
-                old: {
-                    pos: vector(),
-                    vel: vector(),
-                    acc: vector(),
-                    angular: {
-                        pos: 0.0,
-                        vel: 0.0,
-                        acc: 0.0
+                N = {
+                    configurable: !1,
+                    enumerable: !1,
+                    value: null,
+                    writable: !1
+                },
+                V = {
+                    a: "",
+                    b: null,
+                    c: "",
+                    d: "",
+                    e: "",
+                    v: null,
+                    g: "",
+                    h: null,
+                    support: null,
+                    i: "",
+                    j: !1
+                },
+                $ = {
+                    boolean: !1,
+                    function: !0,
+                    object: !0,
+                    number: !1,
+                    string: !1,
+                    undefined: !1
+                },
+                J = $[typeof e] && e || this,
+                K = [],
+                U = Error.prototype,
+                Y = Object.prototype,
+                G = String.prototype,
+                Q = RegExp("^" + (Y.valueOf + "").replace(/[.*+?^${}()|[\]\\]/g, "\\$&").replace(/valueOf|for [^\]]+/g, ".+?") + "$"),
+                X = Math.floor,
+                Z = Function.prototype.toString,
+                tt = Q.test(tt = Object.getPrototypeOf) && tt,
+                et = Y.hasOwnProperty,
+                nt = Q.test(nt = Date.now) && nt || function() {
+                    return +new Date
+                },
+                it = K.push,
+                ot = Y.propertyIsEnumerable,
+                rt = Y.toString,
+                st = K.unshift,
+                at = function() {
+                    try {
+                        var t = {},
+                            e = Q.test(e = Object.defineProperty) && e,
+                            n = e(t, t, t) && e
+                    } catch (t) {}
+                    return n
+                }(),
+                ct = Q.test(ct = rt.bind) && ct,
+                lt = Q.test(lt = Object.create) && lt,
+                ut = Q.test(ut = Array.isArray) && ut,
+                ht = Q.test(ht = Object.keys) && ht,
+                dt = Math.max,
+                ft = Math.min,
+                pt = Math.random,
+                vt = K.slice;
+            e = Q.test(J.attachEvent);
+            var gt = ct && !/\n|true/.test(ct + e),
+                bt = {};
+            bt[F] = Array, bt[O] = Boolean, bt[T] = Date, bt["[object Function]"] = Function, bt[L] = Object, bt[W] = Number, bt[z] = RegExp, bt[H] = String;
+            var yt = {};
+            yt[F] = yt[T] = yt[W] = {
+                    constructor: !0,
+                    toLocaleString: !0,
+                    toString: !0,
+                    valueOf: !0
+                }, yt[O] = yt[H] = {
+                    constructor: !0,
+                    toString: !0,
+                    valueOf: !0
+                }, yt[q] = yt["[object Function]"] = yt[z] = {
+                    constructor: !0,
+                    toString: !0
+                }, yt[L] = {
+                    constructor: !0
+                },
+                function() {
+                    for (var t = M.length; t--;) {
+                        var e, n = M[t];
+                        for (e in yt) et.call(yt, e) && !et.call(yt[e], n) && (yt[e][n] = !1)
                     }
+                }();
+            var mt = r.support = {};
+            ! function() {
+                var t = function() {
+                        this.x = 1
+                    },
+                    e = {
+                        0: 1,
+                        length: 1
+                    },
+                    n = [];
+                for (var i in t.prototype = {
+                        valueOf: 1,
+                        y: 1
+                    }, new t) n.push(i);
+                for (i in arguments);
+                mt.argsClass = rt.call(arguments) == E, mt.argsObject = arguments.constructor == Object && !(arguments instanceof Array), mt.enumErrorProps = ot.call(U, "message") || ot.call(U, "name"), mt.enumPrototypes = ot.call(t, "prototype"), mt.fastBind = ct && !gt, mt.funcDecomp = !Q.test(J.WinRTError) && S.test(function() {
+                    return this
+                }), mt.funcNames = "string" == typeof Function.name, mt.nonEnumArgs = 0 != i, mt.nonEnumShadows = !/valueOf/.test(n), mt.ownLast = "x" != n[0], mt.spliceObjects = (K.splice.call(e, 0, 1), !e[0]), mt.unindexedChars = "xx" != "x" [0] + Object("x")[0];
+                try {
+                    mt.nodeClass = !(rt.call(document) == L && !({
+                        toString: 0
+                    } + ""))
+                } catch (t) {
+                    mt.nodeClass = !0
                 }
-            };
-
-            if (this.mass === 0){
-                throw "Error: Bodies must have non-zero mass";
-            }
-
-            // shape
-            this.geometry = Physics.geometry('point');
-        },
-
-        /**
-         * Accelerate the body by adding supplied vector to its current acceleration
-         * @param  {Vector} acc The acceleration vector
-         * @return {this}
-         */
-        accelerate: function( acc ){
-
-            this.state.acc.vadd( acc );
-            return this;
-        },
-
-        /**
-         * Apply a force at center of mass, or at point "p" relative to the center of mass
-         * @param  {Vector} force The force vector
-         * @param  {Vector} p     (optional) The point vector from the COM at which to apply the force
-         * @return {this}
-         */
-        applyForce: function( force, p ){
-
-            var scratch = Physics.scratchpad()
-                ,r = scratch.vector()
-                ,state
-                ;
-                
-            // if no point at which to apply the force... apply at center of mass
-            if ( !p ){
-                
-                this.accelerate( r.clone( force ).mult( 1/this.mass ) );
-
-            } else if ( this.moi ) {
-
-                // apply torques
-                state = this.state;
-                r.clone( p );
-                // r cross F
-                this.state.angular.acc -= r.cross( force ) / this.moi;
-                // projection of force towards center of mass
-                this.applyForce( force );
-
-            }
-
-            scratch.done();
-
-            return this;
-        },
-
-        /**
-         * Get the Axis aligned bounding box for the body in its current position and rotation
-         * @return {Object} The aabb values
-         */
-        aabb: function(){
-
-            var scratch = Physics.scratchpad()
-                ,trans = scratch.transform()
-                ,angle = this.state.angular.pos
-                ,aabb = scratch.aabb().set( this.geometry.aabb( angle ) )
-                ;
-
-            trans.setRotation( 0 ).setTranslation(this.state.pos);
-            aabb.transform( trans );
-
-            aabb = aabb.get();
-            scratch.done();
-            return aabb;
-        },
-
-        /**
-         * Recalculate properties. Call when body physical properties are changed.
-         * @abstract
-         * @return {this}
-         */
-        recalc: function(){
-            // override to recalculate properties
-        }
-    });
-
-}());
-
-// ---
-// inside: src/core/geometry.js
-
-(function(){
-
-    Physics.geometry = Decorator('geometry', {
-
-        /**
-         * Initialization
-         * @param  {Object} options Config options passed by initializer
-         * @return {void}
-         */
-        init: function( options ){
-
-            this._aabb = new Physics.aabb();
-        },
-        
-        /**
-         * Get axis-aligned bounding box for this object (rotated by angle if specified).
-         * @param  {Number} angle (optional) The angle to rotate the geometry.
-         * @return {Object}       Bounding box values
-         */
-        aabb: function( angle ){
-
-            return this._aabb.get();
-        },
-
-        /**
-         * Get farthest point on the hull of this geometry
-         * along the direction vector "dir"
-         * returns local coordinates
-         * replaces result if provided
-         * @param {Vector} dir Direction to look
-         * @param {Vector} result (optional) A vector to write result to
-         * @return {Vector} The farthest hull point in local coordinates
-         */
-        getFarthestHullPoint: function( dir, result ){
-
-            result = result || Physics.vector();
-
-            // not implemented.
-            return result.set( 0, 0 );
-        },
-
-        /**
-         * Get farthest point on the core of this geometry
-         * along the direction vector "dir"
-         * returns local coordinates
-         * replaces result if provided
-         * @param {Vector} dir Direction to look
-         * @param {Vector} result (optional) A vector to write result to
-         * @return {Vector} The farthest core point in local coordinates
-         */
-        getFarthestCorePoint: function( dir, result, margin ){
-
-            result = result || Physics.vector();
-
-            // not implemented.
-            return result.set( 0, 0 );
-        }
-    });
-
-}());
-
-// ---
-// inside: src/core/geometry-helpers.js
-
-/**
- * Geometry helper functions
- */
-
-/**
- * Determine if polygon hull is convex
- * @param  {Array}  hull Array of vertices (Vectorish)
- * @return {Boolean}
- */
-Physics.geometry.isPolygonConvex = function( hull ){
-
-    var scratch = Physics.scratchpad()
-        ,prev = scratch.vector()
-        ,next = scratch.vector()
-        ,tmp = scratch.vector()
-        ,ret = true
-        ,sign = false
-        ,l = hull.length
-        ;
-
-    if ( !hull || !l ){
-        return false;
-    }
-
-    if ( l < 3 ){
-        // it must be a point or a line...
-        // which are convex
-        scratch.done();
-        return ret;
-    }
-
-    prev.clone( hull[ 0 ] ).vsub( tmp.clone( hull[ l - 1 ] ) );
-
-    // loop over the edges of the hull and construct vectors of the current
-    // edge and retain the last edge
-    // add two to the length to do a full cycle
-    for ( var i = 1; i <= l; ++i ){
-        
-        next.clone( hull[ i % l ] ).vsub( tmp.clone( hull[ (i - 1) % l ] ) );
-
-        if ( sign === false ){
-
-            // first check the sign of the first cross product
-            sign = prev.cross( next );
-
-        } else if ( (sign > 0) ^ (prev.cross( next ) > 0) ){
-        
-            // if the cross products are different signs it's not convex
-            ret = false;
-            break;
-        }
-
-        // remember the last edge
-        next.swap( prev );
-    }
-
-    scratch.done();
-    return ret;
-};
-
-/**
- * Gets the moment of inertia of a convex polygon
- * @see: http://en.wikipedia.org/wiki/List_of_moments_of_inertia
- * assumptions: 
- *  * mass is unitary
- *  * axis of rotation is the origin
- * @param  {Array} hull Array of vertices (vectorish)
- * @return {Number} The polygon MOI
- */
-Physics.geometry.getPolygonMOI = function( hull ){
-
-    var scratch = Physics.scratchpad()
-        ,prev = scratch.vector()
-        ,next = scratch.vector()
-        ,num = 0
-        ,denom = 0
-        ,tmp
-        ,l = hull.length
-        ;
-
-    if ( l < 2 ){
-        // it must be a point
-        // moi = 0
-        scratch.done();
-        return 0;
-    }
-
-    if ( l === 2 ){
-        // it's a line
-        // get length squared
-        tmp = next.clone( hull[ 1 ] ).distSq( prev.clone( hull[ 0 ] ) );
-        scratch.done();
-        return tmp / 12;
-    }
-
-    prev.clone( hull[ 0 ] );
-
-    for ( var i = 1; i < l; ++i ){
-        
-        next.clone( hull[ i ] );
-
-        tmp = Math.abs( next.cross( prev ) );
-        num += tmp * ( next.normSq() + next.dot( prev ) + prev.normSq() );
-        denom += tmp;
-
-        prev.swap( next );
-    }
-
-    scratch.done();
-    return num / ( 6 * denom );
-};
-
-/**
- * Check if point is inside polygon hull
- * @param  {Vectorish}  pt
- * @param  {Array}  hull Array of vertices (Vectorish)
- * @return {Boolean}
- */
-Physics.geometry.isPointInPolygon = function( pt, hull ){
-
-    var scratch = Physics.scratchpad()
-        ,point = scratch.vector().clone( pt )
-        ,prev = scratch.vector()
-        ,next = scratch.vector()
-        ,ang = 0
-        ,l = hull.length
-        ;
-
-    if ( l < 2 ){
-        // it's a point...
-        ang = point.equals( prev.clone( hull[ 0 ] ));
-        scratch.done();
-        return ang;
-    }
-
-    if ( l === 2 ){
-        // it's a line
-        ang = point.angle( prev.clone( hull[ 0 ] ));
-        ang += point.angle( prev.clone( hull[ 1 ] ));
-        scratch.done();
-        return ( Math.abs(ang) === Math.PI );
-    }
-
-    prev.clone( hull[ 0 ] ).vsub( point );
-
-    // calculate the sum of angles between vector pairs
-    // from point to vertices
-    for ( var i = 1; i <= l; ++i ){
-        
-        next.clone( hull[ i % l ] ).vsub( point );
-        ang += next.angle( prev );
-        prev.swap( next );
-    }
-
-    scratch.done();
-    return ( Math.abs(ang) > 0 );
-};
-
-/**
- * Get the signed area of the polygon
- * @param  {Array} hull Array of vertices
- * @return {Number} Area (positive for clockwise ordering)
- */
-Physics.geometry.getPolygonArea = function getPolygonArea( hull ){
-
-    var scratch = Physics.scratchpad()
-        ,prev = scratch.vector()
-        ,next = scratch.vector()
-        ,ret = 0
-        ,l = hull.length
-        ;
-
-    if ( l < 3 ){
-        // it must be a point or a line
-        // area = 0
-        scratch.done();
-        return 0;
-    }
-
-    prev.clone( hull[ l - 1 ] );
-
-    for ( var i = 0; i < l; ++i ){
-        
-        next.clone( hull[ i ] );
-
-        ret += prev.cross( next );
-
-        prev.swap( next );
-    }
-
-    scratch.done();
-    return ret / 2;
-};
-
-/**
- * Get the coordinates of the centroid
- * @param  {Array} hull Polygon hull definition
- * @return {Vector} centroid
- */
-Physics.geometry.getPolygonCentroid = function getPolygonCentroid( hull ){
-
-    var scratch = Physics.scratchpad()
-        ,prev = scratch.vector()
-        ,next = scratch.vector()
-        ,ret = Physics.vector()
-        ,tmp
-        ,l = hull.length
-        ;
-
-    if ( l < 2 ){
-        // it must be a point
-        scratch.done();
-        return Physics.vector( hull[0] );
-    }
-
-    if ( l === 2 ){
-        // it's a line
-        // get the midpoint
-        scratch.done();
-        return Physics.vector((hull[ 1 ].x + hull[ 0 ].x)/2, (hull[ 1 ].y + hull[ 0 ].y)/2 );
-    }
-
-    prev.clone( hull[ l - 1 ] );
-
-    for ( var i = 0; i < l; ++i ){
-        
-        next.clone( hull[ i ] );
-
-        tmp = prev.cross( next );
-        prev.vadd( next ).mult( tmp );
-        ret.vadd( prev );
-
-        prev.swap( next );
-    }
-
-    tmp = 1 / (6 * Physics.geometry.getPolygonArea( hull ));
-
-    scratch.done();
-    return ret.mult( tmp );
-};
-
-/**
- * Get the closest point on a discrete line to specified point.
- * @param  {Vectorish} pt The point
- * @param  {Vectorish} linePt1 The first endpoint of the line
- * @param  {Vectorish} linePt2 The second endpoint of the line
- * @return {Vector} The closest point
- */
-Physics.geometry.nearestPointOnLine = function nearestPointOnLine( pt, linePt1, linePt2 ){
-
-    var scratch = Physics.scratchpad()
-        ,p = scratch.vector().clone( pt )
-        ,A = scratch.vector().clone( linePt1 ).vsub( p )
-        ,L = scratch.vector().clone( linePt2 ).vsub( p ).vsub( A )
-        ,lambdaB
-        ,lambdaA
-        ;
-
-    if ( L.equals(Physics.vector.zero) ){
-        // oh.. it's a zero vector. So A and B are both the closest.
-        // just use one of them
-        scratch.done();
-        return Physics.vector( linePt1 );
-    }
-
-    lambdaB = - L.dot( A ) / L.normSq();
-    lambdaA = 1 - lambdaB;
-
-    if ( lambdaA <= 0 ){
-        // woops.. that means the closest simplex point
-        // isn't on the line it's point B itself
-        scratch.done();
-        return Physics.vector( linePt2 );
-    } else if ( lambdaB <= 0 ){
-        // vice versa
-        scratch.done();
-        return Physics.vector( linePt1 );
-    }
-
-    // guess we'd better do the math now...
-    p = Physics.vector( linePt2 ).mult( lambdaB ).vadd( A.clone( linePt1 ).mult( lambdaA ) );
-    scratch.done();
-    return p;
-};
-
-
-
-// ---
-// inside: src/core/integrator.js
-
-/**
- * Base integrator definition
- */
-(function(){
-
-    var defaults = {
-
-        // drag applied during integration
-        // 0 means vacuum
-        // 0.9 means molasses
-        drag: 0
-    };
-
-    Physics.integrator = Decorator('integrator', {
-
-        /**
-         * Initialization
-         * @param  {Object} options Config options passed by initializer
-         * @return {void}
-         */
-        init: function( options ){
-            
-            this.options = Physics.util.extend({}, defaults, options);
-        },
-
-        /**
-         * Integrate bodies by timestep
-         * @param  {Array} bodies List of bodies to integrate
-         * @param  {Number} dt     Timestep size
-         * @return {this}
-         */
-        integrate: function( bodies, dt ){
-
-            var world = this._world;
-
-            this.integrateVelocities( bodies, dt );
-            
-            if ( world ){
-                world.publish({
-                    topic: 'integrate:velocities',
-                    bodies: bodies,
-                    dt: dt
-                });
-            }
-
-            this.integratePositions( bodies, dt );
-            
-            if ( world ){
-                world.publish({
-                    topic: 'integrate:positions',
-                    bodies: bodies,
-                    dt: dt
-                });
-            }
-
-            return this;
-        },
-
-        /**
-         * Just integrate the velocities
-         * @abstract
-         * @param  {Array} bodies List of bodies to integrate
-         * @param  {Number} dt     Timestep size
-         */
-        integrateVelocities: function( bodies, dt ){
-
-            throw 'The integrator.integrateVelocities() method must be overriden';
-        },
-
-        /**
-         * Just integrate the positions
-         * @abstract
-         * @param  {Array} bodies List of bodies to integrate
-         * @param  {Number} dt     Timestep size
-         */
-        integratePositions: function( bodies, dt ){
-
-            throw 'The integrator.integratePositions() method must be overriden';
-        }
-    });
-
-}());
-
-// ---
-// inside: src/core/renderer.js
-
-/**
- * Base renderer class definition
- */
-(function(){
-
-    var defaults = {
-        // draw meta data (fps, steps, etc)
-        meta: false,
-        // refresh rate of meta info
-        metaRefresh: 200,
-
-        // width of viewport
-        width: 600,
-        // height of viewport
-        height: 600
-    };
-
-    // Service
-    Physics.renderer = Decorator('renderer', {
-
-        /**
-         * Initialization
-         * @param  {Object} options Options passed to the initializer
-         * @return {void}
-         */
-        init: function( options ){
-
-            var el = typeof options.el === 'string' ? document.getElementById(options.el) : options.el
-                ;
-
-            this.options = Physics.util.extend({}, defaults, options);
-
-            this.el = el ? el : document.body;
-
-            this.drawMeta = Physics.util.throttle( Physics.util.bind(this.drawMeta, this), this.options.metaRefresh );
-        },
-
-        /**
-         * Render the world bodies and meta. Called by world.render()
-         * @param  {Array} bodies Array of bodies in the world (reference!)
-         * @param  {Object} meta  meta object
-         * @return {this}
-         */
-        render: function( bodies, meta ){
-
-            var body
-                ,view
-                ,pos
-                ;
-
-            if (this.beforeRender){
-
-                this.beforeRender();
-            }
-
-            this._world.publish({
-                topic: 'beforeRender',
-                renderer: this,
-                bodies: bodies,
-                stats: meta
+            }(1), lt || (h = function(t) {
+                if (v(t)) {
+                    i.prototype = t;
+                    var e = new i;
+                    i.prototype = null
+                }
+                return e || {}
             });
-
-            if (this.options.meta){
-                this.drawMeta( meta );
-            }
-
-            for ( var i = 0, l = bodies.length; i < l; ++i ){
-                
-                body = bodies[ i ];
-                view = body.view || ( body.view = this.createView(body.geometry) );
-
-                if ( !body.hidden ){
-                    this.drawBody( body, view );
-                }
-            }
-
-            return this;
-        },
-
-        /**
-         * Create a view for the specified geometry
-         * @abstract
-         * @param  {Object} geometry The geometry
-         * @return {Mixed} Whatever the renderer needs to render the body.
-         */
-        createView: function( geometry ){
-
-            // example:
-            // var el = document.createElement('div');
-            // el.style.height = geometry.height + 'px';
-            // el.style.width = geometry.width + 'px';
-            // return el;
-            throw 'You must overried the renderer.createView() method.';
-        },
-
-        /**
-         * Draw the meta data.
-         * @abstract
-         * @param  {Object} meta The meta data
-         */
-        drawMeta: function( meta ){
-            
-            // example:
-            // this.els.fps.innerHTML = meta.fps.toFixed(2);
-            // this.els.steps.innerHTML = meta.steps;
-            throw 'You must overried the renderer.drawMeta() method.';
-        },
-
-        /**
-         * Draw specified body using specified view
-         * @abstract
-         * @param  {Object} body The body
-         * @param  {Object} view The view
-         */
-        drawBody: function( body, view ){
-
-            // example (pseudocode):
-            // view.angle = body.state.angle
-            // view.position = body.state.position
-            throw 'You must overried the renderer.drawBody() method.';
-        }
-
-        
-    });
-
-}());
-
-// ---
-// inside: src/core/world.js
-
-/**
- * The world class
- */
-(function(){
-
-    // bodies, behaviors, integrators, and renderers all need the setWorld method
-    var setWorld = function( world ){
-
-        if ( this.disconnect && this._world ){
-            this.disconnect( this._world );
-        }
-
-        this._world = world;
-
-        if ( this.connect && world ){
-            this.connect( world );
-        }
-    };
-
-    Physics.util.each('body,behavior,integrator,renderer'.split(','), function( key, val ){
-
-        // add a setWorld method to all of these types
-        Physics[ key ].mixin('setWorld', setWorld);
-    });
-
-    var defaults = {
-
-        // default timestep
-        timestep: 1000.0 / 160,
-        // maximum number of iterations per step
-        maxIPF: 16,
-        webworker: false, // NOT YET IMPLEMENTED
-
-        // default integrator
-        integrator: 'verlet'
-    };
-
-    // begin world definitions
-    /**
-     * World Constructor
-     * @param {Object}   cfg (optional) Configuration options
-     * @param {Function} fn  (optional) Callback function called with "this" world
-     */
-    var World = function World( cfg, fn ){
-
-        // allow creation of world without "new"
-        if (!(this instanceof World)){
-            return new World( cfg, fn );
-        }
-        
-        this.init( cfg, fn );
-    };
-
-    // extend pubsub
-    World.prototype = Physics.util.extend({}, Physics.util.pubsub.prototype, {
-
-        /**
-         * Initialization
-         * @param {Object}   cfg (optional) Configuration options
-         * @param {Function} fn  (optional) Callback function called with "this" world
-         * @return {void}
-         */
-        init: function( cfg, fn ){
-
-            if ( Physics.util.isFunction( cfg ) ){
-                fn = cfg;
-                cfg = {};
-            }
-
-            this._stats = {
-               // statistics (fps, etc)
-               fps: 0,
-               ipf: 0 
-            }; 
-            this._bodies = [];
-            this._behaviors = [];
-            this._integrator = null;
-            this._renderer = null;
-            this._paused = false;
-            this._opts = {};
-            this.initPubsub( this );
-
-            // set options
-            this.options( cfg || {} );
-
-            // apply the callback function
-            if ( Physics.util.isFunction( fn ) ){
-
-                fn.call(this, this, Physics);
-            }
-        },
-
-        /**
-         * Get or set options
-         * @param  {Object} cfg Config options to set
-         * @return {Object|this}     Options or this
-         */
-        options: function( cfg ){
-
-            if (cfg){
-
-                // extend the defaults
-                Physics.util.extend(this._opts, defaults, cfg);
-                // set timestep
-                this.timeStep(this._opts.timestep);
-                // add integrator
-                this.add(Physics.integrator(this._opts.integrator));
-
-                return this;
-            }
-
-            return Physics.util.clone(this._opts);
-        },
-
-        /**
-         * Multipurpose add method. Add one or many bodies, behaviors, integrators, renderers...
-         * @param {Object|Array} arg The thing to add, or array of things to add
-         * @return {this}
-         */
-        add: function( arg ){
-
-            var i = 0
-                ,len = arg && arg.length || 0
-                ,thing = len ? arg[ 0 ] : arg
-                ,notify
-                ;
-
-            if ( !thing ){
-                return this;
-            }
-
-            // we'll either cycle through an array
-            // or just run this on the arg itself
-            do {
-                switch (thing.type){
-
-                    case 'behavior':
-                        this.addBehavior(thing);
-                    break; // end behavior
-
-                    case 'integrator':
-                        this.integrator(thing);
-                    break; // end integrator
-
-                    case 'renderer':
-                        this.renderer(thing);
-                    break; // end renderer
-
-                    case 'body':
-                        this.addBody(thing);
-                    break; // end body
-                    
-                    default:
-                        throw 'Error: failed to add item of unknown type "'+ thing.type +'" to world';
-                    // end default
-                }
-
-                // notify
-                notify = {
-                    topic: 'add:' + thing.type
+            var _t = at ? function(t, e) {
+                N.value = e, at(t, "__bindData__", N)
+            } : i;
+            mt.argsClass || (f = function(t) {
+                return t && "object" == typeof t && "number" == typeof t.length && et.call(t, "callee") || !1
+            });
+            var xt = ut || function(t) {
+                    return t && "object" == typeof t && "number" == typeof t.length && rt.call(t) == F || !1
+                },
+                wt = u({
+                    a: "z",
+                    e: "[]",
+                    i: "if(!(B[typeof z]))return E",
+                    g: "E.push(n)"
+                }),
+                At = ht ? function(t) {
+                    return v(t) ? mt.enumPrototypes && "function" == typeof t || mt.nonEnumArgs && t.length && f(t) ? wt(t) : ht(t) : []
+                } : wt;
+            e = {
+                a: "z,H,l",
+                i: "var a=arguments,b=0,c=typeof l=='number'?2:a.length;while(++b<c){t=a[b];if(t&&B[typeof t]){",
+                v: At,
+                g: "if(typeof E[n]=='undefined')E[n]=t[n]",
+                c: "}}"
+            };
+            var Ct = {
+                    i: "if(!B[typeof t])return E;" + (ut = {
+                        a: "g,e,K",
+                        i: "e=e&&typeof K=='undefined'?e:d(e,K,3)",
+                        b: "typeof u=='number'",
+                        v: At,
+                        g: "if(e(t[n],n,g)===false)return E"
+                    }).i,
+                    b: !1
+                },
+                Bt = u(ut),
+                kt = u(e, {
+                    i: e.i.replace(";", ";if(c>3&&typeof a[c-2]=='function'){var e=d(a[--c-1],a[c--],2)}else if(c>2&&typeof a[c-1]=='function'){e=a[--c]}"),
+                    g: "E[n]=e?e(E[n],t[n]):t[n]"
+                }),
+                Pt = u(ut, Ct, {
+                    j: !1
+                }),
+                jt = u(ut, Ct);
+            p(/x/) && (p = function(t) {
+                return "function" == typeof t && "[object Function]" == rt.call(t)
+            }), ut = tt ? function(t) {
+                if (!t || rt.call(t) != L || !mt.argsClass && f(t)) return !1;
+                var e = t.valueOf,
+                    n = "function" == typeof e && (n = tt(e)) && tt(n);
+                return n ? t == n || tt(t) == n : d(t)
+            } : d, r.assign = kt, r.bind = y, r.createCallback = function(t, e, n) {
+                var i = typeof t;
+                if (null == t || "function" == i) return a(t, e, n);
+                if ("object" != i) return function(e) {
+                    return e[t]
                 };
-
-                notify[ thing.type ] = thing;
-
-                this.publish( notify );
-
-            } while ( ++i < len && (thing = arg[ i ]) );
-
-            return this;
-        },
-
-        /**
-         * Multipurpose remove method. Remove one or many bodies, behaviors, integrators, renderers...
-         * @param {Object|Array} arg The thing to remove, or array of things to remove
-         * @return {this}
-         */
-        remove: function( arg ){
-
-            var i = 0
-                ,len = arg && arg.length || 0
-                ,thing = len ? arg[ 0 ] : arg
-                ,notify
-                ;
-
-            if ( !thing ){
-                return this;
-            }
-
-            // we'll either cycle through an array
-            // or just run this on the arg itself
-            do {
-                switch (thing.type){
-
-                    case 'behavior':
-                        this.removeBehavior(thing);
-                    break; // end behavior
-
-                    case 'integrator':
-                        if (thing === this._integrator){
-                            this.integrator( null );
-                        }
-                    break; // end integrator
-
-                    case 'renderer':
-                        if (thing === this._renderer){
-                            this.renderer( null );
-                        }
-                    break; // end renderer
-
-                    case 'body':
-                        this.removeBody(thing);
-                    break; // end body
-                    
-                    default:
-                        throw 'Error: failed to remove item of unknown type "'+ thing.type +'" from world';
-                    // end default
+                var o = At(t),
+                    r = o[0],
+                    s = t[r];
+                return 1 != o.length || s != s || v(s) ? function(e) {
+                    for (var n = o.length, i = !1; n-- && (i = c(e[o[n]], t[o[n]], null, !0)););
+                    return i
+                } : function(t) {
+                    return t = t[r], s === t && (0 !== s || 1 / s == 1 / t)
                 }
-
-                // notify
-                notify = {
-                    topic: 'add:' + thing.type
-                };
-
-                notify[ thing.type ] = thing;
-
-                this.publish( notify );
-
-            } while ( ++i < len && (thing = arg[ i ]) );
-
-            return this;
+            }, r.debounce = m, r.forEach = b, r.forIn = Pt, r.forOwn = jt, r.keys = At, r.shuffle = function(t) {
+                var e = -1,
+                    n = t ? t.length : 0,
+                    i = Array("number" == typeof n ? n : 0);
+                return b(t, function(t) {
+                    var n = x(++e);
+                    i[e] = i[n], i[n] = t
+                }), i
+            }, r.throttle = function(t, e, n) {
+                var i = !0,
+                    o = !0;
+                if (!p(t)) throw new TypeError;
+                return !1 === n ? i = !1 : v(n) && (i = "leading" in n ? n.leading : i, o = "trailing" in n ? n.trailing : o), D.leading = i, D.maxWait = e, D.trailing = o, m(t, e, D)
+            }, r.each = b, r.extend = kt, r.clone = function(t, e, n, i) {
+                return "boolean" != typeof e && null != e && (i = n, n = e, e = !1), s(t, e, "function" == typeof n && a(n, i, 1))
+            }, r.identity = _, r.isArguments = f, r.isArray = xt, r.isFunction = p, r.isObject = v, r.isPlainObject = ut, r.isString = g, r.random = x, r.sortedIndex = function(t, e, n, i) {
+                var o = 0,
+                    s = t ? t.length : o;
+                for (e = (n = n ? r.createCallback(n, i, 1) : _)(e); o < s;) n(t[i = o + s >>> 1]) < e ? o = i + 1 : s = i;
+                return o
+            }, r.uniqueId = function(t) {
+                return (null == t ? "" : t) + "" + ++C
+            }, r.VERSION = "2.2.1", r.extend(t.util, r)
+        }(this);
+    var e, n, i, o, r, s, a, c, l, u, h, d, f = t.util.decorator = function(e, n) {
+        var i = {},
+            o = {},
+            r = function(e, n) {
+                return t.util.isFunction(n) ? n : e
+            },
+            s = Object.getPrototypeOf;
+        "function" != typeof s && (s = "object" == typeof "test".__proto__ ? function(t) {
+            return t.__proto__
+        } : function(t) {
+            return t.constructor.prototype
+        });
+        var a = Object.create;
+        "function" != typeof a && (a = function(t) {
+            function e() {}
+            return e.prototype = t, new e
+        });
+        var c = function(n, i) {
+            "object" != typeof n ? "type" !== n && t.util.isFunction(i) && (o[n] = i) : (o = t.util.extend(o, n, r)).type = e
+        };
+        c(n);
+        var l = function(n, c, l, u) {
+            var h, d = o;
+            if ("string" != typeof c) u = l, l = c;
+            else {
+                if (!(d = i[c])) throw 'Error: "' + c + '" ' + e + " not defined";
+                d = d.prototype
+            }
+            if ("function" == typeof l)(h = i[n]) ? h.prototype = t.util.extend(h.prototype, l(s(h.prototype)), r) : ((h = i[n] = function(t) {
+                this.init && this.init(t)
+            }).prototype = a(d), h.prototype = t.util.extend(h.prototype, l(d), r)), h.prototype.type = e, h.prototype.name = n;
+            else if (u = l || {}, !(h = i[n])) throw 'Error: "' + n + '" ' + e + " not defined";
+            if (u) return new h(u)
+        };
+        return l.mixin = c, l
+    };
+    return n = (e = this).Physics, t.noConflict = function() {
+            return e.Physics === t && (e.Physics = n), t
+        }, (i = function t(e) {
+            if (!(this instanceof t)) return new t(e);
+            this.initPubsub(e)
+        }).prototype = {
+            initPubsub: function(t) {
+                this._topics = {}, this._defaultScope = t || this
+            },
+            subscribe: function(e, n, i, o) {
+                var r, s = this._topics[e] || (this._topics[e] = []),
+                    a = n;
+                if (t.util.isObject(e)) {
+                    for (var c in e) this.subscribe(c, e[c], n, i);
+                    return this
+                }
+                return t.util.isObject(i) ? (n = t.util.bind(n, i))._bindfn_ = a : o || (o = i), n._priority_ = o, r = t.util.sortedIndex(s, n, "_priority_"), s.splice(r, 0, n), this
+            },
+            unsubscribe: function(t, e) {
+                if (!0 === t) return this._topics = {}, this;
+                var n, i = this._topics[t];
+                if (!i) return this;
+                if (!0 === e) return this._topics[t] = [], this;
+                for (var o = 0, r = i.length; o < r; o++)
+                    if ((n = i[o])._bindfn_ === e || n === e) {
+                        i.splice(o, 1);
+                        break
+                    } return this
+            },
+            publish: function(t, e) {
+                "object" != typeof t && (t = {
+                    topic: t
+                });
+                var n = t.topic,
+                    i = this._topics[n],
+                    o = i && i.length;
+                if (!n) throw "Error: No topic specified in call to world.publish()";
+                if (!o) return this;
+                for (t.scope = t.scope || this._defaultScope; o--;) t.handler = i[o], t.handler(t);
+                return this
+            }
+        }, t.util.pubsub = i,
+        function(t) {
+            for (var e = 0, n = ["ms", "moz", "webkit", "o"], i = 0; i < n.length && !t.requestAnimationFrame; ++i) t.requestAnimationFrame = t[n[i] + "RequestAnimationFrame"], t.cancelAnimationFrame = t[n[i] + "CancelAnimationFrame"] || t[n[i] + "CancelRequestAnimationFrame"];
+            t.requestAnimationFrame || (t.requestAnimationFrame = function(n, i) {
+                var o = (new Date).getTime(),
+                    r = Math.max(0, 16 - (o - e)),
+                    s = t.setTimeout(function() {
+                        n(o + r)
+                    }, r);
+                return e = o + r, s
+            }), t.cancelAnimationFrame || (t.cancelAnimationFrame = function(t) {
+                clearTimeout(t)
+            })
+        }(this), o = "Error: Scratchpad used after .done() called. (Could it be unintentionally scoped?)", r = "Error: Scratchpad usage space out of bounds. (Did you forget to call .done()?)", s = [], a = 0, (c = function() {
+            if (this.objIndex = 0, this.arrayIndex = 0, this.vectorIndex = 0, this.aabbIndex = 0, this.transformIndex = 0, this.objectStack = [], this.arrayStack = [], this.vectorStack = [], this.aabbStack = [], this.transformStack = [], ++a >= 100) throw "Error: Too many scratchpads created. (Did you forget to call .done()?)"
+        }).prototype = {
+            done: function() {
+                this._active = !1, this.objIndex = this.arrayIndex = this.vectorIndex = this.aabbIndex = this.transformIndex = 0, s.push(this)
+            },
+            object: function() {
+                var t = this.objectStack;
+                if (!this._active) throw o;
+                if (this.objIndex >= 10) throw r;
+                return t[this.objIndex++] || t[t.push({}) - 1]
+            },
+            array: function() {
+                var t = this.arrayStack;
+                if (!this._active) throw o;
+                if (this.arrIndex >= 10) throw r;
+                return t[this.arrIndex++] || t[t.push([]) - 1]
+            },
+            vector: function() {
+                var e = this.vectorStack;
+                if (!this._active) throw o;
+                if (this.vectorIndex >= 10) throw r;
+                return e[this.vectorIndex++] || e[e.push(t.vector()) - 1]
+            },
+            aabb: function() {
+                var e = this.aabbStack;
+                if (!this._active) throw o;
+                if (this.aabbIndex >= 10) throw r;
+                return e[this.aabbIndex++] || e[e.push(t.aabb()) - 1]
+            },
+            transform: function() {
+                var e = this.transformStack;
+                if (!this._active) throw o;
+                if (this.transformIndex >= 10) throw r;
+                return e[this.transformIndex++] || e[e.push(t.transform()) - 1]
+            }
+        }, t.scratchpad = function() {
+            var t = s.pop() || new c;
+            return t._active = !0, t
         },
+        function(e) {
+            var n = 0,
+                i = !1,
+                o = [];
 
-        /**
-         * Get or Set the integrator
-         * @param {Object} integrator Integrator instance to use
-         * @return {this|Object} This or Integrator
-         */
-        integrator: function( integrator ){
-
-            if ( integrator === undefined ){
-                return this._integrator;
+            function r(t) {
+                var s = o;
+                if (i) {
+                    e.requestAnimationFrame(r);
+                    for (var a = 0, c = s.length; a < c; ++a) s[a](t, t - n);
+                    n = t
+                }
             }
-
-            if ( this._integrator ){
-
-                this._integrator.setWorld( null );
-            }
-
-            if ( integrator ){
-                this._integrator = integrator;
-                this._integrator.setWorld( this );
-            }
-
-            return this;
-        },
-
-        /**
-         * Get or Set renderer
-         * @param  {Object} renderer The renderer to set
-         * @return {this|Object}          This or Renderer
-         */
-        renderer: function( renderer ){
-
-            if (renderer === undefined){
-                return this._renderer;
-            }
-
-            if ( this._renderer ){
-
-                this._renderer.setWorld( null );
-            }
-
-            if (renderer){
-                this._renderer = renderer;
-                this._renderer.setWorld( this );
-            }
-
-            return this;
-        },
-
-        /**
-         * Get or Set timestep
-         * @param  {Number} dt The timestep size
-         * @return {this|Number}    This or the timestep
-         */
-        timeStep: function( dt ){
-
-            if ( dt ){
-
-                this._dt = dt;
-                // calculate the maximum jump in time over which to do iterations
-                this._maxJump = dt * this._opts.maxIPF;
-
-                return this;
-            }
-
-            return this._dt;
-        },
-
-        /**
-         * Add behavior to the world
-         * @param {Object} behavior The behavior to add
-         * @return {this} 
-         */
-        addBehavior: function( behavior ){
-
-            behavior.setWorld( this );
-            this._behaviors.push( behavior );
-            return this;
-        },
-
-        /**
-         * Get copied list of behaviors in the world
-         * @return {Array} Array of behaviors
-         */
-        getBehaviors: function(){
-
-            // return the copied array
-            return [].concat(this._behaviors);
-        },
-
-        /**
-         * Remove behavior from the world
-         * @param {Object} behavior The behavior to remove
-         * @return {this} 
-         */
-        removeBehavior: function( behavior ){
-
-            var behaviors = this._behaviors
-                ,notify
-                ;
-
-            if (behavior){
-                
-                for ( var i = 0, l = behaviors.length; i < l; ++i ){
-                    
-                    if (behavior === behaviors[ i ]){
-                        
-                        behaviors.splice( i, 1 );
-                        break;
+            t.util.ticker = {
+                start: function() {
+                    return n = (new Date).getTime(), i = !0, r(), this
+                },
+                stop: function() {
+                    return i = !1, this
+                },
+                subscribe: function(t) {
+                    if ("function" == typeof t) {
+                        for (var e = 0, n = o.length; e < n; ++e)
+                            if (t === o[e]) return this;
+                        o.push(t)
                     }
+                    return this
+                },
+                unsubscribe: function(t) {
+                    for (var e = o, n = 0, i = e.length; n < i; ++n)
+                        if (e[n] === t) return e.splice(n, 1), this;
+                    return this
+                },
+                isActive: function() {
+                    return !!i
                 }
-
-                // notify
-                notify = {
-                    topic: 'remove:behavior'
-                };
-
-                notify.behavior = behavior;
-
-                this.publish( notify );
             }
-
-            return this;
-        },
-
-        /**
-         * Add body to the world
-         * @param {Object} body The body to add
-         * @return {this} 
-         */
-        addBody: function( body ){
-
-            body.setWorld( this );
-            this._bodies.push( body );
-            return this;
-        },
-
-        /**
-         * Get copied list of bodies in the world
-         * @return {Array} Array of bodies
-         */
-        getBodies: function(){
-
-            // return the copied array
-            return [].concat(this._bodies);
-        },
-
-        /**
-         * Remove body from the world
-         * @param {Object} body The body to remove
-         * @return {this} 
-         */
-        removeBody: function( body ){
-
-            var bodies = this._bodies
-                ,notify
-                ;
-
-            if (body){
-                
-                for ( var i = 0, l = bodies.length; i < l; ++i ){
-                    
-                    if (body === bodies[ i ]){
-                        
-                        bodies.splice( i, 1 );
-                        break;
+        }(this), (l = function e(n, i, o, r) {
+            if (!(this instanceof e)) return new e(n, i, o, r);
+            this._pos = t.vector(), this.set(n, i, o, r)
+        }).prototype.set = function(e, n, i, o) {
+            return t.util.isObject(e) ? (this._pos.clone(e.pos), this._hw = e.halfWidth, this._hh = e.halfHeight, this) : (this._pos.set(.5 * (i + e), .5 * (o + n)), this._hw = .5 * (i - e), this._hh = .5 * (o - n), this)
+        }, l.prototype.get = function() {
+            var t = this.halfWidth(),
+                e = this.halfHeight();
+            return {
+                pos: this._pos.values(),
+                halfWidth: t,
+                halfHeight: e,
+                x: t,
+                y: e
+            }
+        }, l.prototype.halfWidth = function() {
+            return this._hw
+        }, l.prototype.halfHeight = function() {
+            return this._hh
+        }, l.prototype.contains = function(t) {
+            var e = void 0 !== t.x ? t.x : t.get(0),
+                n = void 0 !== t.y ? t.y : t.get(1);
+            return e > this._pos.get(0) - this._hw && e < this._pos.get(0) + this._hw && n > this._pos.get(1) - this._hh && n < this._pos.get(1) + this._hh
+        }, l.prototype.transform = function(e) {
+            var n = this._hw,
+                i = this._hh,
+                o = t.scratchpad(),
+                r = o.vector().set(n, i),
+                s = o.vector().set(n, -i);
+            return this._pos.translate(e), r.rotate(e), s.rotate(e), this._hw = Math.max(Math.abs(r.get(0)), Math.abs(s.get(0))), this._hh = Math.max(Math.abs(r.get(1)), Math.abs(s.get(1))), o.done(), this
+        }, l.contains = function(t, e) {
+            var n = void 0 !== e.x ? e.x : e.get(0),
+                i = void 0 !== e.y ? e.y : e.get(1);
+            return n > (t = t.get ? t.get() : t).pos.x - t.halfWidth && n < t.pos.x + t.halfWidth && i > t.pos.y - t.halfHeight && i < t.pos.y + t.halfHeight
+        }, t.aabb = l, u = function(t, e, n) {
+            var i = e.normSq() - e.dot(t),
+                o = e.dot(t) - t.normSq();
+            return i < 0 ? n.clone(e).negate() : o > 0 ? n.clone(t).negate() : (n.clone(e).vsub(t), n.perp(t.cross(n) < 0))
+        }, t.gjk = function(e, n, i, o) {
+            var r, s, a, c, l = !1,
+                h = !1,
+                d = !1,
+                f = [],
+                p = 1,
+                v = t.scratchpad(),
+                g = v.vector().clone(n || t.vector.axis[0]),
+                b = v.vector(),
+                y = v.vector(),
+                m = v.vector(),
+                _ = v.vector(),
+                x = 0;
+            for (c = e(g), p = f.push(c), b.clone(c.pt), g.negate(); ++x;) {
+                if (b.swap(y), c = e(g), p = f.push(c), b.clone(c.pt), o && o(f), b.equals(t.vector.zero)) {
+                    l = !0;
+                    break
+                }
+                if (!h && b.dot(g) <= 0) {
+                    if (i) break;
+                    h = !0
+                }
+                if (2 === p) g = u(b, y, g);
+                else if (h) {
+                    if (g.normalize(), c = y.dot(g), Math.abs(c - b.dot(g)) < 1e-4) {
+                        d = -c;
+                        break
                     }
+                    y.normSq() < m.clone(f[0].pt).normSq() ? f.shift() : f.splice(1, 1), g = u(m.clone(f[1].pt), _.clone(f[0].pt), g)
+                } else if (r = r || v.vector(), s = s || v.vector(), r.clone(y).vsub(b), s.clone(f[0].pt).vsub(b), (a = r.cross(s) > 0) ^ b.cross(r) > 0) f.shift(), r.perp(a), g.swap(r);
+                else {
+                    if (!(a ^ s.cross(b) > 0)) {
+                        l = !0;
+                        break
+                    }
+                    f.splice(1, 1), s.perp(!a), g.swap(r)
                 }
-
-                // notify
-                notify = {
-                    topic: 'remove:body'
-                };
-
-                notify.body = body;
-
-                this.publish( notify );
+                if (x > 100) return v.done(), {
+                    simplex: f,
+                    iterations: x,
+                    distance: 0,
+                    maxIterationsReached: !0
+                }
             }
-
-            return this;
-        },
-
-        /**
-         * Find first matching body based on query parameters
-         * @param  {Object} query The query
-         * @return {Object|false}       Body or false if no match
-         */
-        findOne: function( query ){
-
-            // @TODO: refactor to use a new Query object helper
-            // @TODO: make $and the default. not $or.
-            var list = {
-                    check: function( arg ){
-                        var fn = this;
-                        while ( fn = fn.next ){
-
-                            if ( fn( arg ) ){
-                                return true;
+            return v.done(), c = {
+                overlap: l,
+                simplex: f,
+                iterations: x
+            }, !1 !== d && (c.distance = d, c.closest = function(e) {
+                var n, i, o = e.length,
+                    r = e[o - 2],
+                    s = e[o - 3],
+                    a = t.scratchpad(),
+                    c = a.vector().clone(r.pt),
+                    l = a.vector().clone(s.pt).vsub(c);
+                if (l.equals(t.vector.zero)) return a.done(), {
+                    a: r.a,
+                    b: r.b
+                };
+                if ((i = 1 - (n = -l.dot(c) / l.normSq())) <= 0) return a.done(), {
+                    a: s.a,
+                    b: s.b
+                };
+                if (n <= 0) return a.done(), {
+                    a: r.a,
+                    b: r.b
+                };
+                var u = {
+                    a: c.clone(r.a).mult(i).vadd(l.clone(s.a).mult(n)).values(),
+                    b: c.clone(r.b).mult(i).vadd(l.clone(s.b).mult(n)).values()
+                };
+                return a.done(), u
+            }(f)), c
+        }, (h = function e(n, i, o) {
+            if (!(this instanceof e)) return new e(n, i);
+            this.v = t.vector(), this.o = t.vector(o), n instanceof e && this.clone(n), n && this.setTranslation(n), this.setRotation(i || 0)
+        }).prototype.setTranslation = function(t) {
+            return this.v.clone(t), this
+        }, h.prototype.setRotation = function(t, e) {
+            return this.cosA = Math.cos(t), this.sinA = Math.sin(t), e && this.o.clone(e), this
+        }, h.prototype.clone = function(t) {
+            return t ? (this.setTranslation(t.v), this.cosA = t.cosA, this.sinA = t.sinA, this.o.clone(t.o), this) : new h(this)
+        }, t.transform = h,
+        function(e) {
+            var n = Math.sqrt,
+                i = Math.min,
+                o = Math.max,
+                r = (Math.acos, Math.atan2),
+                s = 2 * Math.PI,
+                a = !!e.Float64Array,
+                c = function t(e, n) {
+                    if (!(this instanceof t)) return new t(e, n);
+                    this._ = a ? new Float64Array(5) : [], e && (void 0 !== e.x || e._ && e._.length) ? this.clone(e) : (this.recalc = !0, this.set(e || 0, n || 0))
+                };
+            c.prototype.set = function(t, e) {
+                return this.recalc = !0, this._[0] = t || 0, this._[1] = e || 0, this
+            }, c.prototype.get = function(t) {
+                return this._[t]
+            }, c.prototype.vadd = function(t) {
+                return this.recalc = !0, this._[0] += t._[0], this._[1] += t._[1], this
+            }, c.prototype.vsub = function(t) {
+                return this.recalc = !0, this._[0] -= t._[0], this._[1] -= t._[1], this
+            }, c.prototype.add = function(t, e) {
+                return this.recalc = !0, this._[0] += t, this._[1] += void 0 === e ? t : e, this
+            }, c.prototype.sub = function(t, e) {
+                return this.recalc = !0, this._[0] -= t, this._[1] -= void 0 === e ? t : e, this
+            }, c.prototype.mult = function(t) {
+                return this.recalc || (this._[4] *= t * t, this._[3] *= t), this._[0] *= t, this._[1] *= t, this
+            }, c.prototype.dot = function(t) {
+                return this._[0] * t._[0] + this._[1] * t._[1]
+            }, c.prototype.cross = function(t) {
+                return -this._[0] * t._[1] + this._[1] * t._[0]
+            }, c.prototype.proj = function(t) {
+                return this.dot(t) / t.norm()
+            }, c.prototype.vproj = function(t) {
+                var e = this.dot(t) / t.normSq();
+                return this.clone(t).mult(e)
+            }, c.prototype.angle = function(t) {
+                var e;
+                if (this.equals(c.zero)) return t ? t.angle() : NaN;
+                for (e = t && !t.equals(c.zero) ? r(this._[1] * t._[0] - this._[0] * t._[1], this._[0] * t._[0] + this._[1] * t._[1]) : r(this._[1], this._[0]); e > Math.PI;) e -= s;
+                for (; e < -Math.PI;) e += s;
+                return e
+            }, c.prototype.angle2 = function(t, e) {
+                for (var n = t._[0] - this._[0], i = t._[1] - this._[1], o = e._[0] - this._[0], a = e._[1] - this._[1], c = r(i * o - n * a, n * o + i * a); c > Math.PI;) c -= s;
+                for (; c < -Math.PI;) c += s;
+                return c
+            }, c.prototype.norm = function() {
+                return this.recalc && (this.recalc = !1, this._[4] = this._[0] * this._[0] + this._[1] * this._[1], this._[3] = n(this._[4])), this._[3]
+            }, c.prototype.normSq = function() {
+                return this.recalc && (this.recalc = !1, this._[4] = this._[0] * this._[0] + this._[1] * this._[1], this._[3] = n(this._[4])), this._[4]
+            }, c.prototype.dist = function(t) {
+                var e, i;
+                return n((e = t._[0] - this._[0]) * e + (i = t._[1] - this._[1]) * i)
+            }, c.prototype.distSq = function(t) {
+                var e, n;
+                return (e = t._[0] - this._[0]) * e + (n = t._[1] - this._[1]) * n
+            }, c.prototype.perp = function(t) {
+                var e = this._[0];
+                return t ? (this._[0] = -this._[1], this._[1] = e) : (this._[0] = this._[1], this._[1] = -e), this
+            }, c.prototype.normalize = function() {
+                var t = this.norm();
+                return 0 === t ? this : (this._[0] /= t, this._[1] /= t, this._[3] = 1, this._[4] = 1, this)
+            }, c.prototype.transform = function(t) {
+                return this.set((this._[0] - t.o._[0]) * t.cosA - (this._[1] - t.o._[1]) * t.sinA + t.v._[0] + t.o._[0], (this._[0] - t.o._[0]) * t.sinA + (this._[1] - t.o._[1]) * t.cosA + t.v._[1] + t.o._[1])
+            }, c.prototype.transformInv = function(t) {
+                return this.set((this._[0] - t.o._[0]) * t.cosA + (this._[1] - t.o._[1]) * t.sinA - t.v._[0] + t.o._[0], -(this._[0] - t.o._[0]) * t.sinA + (this._[1] - t.o._[1]) * t.cosA - t.v._[1] + t.o._[1])
+            }, c.prototype.rotate = function(t) {
+                return this.set((this._[0] - t.o._[0]) * t.cosA - (this._[1] - t.o._[1]) * t.sinA + t.o._[0], (this._[0] - t.o._[0]) * t.sinA + (this._[1] - t.o._[1]) * t.cosA + t.o._[1])
+            }, c.prototype.rotateInv = function(t) {
+                return this.set((this._[0] - t.o._[0]) * t.cosA + (this._[1] - t.o._[1]) * t.sinA + t.o._[0], -(this._[0] - t.o._[0]) * t.sinA + (this._[1] - t.o._[1]) * t.cosA + t.o._[1])
+            }, c.prototype.translate = function(t) {
+                return this.vadd(t.v)
+            }, c.prototype.translateInv = function(t) {
+                return this.vsub(t.v)
+            }, c.prototype.clone = function(t) {
+                return t ? t._ ? (this.recalc = t.recalc, t.recalc || (this._[3] = t._[3], this._[4] = t._[4]), this._[0] = t._[0], this._[1] = t._[1], this) : this.set(t.x, t.y) : new c(this)
+            }, c.prototype.swap = function(t) {
+                var e = this._;
+                return this._ = t._, t._ = e, e = this.recalc, this.recalc = t.recalc, t.recalc = e, this
+            }, c.prototype.values = function() {
+                return {
+                    x: this._[0],
+                    y: this._[1]
+                }
+            }, c.prototype.zero = function() {
+                return this._[3] = 0, this._[4] = 0, this._[0] = 0, this._[1] = 0, this
+            }, c.prototype.negate = function(t) {
+                return void 0 !== t ? (this._[t] = -this._[t], this) : (this._[0] = -this._[0], this._[1] = -this._[1], this)
+            }, c.prototype.clamp = function(t, e) {
+                return t = t.values ? t.values() : t, e = e.values ? e.values() : e, this._[0] = i(o(this._[0], t.x), e.x), this._[1] = i(o(this._[1], t.y), e.y), this.recalc = !0, this
+            }, c.prototype.toString = function() {
+                return "(" + this._[0] + ", " + this._[1] + ")"
+            }, c.prototype.equals = function(t) {
+                return this._[0] === t._[0] && this._[1] === t._[1] && this._[2] === t._[2]
+            }, c.vadd = function(t, e) {
+                return new c(t._[0] + e._[0], t._[1] + e._[1])
+            }, c.vsub = function(t, e) {
+                return new c(t._[0] - e._[0], t._[1] - e._[1])
+            }, c.mult = function(t, e) {
+                return new c(e._[0] * t, e._[1] * t)
+            }, c.vproj = function(t, e) {
+                return c.mult(t.dot(e) / e.normSq(), e)
+            }, c.axis = [new c(1, 0), new c(0, 1)], c.zero = new c(0, 0), t.vector = c
+        }(this), t.behavior = t.behaviour = f("behavior", {
+            priority: 0,
+            init: function() {
+                this.options = {}
+            },
+            connect: function(t) {
+                this.behave && t.subscribe("integrate:positions", this.behave, this, this.priority)
+            },
+            disconnect: function(t) {
+                this.behave && t.unsubscribe("integrate:positions", this.behave)
+            },
+            behave: null
+        }), d = {
+            fixed: !1,
+            mass: 1,
+            restitution: 1,
+            cof: .8,
+            view: null
+        }, t.body = f("body", {
+            init: function(e) {
+                var n = t.vector;
+                if (this.options = t.util.extend({}, d, e), this.fixed = this.options.fixed, this.hidden = this.options.hidden, this.mass = this.options.mass, this.restitution = this.options.restitution, this.cof = this.options.cof, this.view = this.options.view, this.state = {
+                        pos: n(e.x, e.y),
+                        vel: n(e.vx, e.vy),
+                        acc: n(),
+                        angular: {
+                            pos: e.angle || 0,
+                            vel: e.angularVelocity || 0,
+                            acc: 0
+                        },
+                        old: {
+                            pos: n(),
+                            vel: n(),
+                            acc: n(),
+                            angular: {
+                                pos: 0,
+                                vel: 0,
+                                acc: 0
                             }
                         }
-                        return false;
-                    }
-                }
-                ,test = list
-                ,bodies = this._bodies
-                ;
-
-            // init tests
-            if ( query.$within ){
-                //aabb
+                    }, 0 === this.mass) throw "Error: Bodies must have non-zero mass";
+                this.geometry = t.geometry("point")
+            },
+            accelerate: function(t) {
+                return this.state.acc.vadd(t), this
+            },
+            applyForce: function(e, n) {
+                var i = t.scratchpad(),
+                    o = i.vector();
+                return n ? this.moi && (this.state, o.clone(n), this.state.angular.acc -= o.cross(e) / this.moi, this.applyForce(e)) : this.accelerate(o.clone(e).mult(1 / this.mass)), i.done(), this
+            },
+            aabb: function() {
+                var e = t.scratchpad(),
+                    n = e.transform(),
+                    i = this.state.angular.pos,
+                    o = e.aabb().set(this.geometry.aabb(i));
+                return n.setRotation(0).setTranslation(this.state.pos), o.transform(n), o = o.get(), e.done(), o
+            },
+            recalc: function() {}
+        }), (t.geometry = f("geometry", {
+            init: function(e) {
+                this._aabb = new t.aabb
+            },
+            aabb: function(t) {
+                return this._aabb.get()
+            },
+            getFarthestHullPoint: function(e, n) {
+                return (n = n || t.vector()).set(0, 0)
+            },
+            getFarthestCorePoint: function(e, n, i) {
+                return (n = n || t.vector()).set(0, 0)
             }
-            if ( query.$at ){
-
-                test.next = function( body ){
-
-                    var aabb = body.aabb();
-                    return Physics.aabb.contains( aabb, query.$at );
+        })).isPolygonConvex = function(e) {
+            var n = t.scratchpad(),
+                i = n.vector(),
+                o = n.vector(),
+                r = n.vector(),
+                s = !0,
+                a = !1,
+                c = e.length;
+            if (!e || !c) return !1;
+            if (c < 3) return n.done(), s;
+            i.clone(e[0]).vsub(r.clone(e[c - 1]));
+            for (var l = 1; l <= c; ++l) {
+                if (o.clone(e[l % c]).vsub(r.clone(e[(l - 1) % c])), !1 === a) a = i.cross(o);
+                else if (a > 0 ^ i.cross(o) > 0) {
+                    s = !1;
+                    break
+                }
+                o.swap(i)
+            }
+            return n.done(), s
+        }, t.geometry.getPolygonMOI = function(e) {
+            var n, i = t.scratchpad(),
+                o = i.vector(),
+                r = i.vector(),
+                s = 0,
+                a = 0,
+                c = e.length;
+            if (c < 2) return i.done(), 0;
+            if (2 === c) return n = r.clone(e[1]).distSq(o.clone(e[0])), i.done(), n / 12;
+            o.clone(e[0]);
+            for (var l = 1; l < c; ++l) r.clone(e[l]), s += (n = Math.abs(r.cross(o))) * (r.normSq() + r.dot(o) + o.normSq()), a += n, o.swap(r);
+            return i.done(), s / (6 * a)
+        }, t.geometry.isPointInPolygon = function(e, n) {
+            var i = t.scratchpad(),
+                o = i.vector().clone(e),
+                r = i.vector(),
+                s = i.vector(),
+                a = 0,
+                c = n.length;
+            if (c < 2) return a = o.equals(r.clone(n[0])), i.done(), a;
+            if (2 === c) return a = o.angle(r.clone(n[0])), a += o.angle(r.clone(n[1])), i.done(), Math.abs(a) === Math.PI;
+            r.clone(n[0]).vsub(o);
+            for (var l = 1; l <= c; ++l) s.clone(n[l % c]).vsub(o), a += s.angle(r), r.swap(s);
+            return i.done(), Math.abs(a) > 0
+        }, t.geometry.getPolygonArea = function(e) {
+            var n = t.scratchpad(),
+                i = n.vector(),
+                o = n.vector(),
+                r = 0,
+                s = e.length;
+            if (s < 3) return n.done(), 0;
+            i.clone(e[s - 1]);
+            for (var a = 0; a < s; ++a) o.clone(e[a]), r += i.cross(o), i.swap(o);
+            return n.done(), r / 2
+        }, t.geometry.getPolygonCentroid = function(e) {
+            var n, i = t.scratchpad(),
+                o = i.vector(),
+                r = i.vector(),
+                s = t.vector(),
+                a = e.length;
+            if (a < 2) return i.done(), t.vector(e[0]);
+            if (2 === a) return i.done(), t.vector((e[1].x + e[0].x) / 2, (e[1].y + e[0].y) / 2);
+            o.clone(e[a - 1]);
+            for (var c = 0; c < a; ++c) r.clone(e[c]), n = o.cross(r), o.vadd(r).mult(n), s.vadd(o), o.swap(r);
+            return n = 1 / (6 * t.geometry.getPolygonArea(e)), i.done(), s.mult(n)
+        }, t.geometry.nearestPointOnLine = function(e, n, i) {
+            var o, r, s = t.scratchpad(),
+                a = s.vector().clone(e),
+                c = s.vector().clone(n).vsub(a),
+                l = s.vector().clone(i).vsub(a).vsub(c);
+            return l.equals(t.vector.zero) ? (s.done(), t.vector(n)) : (r = 1 - (o = -l.dot(c) / l.normSq())) <= 0 ? (s.done(), t.vector(i)) : o <= 0 ? (s.done(), t.vector(n)) : (a = t.vector(i).mult(o).vadd(c.clone(n).mult(r)), s.done(), a)
+        },
+        function() {
+            var e = {
+                drag: 0
+            };
+            t.integrator = f("integrator", {
+                init: function(n) {
+                    this.options = t.util.extend({}, e, n)
+                },
+                integrate: function(t, e) {
+                    var n = this._world;
+                    return this.integrateVelocities(t, e), n && n.publish({
+                        topic: "integrate:velocities",
+                        bodies: t,
+                        dt: e
+                    }), this.integratePositions(t, e), n && n.publish({
+                        topic: "integrate:positions",
+                        bodies: t,
+                        dt: e
+                    }), this
+                },
+                integrateVelocities: function(t, e) {
+                    throw "The integrator.integrateVelocities() method must be overriden"
+                },
+                integratePositions: function(t, e) {
+                    throw "The integrator.integratePositions() method must be overriden"
+                }
+            })
+        }(),
+        function() {
+            var e = {
+                meta: !1,
+                metaRefresh: 200,
+                width: 600,
+                height: 600
+            };
+            t.renderer = f("renderer", {
+                init: function(n) {
+                    var i = "string" == typeof n.el ? document.getElementById(n.el) : n.el;
+                    this.options = t.util.extend({}, e, n), this.el = i || document.body, this.drawMeta = t.util.throttle(t.util.bind(this.drawMeta, this), this.options.metaRefresh)
+                },
+                render: function(t, e) {
+                    var n, i;
+                    this.beforeRender && this.beforeRender(), this._world.publish({
+                        topic: "beforeRender",
+                        renderer: this,
+                        bodies: t,
+                        stats: e
+                    }), this.options.meta && this.drawMeta(e);
+                    for (var o = 0, r = t.length; o < r; ++o) i = (n = t[o]).view || (n.view = this.createView(n.geometry)), n.hidden || this.drawBody(n, i);
+                    return this
+                },
+                createView: function(t) {
+                    throw "You must overried the renderer.createView() method."
+                },
+                drawMeta: function(t) {
+                    throw "You must overried the renderer.drawMeta() method."
+                },
+                drawBody: function(t, e) {
+                    throw "You must overried the renderer.drawBody() method."
+                }
+            })
+        }(),
+        function() {
+            var e = function(t) {
+                this.disconnect && this._world && this.disconnect(this._world), this._world = t, this.connect && t && this.connect(t)
+            };
+            t.util.each("body,behavior,integrator,renderer".split(","), function(n, i) {
+                t[n].mixin("setWorld", e)
+            });
+            var n = {
+                    timestep: 6.25,
+                    maxIPF: 16,
+                    webworker: !1,
+                    integrator: "verlet"
+                },
+                i = function t(e, n) {
+                    if (!(this instanceof t)) return new t(e, n);
+                    this.init(e, n)
                 };
-            }
-
-            // do search
-            for ( var i = 0, l = bodies.length; i < l; ++i ){
-                
-                if (list.check( bodies[ i ] )){
-                    return bodies[ i ];
-                }
-            }
-
-            return false;
-        },
-
-        /**
-         * Do a single iteration
-         * @private
-         * @param  {Number} dt The timestep size
-         * @return {void}
-         */
-        iterate: function( dt ){
-
-            this._integrator.integrate( this._bodies, dt );
-        },
-
-        /**
-         * Do a single step
-         * @param  {Number} now Current unix timestamp
-         * @return {this}
-         */
-        step: function( now ){
-            
-            if ( this._paused ){
-
-                this._time = false;
-                return this;
-            }
-
-            var time = this._time || (this._time = now)
-                ,diff = now - time
-                ,stats = this._stats
-                ,dt = this._dt
-                ;
-
-            if ( !diff ){
-                return this;
-            }
-            
-            // limit number of iterations in each step
-            if ( diff > this._maxJump ){
-
-                this._time = now - this._maxJump;
-                diff = this._maxJump;
-            }
-
-            // set some stats
-            stats.fps = 1000/diff;
-            stats.ipf = Math.ceil(diff/this._dt);
-
-            while ( this._time < now ){
-                this._time += dt;
-                this.iterate( dt );
-            }
-
-            this.publish({
-                topic: 'step'
-            });
-            return this;
-        },
-
-        /**
-         * Render current world state using the renderer
-         * @return {this}
-         */
-        render: function(){
-
-            if ( !this._renderer ){
-                throw "No renderer added to world";
-            }
-            
-            this._renderer.render( this._bodies, this._stats );
-            this.publish({
-                topic: 'render',
-                bodies: this._bodies,
-                stats: this._stats,
-                renderer: this._renderer
-            });
-            return this;
-        },
-
-        /**
-         * Pause the world. (step calls do nothing)
-         * @return {this}
-         */
-        pause: function(){
-
-            this._paused = true;
-            this.publish({
-                topic: 'pause'
-            });
-            return this;
-        },
-
-        /**
-         * Unpause the world. (step calls continue as usual)
-         * @return {this}
-         */
-        unpause: function(){
-
-            this._paused = false;
-            this.publish({
-                topic: 'unpause'
-            });
-            return this;
-        },
-
-        /**
-         * Determine if world is paused
-         * @return {Boolean} Is the world paused?
-         */
-        isPaused: function(){
-
-            return !!this._paused;
-        },
-
-        /**
-         * Destroy the world.
-         * (Bwahahahahaha!)
-         * @return {void}
-         */
-        destroy: function(){
-
-            var self = this;
-            self.pause();
-            // remove all listeners
-            self.unsubscribe( true );
-            // remove everything
-            self.remove( self.getBodies() );
-            self.remove( self.getBehaviors() );
-            self.integrator( null );
-            self.renderer( null );
-        }
-
-    });
-
-    Physics.world = World;
-    
-}());
-
-// ---
-// inside: src/integrators/verlet.js
-
-Physics.integrator('verlet', function( parent ){
-
-    // for this integrator we need to know if the object has been integrated before
-    // so let's add a mixin to bodies
-
-    Physics.body.mixin({
-
-        started: function( val ){
-            if ( val !== undefined ){
-                this._started = true;
-            }
-
-            return !!this._started;
-        }
-    });
-
-
-    return {
-
-        /**
-         * Initialization
-         * @param  {Object} options Configuration options
-         * @return {void}
-         */
-        init: function( options ){
-
-            // call parent init
-            parent.init.call(this, options);
-        },
-
-        /**
-         * Velocity integration
-         * @param  {Array} bodies Array of bodies to integrate
-         * @param  {Number} dt     Timestep size
-         * @return {void}
-         */
-        integrateVelocities: function( bodies, dt ){
-
-            // half the timestep
-            var dtdt = dt * dt
-                ,drag = 1 - this.options.drag
-                ,body = null
-                ,state
-                ;
-
-            for ( var i = 0, l = bodies.length; i < l; ++i ){
-
-                body = bodies[ i ];
-                state = body.state;
-
-                // only integrate if the body isn't fixed
-                if ( !body.fixed ){
-
-                    // Inspired from https://github.com/soulwire/Coffee-Physics
-                    // @licence MIT
-                    // 
-                    // v = x - ox
-                    // x = x + (v + a * dt * dt)
-
-                    // use the velocity in vel if the velocity has been changed manually
-                    if (state.vel.equals( state.old.vel ) && body.started()){
-                            
-                        // Get velocity by subtracting old position from curr position
-                        state.vel.clone( state.pos ).vsub( state.old.pos );
-
-                    } else {
-
-                        state.old.pos.clone( state.pos ).vsub( state.vel );
-                        // so we need to scale the value by dt so it 
-                        // complies with other integration methods
-                        state.vel.mult( dt );
+            i.prototype = t.util.extend({}, t.util.pubsub.prototype, {
+                init: function(e, n) {
+                    t.util.isFunction(e) && (n = e, e = {}), this._stats = {
+                        fps: 0,
+                        ipf: 0
+                    }, this._bodies = [], this._behaviors = [], this._integrator = null, this._renderer = null, this._paused = !1, this._opts = {}, this.initPubsub(this), this.options(e || {}), t.util.isFunction(n) && n.call(this, this, t)
+                },
+                options: function(e) {
+                    return e ? (t.util.extend(this._opts, n, e), this.timeStep(this._opts.timestep), this.add(t.integrator(this._opts.integrator)), this) : t.util.clone(this._opts)
+                },
+                add: function(t) {
+                    var e, n = 0,
+                        i = t && t.length || 0,
+                        o = i ? t[0] : t;
+                    if (!o) return this;
+                    do {
+                        switch (o.type) {
+                            case "behavior":
+                                this.addBehavior(o);
+                                break;
+                            case "integrator":
+                                this.integrator(o);
+                                break;
+                            case "renderer":
+                                this.renderer(o);
+                                break;
+                            case "body":
+                                this.addBody(o);
+                                break;
+                            default:
+                                throw 'Error: failed to add item of unknown type "' + o.type + '" to world'
+                        }(e = {
+                            topic: "add:" + o.type
+                        })[o.type] = o, this.publish(e)
+                    } while (++n < i && (o = t[n]));
+                    return this
+                },
+                remove: function(t) {
+                    var e, n = 0,
+                        i = t && t.length || 0,
+                        o = i ? t[0] : t;
+                    if (!o) return this;
+                    do {
+                        switch (o.type) {
+                            case "behavior":
+                                this.removeBehavior(o);
+                                break;
+                            case "integrator":
+                                o === this._integrator && this.integrator(null);
+                                break;
+                            case "renderer":
+                                o === this._renderer && this.renderer(null);
+                                break;
+                            case "body":
+                                this.removeBody(o);
+                                break;
+                            default:
+                                throw 'Error: failed to remove item of unknown type "' + o.type + '" from world'
+                        }(e = {
+                            topic: "add:" + o.type
+                        })[o.type] = o, this.publish(e)
+                    } while (++n < i && (o = t[n]));
+                    return this
+                },
+                integrator: function(t) {
+                    return void 0 === t ? this._integrator : (this._integrator && this._integrator.setWorld(null), t && (this._integrator = t, this._integrator.setWorld(this)), this)
+                },
+                renderer: function(t) {
+                    return void 0 === t ? this._renderer : (this._renderer && this._renderer.setWorld(null), t && (this._renderer = t, this._renderer.setWorld(this)), this)
+                },
+                timeStep: function(t) {
+                    return t ? (this._dt = t, this._maxJump = t * this._opts.maxIPF, this) : this._dt
+                },
+                addBehavior: function(t) {
+                    return t.setWorld(this), this._behaviors.push(t), this
+                },
+                getBehaviors: function() {
+                    return [].concat(this._behaviors)
+                },
+                removeBehavior: function(t) {
+                    var e, n = this._behaviors;
+                    if (t) {
+                        for (var i = 0, o = n.length; i < o; ++i)
+                            if (t === n[i]) {
+                                n.splice(i, 1);
+                                break
+                            }(e = {
+                                topic: "remove:behavior"
+                            }). behavior = t, this.publish(e)
                     }
-
-                    // Apply "air resistance".
-                    if ( drag ){
-
-                        state.vel.mult( drag );
+                    return this
+                },
+                addBody: function(t) {
+                    return t.setWorld(this), this._bodies.push(t), this
+                },
+                getBodies: function() {
+                    return [].concat(this._bodies)
+                },
+                removeBody: function(t) {
+                    var e, n = this._bodies;
+                    if (t) {
+                        for (var i = 0, o = n.length; i < o; ++i)
+                            if (t === n[i]) {
+                                n.splice(i, 1);
+                                break
+                            }(e = {
+                                topic: "remove:body"
+                            }). body = t, this.publish(e)
                     }
-
-                    // Apply acceleration
-                    // v += a * dt * dt
-                    state.vel.vadd( state.acc.mult( dtdt ) );
-
-                    // normalize velocity 
-                    state.vel.mult( 1/dt );
-
-                    // store calculated velocity
-                    state.old.vel.clone( state.vel );
-
-                    // Reset accel
-                    state.acc.zero();
-
-                    //
-                    // Angular components
-                    // 
-
-                    if (state.angular.vel === state.old.angular.vel && body.started()){
-
-                        state.angular.vel = (state.angular.pos - state.old.angular.pos);
-
-                    } else {
-
-                        state.old.angular.pos = state.angular.pos - state.angular.vel;
-                        state.angular.vel *= dt;
+                    return this
+                },
+                findOne: function(e) {
+                    var n = {
+                            check: function(t) {
+                                for (var e = this; e = e.next;)
+                                    if (e(t)) return !0;
+                                return !1
+                            }
+                        },
+                        i = n,
+                        o = this._bodies;
+                    e.$within, e.$at && (i.next = function(n) {
+                        var i = n.aabb();
+                        return t.aabb.contains(i, e.$at)
+                    });
+                    for (var r = 0, s = o.length; r < s; ++r)
+                        if (n.check(o[r])) return o[r];
+                    return !1
+                },
+                iterate: function(t) {
+                    this._integrator.integrate(this._bodies, t)
+                },
+                step: function(t) {
+                    if (this._paused) return this._time = !1, this;
+                    var e = t - (this._time || (this._time = t)),
+                        n = this._stats,
+                        i = this._dt;
+                    if (!e) return this;
+                    for (e > this._maxJump && (this._time = t - this._maxJump, e = this._maxJump), n.fps = 1e3 / e, n.ipf = Math.ceil(e / this._dt); this._time < t;) this._time += i, this.iterate(i);
+                    return this.publish({
+                        topic: "step"
+                    }), this
+                },
+                render: function() {
+                    if (!this._renderer) throw "No renderer added to world";
+                    return this._renderer.render(this._bodies, this._stats), this.publish({
+                        topic: "render",
+                        bodies: this._bodies,
+                        stats: this._stats,
+                        renderer: this._renderer
+                    }), this
+                },
+                pause: function() {
+                    return this._paused = !0, this.publish({
+                        topic: "pause"
+                    }), this
+                },
+                unpause: function() {
+                    return this._paused = !1, this.publish({
+                        topic: "unpause"
+                    }), this
+                },
+                isPaused: function() {
+                    return !!this._paused
+                },
+                destroy: function() {
+                    this.pause(), this.unsubscribe(!0), this.remove(this.getBodies()), this.remove(this.getBehaviors()), this.integrator(null), this.renderer(null)
+                }
+            }), t.world = i
+        }(), t.integrator("verlet", function(e) {
+            return t.body.mixin({
+                started: function(t) {
+                    return void 0 !== t && (this._started = !0), !!this._started
+                }
+            }), {
+                init: function(t) {
+                    e.init.call(this, t)
+                },
+                integrateVelocities: function(t, e) {
+                    for (var n, i = e * e, o = 1 - this.options.drag, r = null, s = 0, a = t.length; s < a; ++s) n = (r = t[s]).state, r.fixed ? (n.vel.zero(), n.acc.zero(), n.angular.vel = 0, n.angular.acc = 0) : (n.vel.equals(n.old.vel) && r.started() ? n.vel.clone(n.pos).vsub(n.old.pos) : (n.old.pos.clone(n.pos).vsub(n.vel), n.vel.mult(e)), o && n.vel.mult(o), n.vel.vadd(n.acc.mult(i)), n.vel.mult(1 / e), n.old.vel.clone(n.vel), n.acc.zero(), n.angular.vel === n.old.angular.vel && r.started() ? n.angular.vel = n.angular.pos - n.old.angular.pos : (n.old.angular.pos = n.angular.pos - n.angular.vel, n.angular.vel *= e), n.angular.vel += n.angular.acc * i, n.angular.vel /= e, n.old.angular.vel = n.angular.vel, n.angular.acc = 0, r.started(!0))
+                },
+                integratePositions: function(t, e) {
+                    for (var n, i = null, o = 0, r = t.length; o < r; ++o) n = (i = t[o]).state, i.fixed || (n.vel.mult(e), n.old.pos.clone(n.pos), n.pos.vadd(n.vel), n.vel.mult(1 / e), n.old.vel.clone(n.vel), n.angular.vel *= e, n.old.angular.pos = n.angular.pos, n.angular.pos += n.angular.vel, n.angular.vel /= e, n.old.angular.vel = n.angular.vel)
+                }
+            }
+        }), t.geometry("point", function(t) {}), t.geometry("circle", function(e) {
+            var n = {
+                radius: 1
+            };
+            return {
+                init: function(i) {
+                    e.init.call(this, i), i = t.util.extend({}, n, i), this.radius = i.radius, this._aabb = t.aabb()
+                },
+                aabb: function(t) {
+                    var e = this.radius,
+                        n = this._aabb;
+                    return n.halfWidth() === e ? n.get() : n.set(-e, -e, e, e).get()
+                },
+                getFarthestHullPoint: function(e, n) {
+                    return (n = n || t.vector()).clone(e).normalize().mult(this.radius)
+                },
+                getFarthestCorePoint: function(e, n, i) {
+                    return (n = n || t.vector()).clone(e).normalize().mult(this.radius - i)
+                }
+            }
+        }), t.geometry("convex-polygon", function(e) {
+            var n = {};
+            return {
+                init: function(i) {
+                    e.init.call(this, i), i = t.util.extend({}, n, i), this.setVertices(i.vertices || [])
+                },
+                setVertices: function(e) {
+                    var n = t.scratchpad(),
+                        i = n.transform(),
+                        o = this.vertices = [];
+                    if (!t.geometry.isPolygonConvex(e)) throw "Error: The vertices specified do not match that of a _convex_ polygon.";
+                    i.setRotation(0), i.setTranslation(t.geometry.getPolygonCentroid(e).negate());
+                    for (var r = 0, s = e.length; r < s; ++r) o.push(t.vector(e[r]).translate(i));
+                    return this._area = t.geometry.getPolygonArea(o), this._aabb = !1, n.done(), this
+                },
+                aabb: function(e) {
+                    if (!e && this._aabb) return this._aabb.get();
+                    var n, i = t.scratchpad(),
+                        o = i.vector(),
+                        r = i.transform().setRotation(e || 0),
+                        s = i.vector().clone(t.vector.axis[0]).rotateInv(r),
+                        a = i.vector().clone(t.vector.axis[1]).rotateInv(r),
+                        c = this.getFarthestHullPoint(s, o).proj(s),
+                        l = -this.getFarthestHullPoint(s.negate(), o).proj(s),
+                        u = this.getFarthestHullPoint(a, o).proj(a),
+                        h = -this.getFarthestHullPoint(a.negate(), o).proj(a);
+                    return n = new t.aabb(l, h, c, u), e || (this._aabb = n), i.done(), n.get()
+                },
+                getFarthestHullPoint: function(e, n, i) {
+                    var o, r, s, a = this.vertices,
+                        c = a.length,
+                        l = 2;
+                    if (n = n || t.vector(), c < 2) return i && (i.idx = 0), n.clone(a[0]);
+                    if (r = a[0].dot(e), o = a[1].dot(e), 2 === c) return s = o >= r ? 1 : 0, i && (i.idx = s), n.clone(a[s]);
+                    if (o >= r) {
+                        for (; l < c && o >= r;) r = o, o = a[l].dot(e), l++;
+                        return o >= r && l++, s = l - 2, i && (i.idx = l - 2), n.clone(a[s])
                     }
-
-                    state.angular.vel += state.angular.acc * dtdt;
-                    state.angular.vel /= dt;
-                    state.old.angular.vel = state.angular.vel;
-                    state.angular.acc = 0;
-
-                    body.started( true );
-
-                } else {
-                    // set the velocity and acceleration to zero!
-                    state.vel.zero();
-                    state.acc.zero();
-                    state.angular.vel = 0;
-                    state.angular.acc = 0;
+                    for (l = c; l > 2 && r >= o;) o = r, r = a[--l].dot(e);
+                    return s = (l + 1) % c, i && (i.idx = s), n.clone(a[s])
+                },
+                getFarthestCorePoint: function(e, n, i) {
+                    var o, r = t.scratchpad(),
+                        s = r.vector(),
+                        a = r.vector(),
+                        c = this.vertices,
+                        l = c.length,
+                        u = this._area > 0,
+                        h = {};
+                    return n = this.getFarthestHullPoint(e, n, h), s.clone(c[(h.idx + 1) % l]).vsub(n).normalize().perp(!u), a.clone(c[(h.idx - 1 + l) % l]).vsub(n).normalize().perp(u), o = i / (1 + s.dot(a)), n.vadd(s.vadd(a).mult(o)), r.done(), n
                 }
             }
-        },
-
-        /**
-         * Position integration
-         * @param  {Array} bodies Array of bodies to integrate
-         * @param  {Number} dt     Timestep size
-         * @return {void}
-         */
-        integratePositions: function( bodies, dt ){
-
-            // half the timestep
-            var dtdt = dt * dt
-                ,body = null
-                ,state
-                ;
-
-            for ( var i = 0, l = bodies.length; i < l; ++i ){
-
-                body = bodies[ i ];
-                state = body.state;
-
-                // only integrate if the body isn't fixed
-                if ( !body.fixed ){
-
-                    // so we need to scale the value by dt so it 
-                    // complies with other integration methods
-                    state.vel.mult( dt );
-                
-                    // Store old position.
-                    // xold = x
-                    state.old.pos.clone( state.pos );
-
-                    state.pos.vadd( state.vel );
-
-                    // normalize velocity 
-                    state.vel.mult( 1/dt );
-
-                    // store calculated velocity
-                    state.old.vel.clone( state.vel );
-
-                    //
-                    // Angular components
-                    // 
-
-                    
-                    state.angular.vel *= dt;
-                
-                    state.old.angular.pos = state.angular.pos;
-
-                    state.angular.pos += state.angular.vel;
-                    state.angular.vel /= dt;
-                    state.old.angular.vel = state.angular.vel;
-                }
-            }
-        }
-    };
-});
-
-
-
-// ---
-// inside: src/geometries/point.js
-
-/**
- * Point geometry
- * @module geometries/point
- */
-Physics.geometry('point', function( parent ){
-
-    // alias of default
-});
-
-
-// ---
-// inside: src/geometries/circle.js
-
-/**
- * Circle geometry
- * @module geometries/circle
- */
-Physics.geometry('circle', function( parent ){
-
-    var defaults = {
-
-        radius: 1.0
-    };
-
-    return {
-
-        /**
-         * Initialization
-         * @param  {Object} options Configuration options
-         * @return {void}
-         */
-        init: function( options ){
-
-            // call parent init method
-            parent.init.call(this, options);
-
-            options = Physics.util.extend({}, defaults, options);
-            this.radius = options.radius;
-            this._aabb = Physics.aabb();
-        },
-                
-        /**
-         * Get axis-aligned bounding box for this object (rotated by angle if specified).
-         * @param  {Number} angle (optional) The angle to rotate the geometry.
-         * @return {Object}       Bounding box values
-         */
-        aabb: function( angle ){
-
-            var r = this.radius
-                ,aabb = this._aabb
-                ;
-
-            // circles are symetric... so angle has no effect
-            if ( aabb.halfWidth() === r ){
-                // don't recalculate
-                return aabb.get();
-            }
-
-            return aabb.set( -r, -r, r, r ).get();
-        },
-
-        /**
-         * Get farthest point on the hull of this geometry
-         * along the direction vector "dir"
-         * returns local coordinates
-         * replaces result if provided
-         * @param {Vector} dir Direction to look
-         * @param {Vector} result (optional) A vector to write result to
-         * @return {Vector} The farthest hull point in local coordinates
-         */
-        getFarthestHullPoint: function( dir, result ){
-
-            result = result || Physics.vector();
-
-            return result.clone( dir ).normalize().mult( this.radius );
-        },
-
-        /**
-         * Get farthest point on the core of this geometry
-         * along the direction vector "dir"
-         * returns local coordinates
-         * replaces result if provided
-         * @param {Vector} dir Direction to look
-         * @param {Vector} result (optional) A vector to write result to
-         * @return {Vector} The farthest core point in local coordinates
-         */
-        getFarthestCorePoint: function( dir, result, margin ){
-
-            result = result || Physics.vector();
-
-            // we can use the center of the circle as the core object
-            // because we can project a point to the hull in any direction
-            // ... yay circles!
-            // but since the caller is expecting a certain margin... give it
-            // to them
-            return result.clone( dir ).normalize().mult( this.radius - margin );
-        }
-    };
-});
-
-
-// ---
-// inside: src/geometries/convex-polygon.js
-
-/**
- * Convex polygon geometry
- * @module geometries/convex-polygon
- */
-Physics.geometry('convex-polygon', function( parent ){
-
-    var ERROR_NOT_CONVEX = 'Error: The vertices specified do not match that of a _convex_ polygon.';
-
-    var defaults = {
-
-    };
-
-    return {
-
-        /**
-         * Initialization
-         * @param  {Object} options Configuration options
-         * @return {void}
-         */
-        init: function( options ){
-
-            // call parent init method
-            parent.init.call(this, options);
-            options = Physics.util.extend({}, defaults, options);
-
-            this.setVertices( options.vertices || [] );
-        },
-
-        /**
-         * Set the vertices of the polygon shape. Vertices will be converted to be relative to the calculated centroid
-         * @param {Array} hull The hull definition. Array of vectorish objects
-         * @return {self}
-         */
-        setVertices: function( hull ){
-
-            var scratch = Physics.scratchpad()
-                ,transl = scratch.transform()
-                ,verts = this.vertices = []
-                ;
-
-            if ( !Physics.geometry.isPolygonConvex( hull ) ){
-                throw ERROR_NOT_CONVEX;
-            }
-
-            transl.setRotation( 0 );
-            transl.setTranslation( Physics.geometry.getPolygonCentroid( hull ).negate() );
-
-            // translate each vertex so that the centroid is at the origin
-            // then add the vertex as a vector to this.vertices
-            for ( var i = 0, l = hull.length; i < l; ++i ){
-                
-                verts.push( Physics.vector( hull[ i ] ).translate( transl ) );
-            }
-
-            this._area = Physics.geometry.getPolygonArea( verts );
-
-            this._aabb = false;
-            scratch.done();
-            return this;
-        },
-        
-        /**
-         * Get axis-aligned bounding box for this object (rotated by angle if specified).
-         * @param  {Number} angle (optional) The angle to rotate the geometry.
-         * @return {Object}       Bounding box values
-         */
-        aabb: function( angle ){
-
-            if (!angle && this._aabb){
-                return this._aabb.get();
-            }
-
-            var scratch = Physics.scratchpad()
-                ,p = scratch.vector()
-                ,trans = scratch.transform().setRotation( angle || 0 )
-                ,xaxis = scratch.vector().clone(Physics.vector.axis[0]).rotateInv( trans )
-                ,yaxis = scratch.vector().clone(Physics.vector.axis[1]).rotateInv( trans )
-                ,xmax = this.getFarthestHullPoint( xaxis, p ).proj( xaxis )
-                ,xmin = - this.getFarthestHullPoint( xaxis.negate(), p ).proj( xaxis )
-                ,ymax = this.getFarthestHullPoint( yaxis, p ).proj( yaxis )
-                ,ymin = - this.getFarthestHullPoint( yaxis.negate(), p ).proj( yaxis )
-                ,aabb
-                ;
-
-            aabb = new Physics.aabb( xmin, ymin, xmax, ymax );
-
-            if (!angle){
-                this._aabb = aabb;
-            }
-
-            scratch.done();
-            return aabb.get();
-        },
-
-        /**
-         * Get farthest point on the hull of this geometry
-         * along the direction vector "dir"
-         * returns local coordinates
-         * replaces result if provided
-         * @param {Vector} dir Direction to look
-         * @param {Vector} result (optional) A vector to write result to
-         * @return {Vector} The farthest hull point in local coordinates
-         */
-        getFarthestHullPoint: function( dir, result, data ){
-
-            var verts = this.vertices
-                ,val
-                ,prev
-                ,l = verts.length
-                ,i = 2
-                ,idx
-                ;
-
-            result = result || Physics.vector();
-
-            if ( l < 2 ){
-                if ( data ){
-                    data.idx = 0;
-                }
-                return result.clone( verts[0] );
-            }
-
-            prev = verts[ 0 ].dot( dir );
-            val = verts[ 1 ].dot( dir );
-
-            if ( l === 2 ){
-                idx = (val >= prev) ? 1 : 0;
-                if ( data ){
-                    data.idx = idx;
-                }
-                return result.clone( verts[ idx ] );
-            }
-
-            if ( val >= prev ){
-                // go up
-                // search until the next dot product 
-                // is less than the previous
-                while ( i < l && val >= prev ){
-                    prev = val;
-                    val = verts[ i ].dot( dir );
-                    i++;
-                }
-
-                if (val >= prev){
-                    i++;
-                }
-
-                // return the previous (furthest with largest dot product)
-                idx = i - 2;
-                if ( data ){
-                    data.idx = i - 2;
-                }
-                return result.clone( verts[ idx ] );
-
-            } else {
-                // go down
-
-                i = l;
-                while ( i > 2 && prev >= val ){
-                    i--;
-                    val = prev;
-                    prev = verts[ i ].dot( dir );
-                }
-
-                // return the previous (furthest with largest dot product)
-                idx = (i + 1) % l;
-                if ( data ){
-                    data.idx = idx;
-                }
-                return result.clone( verts[ idx ] );                
-            }
-        },
-
-        /**
-         * Get farthest point on the core of this geometry
-         * along the direction vector "dir"
-         * returns local coordinates
-         * replaces result if provided
-         * @param {Vector} dir Direction to look
-         * @param {Vector} result (optional) A vector to write result to
-         * @return {Vector} The farthest core point in local coordinates
-         */
-        getFarthestCorePoint: function( dir, result, margin ){
-
-            var norm
-                ,scratch = Physics.scratchpad()
-                ,next = scratch.vector()
-                ,prev = scratch.vector()
-                ,verts = this.vertices
-                ,l = verts.length
-                ,mag
-                ,sign = this._area > 0
-                ,data = {}
-                ;
-
-            result = this.getFarthestHullPoint( dir, result, data );
-
-            // get normalized directions to next and previous vertices
-            next.clone( verts[ (data.idx + 1) % l ] ).vsub( result ).normalize().perp( !sign );
-            prev.clone( verts[ (data.idx - 1 + l) % l ] ).vsub( result ).normalize().perp( sign );
-
-            // get the magnitude of a vector from the result vertex 
-            // that splits down the middle
-            // creating a margin of "m" to each edge
-            mag = margin / (1 + next.dot(prev));
-
-            result.vadd( next.vadd( prev ).mult( mag ) );
-            scratch.done();
-            return result;
-        }
-    };
-});
-
-
-// ---
-// inside: src/bodies/circle.js
-
-/**
- * Circle body definition
- * @module bodies/circle
- * @requires geometries/circle
- */
-Physics.body('circle', function( parent ){
-
-    var defaults = {
-        radius: 1.0
-    };
-
-    return {
-
-        /**
-         * Initialization
-         * @param  {Object} options Configuration options
-         * @return {void}
-         */
-        init: function( options ){
-
-            // call parent init method
-            parent.init.call(this, options);
-
-            options = Physics.util.extend({}, defaults, options);
-
-            this.geometry = Physics.geometry('circle', {
-                radius: options.radius
-            });
-
-            this.recalc();
-        },
-
-        /**
-         * Recalculate properties. Call when body physical properties are changed.
-         * @return {this}
-         */
-        recalc: function(){
-            parent.recalc.call(this);
-            // moment of inertia
-            this.moi = this.mass * this.geometry.radius * this.geometry.radius / 2;
-        }
-    };
-});
-
-
-// ---
-// inside: src/bodies/convex-polygon.js
-
-/**
- * Convex Polygon Body
- * @module bodies/convex-polygon
- * @requires geometries/convex-polygon
- */
-Physics.body('convex-polygon', function( parent ){
-
-    var defaults = {
-        
-    };
-
-    return {
-
-        /**
-         * Initialization
-         * @param  {Object} options Configuration options
-         * @return {void}
-         */
-        init: function( options ){
-
-            // call parent init method
-            parent.init.call(this, options);
-
-            options = Physics.util.extend({}, defaults, options);
-
-            this.geometry = Physics.geometry('convex-polygon', {
-                vertices: options.vertices
-            });
-
-            this.recalc();
-        },
-
-        /**
-         * Recalculate properties. Call when body physical properties are changed.
-         * @return {this}
-         */
-        recalc: function(){
-            parent.recalc.call(this);
-            // moment of inertia
-            this.moi = Physics.geometry.getPolygonMOI( this.geometry.vertices );
-        }
-    };
-});
-
-
-// ---
-// inside: src/bodies/point.js
-
-/**
- * Point body
- * @module bodies/point
- */
-Physics.body('point', function(){});
-
-// ---
-// inside: src/behaviors/body-collision-detection.js
-
-/**
- * Body collision detection
- * @module behaviors/body-collision-detection
- */
-Physics.behavior('body-collision-detection', function( parent ){
-
-    var PUBSUB_CANDIDATES = 'collisions:candidates';
-    var PUBSUB_COLLISION = 'collisions:detected';
-
-    /**
-     * Get a general support function for use with GJK algorithm
-     * @param  {Object} bodyA First body
-     * @param  {Object} bodyB Second body
-     * @return {Function}       The support function
-     */
-    var getSupportFn = function getSupportFn( bodyA, bodyB ){
-
-        var fn;
-
-        fn = function( searchDir ){
-
-            var scratch = Physics.scratchpad()
-                ,tA = scratch.transform().setTranslation( bodyA.state.pos ).setRotation( bodyA.state.angular.pos )
-                ,tB = scratch.transform().setTranslation( bodyB.state.pos ).setRotation( bodyB.state.angular.pos )
-                ,vA = scratch.vector()
-                ,vB = scratch.vector()
-                ,method = fn.useCore? 'getFarthestCorePoint' : 'getFarthestHullPoint'
-                ,marginA = fn.marginA
-                ,marginB = fn.marginB
-                ,ret
-                ;
-
-            vA = bodyA.geometry[ method ]( searchDir.rotateInv( tA ), vA, marginA ).transform( tA );
-            vB = bodyB.geometry[ method ]( searchDir.rotate( tA ).rotateInv( tB ).negate(), vB, marginB ).transform( tB );
-
-            searchDir.negate().rotate( tB );
-
-            ret = {
-                a: vA.values(),
-                b: vB.values(),
-                pt: vA.vsub( vB ).values() 
+        }), t.body("circle", function(e) {
+            var n = {
+                radius: 1
             };
-            scratch.done();
-            return ret;
-        };
-
-        fn.useCore = false;
-        fn.margin = 0;
-
-        return fn;
-    };
-
-    /**
-     * Use GJK algorithm to check arbitrary bodies for collisions
-     * @param  {Object} bodyA First body
-     * @param  {Object} bodyB Second body
-     * @return {Object}       Collision result
-     */
-    var checkGJK = function checkGJK( bodyA, bodyB ){
-
-        var scratch = Physics.scratchpad()
-            ,d = scratch.vector()
-            ,tmp = scratch.vector()
-            ,overlap
-            ,result
-            ,support
-            ,collision = false
-            ,aabbA = bodyA.aabb()
-            ,dimA = Math.min( aabbA.halfWidth, aabbA.halfHeight )
-            ,aabbB = bodyB.aabb()
-            ,dimB = Math.min( aabbB.halfWidth, aabbB.halfHeight )
-            ;
-
-        // just check the overlap first
-        support = getSupportFn( bodyA, bodyB );
-        d.clone( bodyA.state.pos ).vsub( bodyB.state.pos );
-        result = Physics.gjk(support, d, true);
-
-        if ( result.overlap ){
-
-            // there is a collision. let's do more work.
-            collision = {
-                bodyA: bodyA,
-                bodyB: bodyB
+            return {
+                init: function(i) {
+                    e.init.call(this, i), i = t.util.extend({}, n, i), this.geometry = t.geometry("circle", {
+                        radius: i.radius
+                    }), this.recalc()
+                },
+                recalc: function() {
+                    e.recalc.call(this), this.moi = this.mass * this.geometry.radius * this.geometry.radius / 2
+                }
+            }
+        }), t.body("convex-polygon", function(e) {
+            var n = {};
+            return {
+                init: function(i) {
+                    e.init.call(this, i), i = t.util.extend({}, n, i), this.geometry = t.geometry("convex-polygon", {
+                        vertices: i.vertices
+                    }), this.recalc()
+                },
+                recalc: function() {
+                    e.recalc.call(this), this.moi = t.geometry.getPolygonMOI(this.geometry.vertices)
+                }
+            }
+        }), t.body("point", function() {}), t.behavior("body-collision-detection", function(e) {
+            var n = function(e, n) {
+                    var i, o, r, s = t.scratchpad(),
+                        a = s.vector(),
+                        c = s.vector(),
+                        l = !1,
+                        u = e.aabb(),
+                        h = Math.min(u.halfWidth, u.halfHeight),
+                        d = n.aabb(),
+                        f = Math.min(d.halfWidth, d.halfHeight);
+                    if (r = function(e, n) {
+                            var i;
+                            return (i = function(o) {
+                                var r, s = t.scratchpad(),
+                                    a = s.transform().setTranslation(e.state.pos).setRotation(e.state.angular.pos),
+                                    c = s.transform().setTranslation(n.state.pos).setRotation(n.state.angular.pos),
+                                    l = s.vector(),
+                                    u = s.vector(),
+                                    h = i.useCore ? "getFarthestCorePoint" : "getFarthestHullPoint",
+                                    d = i.marginA,
+                                    f = i.marginB;
+                                return l = e.geometry[h](o.rotateInv(a), l, d).transform(a), u = n.geometry[h](o.rotate(a).rotateInv(c).negate(), u, f).transform(c), o.negate().rotate(c), r = {
+                                    a: l.values(),
+                                    b: u.values(),
+                                    pt: l.vsub(u).values()
+                                }, s.done(), r
+                            }).useCore = !1, i.margin = 0, i
+                        }(e, n), a.clone(e.state.pos).vsub(n.state.pos), (o = t.gjk(r, a, !0)).overlap) {
+                        for (l = {
+                                bodyA: e,
+                                bodyB: n
+                            }, r.useCore = !0, r.marginA = 0, r.marginB = 0; o.overlap && (r.marginA < h || r.marginB < f);) r.marginA < h && (r.marginA += 1), r.marginB < f && (r.marginB += 1), o = t.gjk(r, a);
+                        if (o.overlap || o.maxIterationsReached) return s.done(), !1;
+                        i = Math.max(0, r.marginA + r.marginB - o.distance), l.overlap = i, l.norm = a.clone(o.closest.b).vsub(c.clone(o.closest.a)).normalize().values(), l.mtv = a.mult(i).values(), l.pos = a.clone(l.norm).mult(r.margin).vadd(c.clone(o.closest.a)).vsub(e.state.pos).values()
+                    }
+                    return s.done(), l
+                },
+                i = function(e, i) {
+                    return "circle" === e.geometry.name && "circle" === i.geometry.name ? function(e, n) {
+                        var i, o = t.scratchpad(),
+                            r = o.vector(),
+                            s = (o.vector(), !1);
+                        return r.clone(n.state.pos).vsub(e.state.pos), i = r.norm() - (e.geometry.radius + n.geometry.radius), r.equals(t.vector.zero) && r.set(1, 0), i <= 0 && (s = {
+                            bodyA: e,
+                            bodyB: n,
+                            norm: r.normalize().values(),
+                            mtv: r.mult(-i).values(),
+                            pos: r.normalize().mult(e.geometry.radius).values(),
+                            overlap: -i
+                        }), o.done(), s
+                    }(e, i) : n(e, i)
+                },
+                o = {
+                    checkAll: !1
+                };
+            return {
+                init: function(n) {
+                    e.init.call(this, n), this.options = t.util.extend({}, this.options, o, n)
+                },
+                connect: function(t) {
+                    this.options.checkAll ? t.subscribe("integrate:velocities", this.checkAll, this) : t.subscribe("collisions:candidates", this.check, this)
+                },
+                disconnect: function(t) {
+                    this.options.checkAll ? t.unsubscribe("integrate:velocities", this.checkAll) : t.unsubscribe("collisions:candidates", this.check)
+                },
+                check: function(t) {
+                    for (var e, n, o = t.candidates, r = [], s = 0, a = o.length; s < a; ++s) e = o[s], (n = i(e.bodyA, e.bodyB)) && r.push(n);
+                    r.length && this._world.publish({
+                        topic: "collisions:detected",
+                        collisions: r
+                    })
+                },
+                checkAll: function(t) {
+                    for (var e, n, o, r = t.bodies, s = (t.dt, []), a = 0, c = r.length; a < c; a++) {
+                        e = r[a];
+                        for (var l = a + 1; l < c; l++) n = r[l], e.fixed && n.fixed || (o = i(e, n)) && s.push(o)
+                    }
+                    s.length && this._world.publish({
+                        topic: "collisions:detected",
+                        collisions: s
+                    })
+                }
+            }
+        }), t.behavior("body-impulse-response", function(e) {
+            return {
+                connect: function(t) {
+                    t.subscribe("collisions:detected", this.respond, this)
+                },
+                disconnect: function(t) {
+                    t.unsubscribe("collisions:detected", this.respond)
+                },
+                collideBodies: function(e, n, i, o, r, s) {
+                    var a = e.fixed,
+                        c = n.fixed,
+                        l = t.scratchpad(),
+                        u = l.vector().clone(r);
+                    if (a && c) l.done();
+                    else {
+                        a ? n.state.pos.vadd(u) : c ? e.state.pos.vsub(u) : (u.mult(.5), e.state.pos.vsub(u), n.state.pos.vadd(u));
+                        var h, d, f, p = a ? 0 : 1 / e.moi,
+                            v = c ? 0 : 1 / n.moi,
+                            g = a ? 0 : 1 / e.mass,
+                            b = c ? 0 : 1 / n.mass,
+                            y = s ? 0 : e.restitution * n.restitution,
+                            m = e.cof * n.cof,
+                            _ = l.vector().clone(i),
+                            x = l.vector().clone(_).perp(!0),
+                            w = l.vector().clone(o),
+                            A = l.vector().clone(o).vadd(e.state.pos).vsub(n.state.pos),
+                            C = l.vector(),
+                            B = e.state.angular.vel,
+                            k = n.state.angular.vel,
+                            P = l.vector().clone(n.state.vel).vadd(C.clone(A).perp(!0).mult(k)).vsub(e.state.vel).vsub(C.clone(w).perp(!0).mult(B)),
+                            j = w.proj(_),
+                            I = w.proj(x),
+                            S = A.proj(_),
+                            M = A.proj(x),
+                            E = P.proj(_),
+                            F = P.proj(x);
+                        E >= 0 ? l.done() : (h = -(1 + y) * E / (g + b + p * I * I + v * M * M), a ? (n.state.vel.vadd(_.mult(h * b)), n.state.angular.vel -= h * v * M) : c ? (e.state.vel.vsub(_.mult(h * g)), e.state.angular.vel += h * p * I) : (n.state.vel.vadd(_.mult(h * b)), n.state.angular.vel -= h * v * M, e.state.vel.vsub(_.mult(g * n.mass)), e.state.angular.vel += h * p * I), m && F && (f = F / (g + b + p * j * j + v * S * S), h *= (d = F < 0 ? -1 : 1) * m, h = 1 === d ? Math.min(h, f) : Math.max(h, f), a ? (n.state.vel.vsub(x.mult(h * b)), n.state.angular.vel -= h * v * S) : c ? (e.state.vel.vadd(x.mult(h * g)), e.state.angular.vel += h * p * j) : (n.state.vel.vsub(x.mult(h * b)), n.state.angular.vel -= h * v * S, e.state.vel.vadd(x.mult(g * n.mass)), e.state.angular.vel += h * p * j)), l.done())
+                    }
+                },
+                respond: function(e) {
+                    for (var n, i = t.util.shuffle(e.collisions), o = 0, r = i.length; o < r; ++o) n = i[o], this.collideBodies(n.bodyA, n.bodyB, n.norm, n.pos, n.mtv)
+                }
+            }
+        }), t.behavior("constant-acceleration", function(e) {
+            var n = {
+                acc: {
+                    x: 0,
+                    y: 4e-4
+                }
             };
-
-            // first get the min distance of between core objects
-            support.useCore = true;
-            support.marginA = 0;
-            support.marginB = 0;
-
-            while ( result.overlap && (support.marginA < dimA || support.marginB < dimB) ){
-                if ( support.marginA < dimA ){
-                    support.marginA += 1;
-                }
-                if ( support.marginB < dimB ){
-                    support.marginB += 1;
-                }
-
-                result = Physics.gjk(support, d);
-            }
-
-            if ( result.overlap || result.maxIterationsReached ){
-                scratch.done();
-                // This implementation can't deal with a core overlap yet
-                return false;
-            }
-
-            // calc overlap
-            overlap = Math.max(0, (support.marginA + support.marginB) - result.distance);
-            collision.overlap = overlap;
-            // @TODO: for now, just let the normal be the mtv
-            collision.norm = d.clone( result.closest.b ).vsub( tmp.clone( result.closest.a ) ).normalize().values();
-            collision.mtv = d.mult( overlap ).values();
-            // get a corresponding hull point for one of the core points.. relative to body A
-            collision.pos = d.clone( collision.norm ).mult( support.margin ).vadd( tmp.clone( result.closest.a ) ).vsub( bodyA.state.pos ).values();
-        }
-
-        scratch.done();
-        return collision;
-    };
-
-    /**
-     * Check two circles for collisions
-     * @param  {Object} bodyA First circle
-     * @param  {Object} bodyB Second circle
-     * @return {Object}       Collision result
-     */
-    var checkCircles = function checkCircles( bodyA, bodyB ){
-
-        var scratch = Physics.scratchpad()
-            ,d = scratch.vector()
-            ,tmp = scratch.vector()
-            ,overlap
-            ,collision = false
-            ;
-        
-        d.clone( bodyB.state.pos ).vsub( bodyA.state.pos );
-        overlap = d.norm() - (bodyA.geometry.radius + bodyB.geometry.radius);
-
-        // hmm... they overlap exactly... choose a direction
-        if ( d.equals( Physics.vector.zero ) ){
-
-            d.set( 1, 0 );
-        }
-
-        // if ( overlap > 0 ){
-        //     // check the future
-        //     d.vadd( tmp.clone(bodyB.state.vel).mult( dt ) ).vsub( tmp.clone(bodyA.state.vel).mult( dt ) );
-        //     overlap = d.norm() - (bodyA.geometry.radius + bodyB.geometry.radius);
-        // }
-
-        if ( overlap <= 0 ){
-
-            collision = {
-                bodyA: bodyA,
-                bodyB: bodyB,
-                norm: d.normalize().values(),
-                mtv: d.mult( -overlap ).values(),
-                pos: d.normalize().mult( bodyA.geometry.radius ).values(),
-                overlap: -overlap
-            };
-        }
-    
-        scratch.done();
-        return collision;
-    };
-
-    /**
-     * Check a pair for collisions
-     * @param  {Object} bodyA First body
-     * @param  {Object} bodyB Second body
-     * @return {Object}       Collision result
-     */
-    var checkPair = function checkPair( bodyA, bodyB ){
-
-        if ( bodyA.geometry.name === 'circle' && bodyB.geometry.name === 'circle' ){
-
-            return checkCircles( bodyA, bodyB );
-
-        } else {
-
-            return checkGJK( bodyA, bodyB );
-        }
-    };
-
-    var defaults = {
-
-        // force check every pair of bodies in the world
-        checkAll: false
-    };
-
-    return {
-
-        /**
-         * Initialization
-         * @param  {Object} options Configuration options
-         * @return {void}
-         */
-        init: function( options ){
-
-            parent.init.call(this, options);
-
-            this.options = Physics.util.extend({}, this.options, defaults, options);
-        },
-
-        /**
-         * Connect to world. Automatically called when added to world by the setWorld method
-         * @param  {Object} world The world to connect to
-         * @return {void}
-         */
-        connect: function( world ){
-
-            if ( this.options.checkAll ){
-
-                world.subscribe( 'integrate:velocities', this.checkAll, this );
-
-            } else {
-
-                world.subscribe( PUBSUB_CANDIDATES, this.check, this );
-            }
-        },
-
-        /**
-         * Disconnect from world
-         * @param  {Object} world The world to disconnect from
-         * @return {void}
-         */
-        disconnect: function( world ){
-
-            if ( this.options.checkAll ){
-
-                world.unsubscribe( 'integrate:velocities', this.checkAll );
-
-            } else {
-
-                world.unsubscribe( PUBSUB_CANDIDATES, this.check );
-            }
-        },
-
-        /**
-         * Check pairs of objects that have been flagged by broad phase for possible collisions.
-         * @param  {Object} data Event data
-         * @return {void}
-         */
-        check: function( data ){
-
-            var candidates = data.candidates
-                ,pair
-                ,collisions = []
-                ,ret
-                ;
-
-            for ( var i = 0, l = candidates.length; i < l; ++i ){
-                
-                pair = candidates[ i ];
-
-                ret = checkPair( pair.bodyA, pair.bodyB );
-
-                if ( ret ){
-                    collisions.push( ret );
+            return {
+                init: function(i) {
+                    e.init.call(this, i), this.options = t.util.extend(this.options, n, i), this._acc = t.vector(), this.setAcceleration(this.options.acc)
+                },
+                setAcceleration: function(t) {
+                    return this._acc.clone(t), this
+                },
+                behave: function(t) {
+                    for (var e = t.bodies, n = 0, i = e.length; n < i; ++n) e[n].accelerate(this._acc)
                 }
             }
-
-            if ( collisions.length ){
-
-                this._world.publish({
-                    topic: PUBSUB_COLLISION,
-                    collisions: collisions
-                });
-            }
-        },
-
-        /**
-         * Check all pairs of objects in the list for collisions
-         * @param  {Object} data Event data
-         * @return {void}
-         */
-        checkAll: function( data ){
-
-            var bodies = data.bodies
-                ,dt = data.dt
-                ,bodyA
-                ,bodyB
-                ,collisions = []
-                ,ret
-                ;
-
-            for ( var j = 0, l = bodies.length; j < l; j++ ){
-                
-                bodyA = bodies[ j ];
-
-                for ( var i = j + 1; i < l; i++ ){
-
-                    bodyB = bodies[ i ];
-
-                    // don't detect two fixed bodies
-                    if ( !bodyA.fixed || !bodyB.fixed ){
-                        
-                        ret = checkPair( bodyA, bodyB );
-
-                        if ( ret ){
-                            collisions.push( ret );
+        }), t.behavior("edge-collision-detection", function(e) {
+            var n = function(e, n, i) {
+                    return function(e, n, i) {
+                        var o, r = e.aabb(),
+                            s = t.scratchpad(),
+                            a = s.transform(),
+                            c = s.vector(),
+                            l = s.vector(),
+                            u = !1,
+                            h = [];
+                        return (o = r.pos.x + r.x - n.max.x) >= 0 && (c.set(1, 0).rotateInv(a.setRotation(e.state.angular.pos)), u = {
+                            bodyA: e,
+                            bodyB: i,
+                            overlap: o,
+                            norm: {
+                                x: 1,
+                                y: 0
+                            },
+                            mtv: {
+                                x: o,
+                                y: 0
+                            },
+                            pos: e.geometry.getFarthestHullPoint(c, l).rotate(a).values()
+                        }, h.push(u)), (o = r.pos.y + r.y - n.max.y) >= 0 && (c.set(0, 1).rotateInv(a.setRotation(e.state.angular.pos)), u = {
+                            bodyA: e,
+                            bodyB: i,
+                            overlap: o,
+                            norm: {
+                                x: 0,
+                                y: 1
+                            },
+                            mtv: {
+                                x: 0,
+                                y: o
+                            },
+                            pos: e.geometry.getFarthestHullPoint(c, l).rotate(a).values()
+                        }, h.push(u)), (o = n.min.x - (r.pos.x - r.x)) >= 0 && (c.set(-1, 0).rotateInv(a.setRotation(e.state.angular.pos)), u = {
+                            bodyA: e,
+                            bodyB: i,
+                            overlap: o,
+                            norm: {
+                                x: -1,
+                                y: 0
+                            },
+                            mtv: {
+                                x: -o,
+                                y: 0
+                            },
+                            pos: e.geometry.getFarthestHullPoint(c, l).rotate(a).values()
+                        }, h.push(u)), (o = n.min.y - (r.pos.y - r.y)) >= 0 && (c.set(0, -1).rotateInv(a.setRotation(e.state.angular.pos)), u = {
+                            bodyA: e,
+                            bodyB: i,
+                            overlap: o,
+                            norm: {
+                                x: 0,
+                                y: -1
+                            },
+                            mtv: {
+                                x: 0,
+                                y: -o
+                            },
+                            pos: e.geometry.getFarthestHullPoint(c, l).rotate(a).values()
+                        }, h.push(u)), s.done(), h
+                    }(e, n, i)
+                },
+                i = {
+                    aabb: null,
+                    restitution: .99,
+                    cof: 1
+                };
+            return {
+                init: function(n) {
+                    e.init.call(this, n), this.options = t.util.extend({}, this.options, i, n), this.setAABB(n.aabb), this.restitution = n.restitution, this._dummy = t.body("_dummy", function() {}, {
+                        fixed: !0,
+                        restitution: this.options.restitution,
+                        cof: this.options.cof
+                    })
+                },
+                setAABB: function(t) {
+                    if (!t) throw "Error: aabb not set";
+                    t = t.get && t.get() || t, this._edges = {
+                        min: {
+                            x: t.pos.x - t.x,
+                            y: t.pos.y - t.y
+                        },
+                        max: {
+                            x: t.pos.x + t.x,
+                            y: t.pos.y + t.y
                         }
                     }
+                },
+                connect: function(t) {
+                    t.subscribe("integrate:velocities", this.checkAll, this)
+                },
+                disconnect: function(t) {
+                    t.unsubscribe("integrate:velocities", this.checkAll)
+                },
+                checkAll: function(t) {
+                    for (var e, i, o = t.bodies, r = (t.dt, []), s = this._edges, a = this._dummy, c = 0, l = o.length; c < l; c++)(e = o[c]).fixed || (i = n(e, s, a)) && r.push.apply(r, i);
+                    r.length && this._world.publish({
+                        topic: "collisions:detected",
+                        collisions: r
+                    })
                 }
             }
-
-            if ( collisions.length ){
-
-                this._world.publish({
-                    topic: PUBSUB_COLLISION,
-                    collisions: collisions
-                });
-            }
-        }
-    };
-
-});
-
-// ---
-// inside: src/behaviors/body-impulse-response.js
-
-/**
- * Body collision response
- * @module behaviors/body-collision-response
- */
-Physics.behavior('body-impulse-response', function( parent ){
-    
-    var defaults = {
-
-    };
-
-    var PUBSUB_COLLISION = 'collisions:detected';
-
-    return {
-
-        /**
-         * Connect to world. Automatically called when added to world by the setWorld method
-         * @param  {Object} world The world to connect to
-         * @return {void}
-         */
-        connect: function( world ){
-
-            world.subscribe( PUBSUB_COLLISION, this.respond, this );
-        },
-
-        /**
-         * Disconnect from world
-         * @param  {Object} world The world to disconnect from
-         * @return {void}
-         */
-        disconnect: function( world ){
-
-            world.unsubscribe( PUBSUB_COLLISION, this.respond );
-        },
-
-        /**
-         * Collide two bodies by modifying their positions and velocities to conserve momentum
-         * @param  {Object} bodyA   First Body
-         * @param  {Object} bodyB   Second body
-         * @param  {Vector} normal  Normal vector of the collision surface
-         * @param  {Vector} point   Contact point of the collision
-         * @param  {Vector} mtrans  Minimum transit vector that is the smallest displacement to separate the bodies
-         * @param  {Boolean} contact Are the bodies in resting contact relative to each other
-         * @return {void}
-         */
-        collideBodies: function(bodyA, bodyB, normal, point, mtrans, contact){
-
-            var fixedA = bodyA.fixed
-                ,fixedB = bodyB.fixed
-                ,scratch = Physics.scratchpad()
-                // minimum transit vector for each body
-                ,mtv = scratch.vector().clone( mtrans )
-                ;
-
-            // do nothing if both are fixed
-            if ( fixedA && fixedB ){
-                scratch.done();
-                return;
-            }
-
-            if ( fixedA ){
-
-                // extract bodies
-                bodyB.state.pos.vadd( mtv );
-                
-            } else if ( fixedB ){
-
-                // extract bodies
-                bodyA.state.pos.vsub( mtv );
-
-            } else {
-
-                // extract bodies
-                mtv.mult( 0.5 );
-                bodyA.state.pos.vsub( mtv );
-                bodyB.state.pos.vadd( mtv );
-            }
-
-            // inverse masses and moments of inertia.
-            // give fixed bodies infinite mass and moi
-            var invMoiA = fixedA ? 0 : 1 / bodyA.moi
-                ,invMoiB = fixedB ? 0 : 1 / bodyB.moi
-                ,invMassA = fixedA ? 0 : 1 / bodyA.mass
-                ,invMassB = fixedB ? 0 : 1 / bodyB.mass
-                // coefficient of restitution between bodies
-                ,cor = contact ? 0 : bodyA.restitution * bodyB.restitution
-                // coefficient of friction between bodies
-                ,cof = bodyA.cof * bodyB.cof
-                // normal vector
-                ,n = scratch.vector().clone( normal )
-                // vector perpendicular to n
-                ,perp = scratch.vector().clone( n ).perp( true )
-                // collision point from A's center
-                ,rA = scratch.vector().clone( point )
-                // collision point from B's center
-                ,rB = scratch.vector().clone( point ).vadd( bodyA.state.pos ).vsub( bodyB.state.pos )
-                ,tmp = scratch.vector()
-                ,angVelA = bodyA.state.angular.vel
-                ,angVelB = bodyB.state.angular.vel
-                // relative velocity towards B at collision point
-                ,vAB = scratch.vector().clone( bodyB.state.vel )
-                        .vadd( tmp.clone(rB).perp( true ).mult( angVelB ) )
-                        .vsub( bodyA.state.vel )
-                        .vsub( tmp.clone(rA).perp( true ).mult( angVelA ) )
-                // break up components along normal and perp-normal directions
-                ,rAproj = rA.proj( n )
-                ,rAreg = rA.proj( perp )
-                ,rBproj = rB.proj( n )
-                ,rBreg = rB.proj( perp )
-                ,vproj = vAB.proj( n ) // projection of vAB along n
-                ,vreg = vAB.proj( perp ) // rejection of vAB along n (perp of proj)
-                ,impulse
-                ,sign
-                ,max
-                ,inContact = false
-                ;
-
-            // if moving away from each other... don't bother.
-            if (vproj >= 0){
-                scratch.done();
-                return;
-            }
-
-            impulse =  - ((1 + cor) * vproj) / ( invMassA + invMassB + (invMoiA * rAreg * rAreg) + (invMoiB * rBreg * rBreg) );
-            // vproj += impulse * ( invMass + (invMoi * rreg * rreg) );
-            // angVel -= impulse * rreg * invMoi;
-
-            
-            if ( fixedA ){
-
-                // apply impulse
-                bodyB.state.vel.vadd( n.mult( impulse * invMassB ) );
-                bodyB.state.angular.vel -= impulse * invMoiB * rBreg;
-                
-            } else if ( fixedB ){
-
-                // apply impulse
-                bodyA.state.vel.vsub( n.mult( impulse * invMassA ) );
-                bodyA.state.angular.vel += impulse * invMoiA * rAreg;
-
-            } else {
-
-                // apply impulse
-                bodyB.state.vel.vadd( n.mult( impulse * invMassB ) );
-                bodyB.state.angular.vel -= impulse * invMoiB * rBreg;
-                bodyA.state.vel.vsub( n.mult( invMassA * bodyB.mass ) );
-                bodyA.state.angular.vel += impulse * invMoiA * rAreg;
-            }
-
-            // inContact = (impulse < 0.004);
-            
-            // if we have friction and a relative velocity perpendicular to the normal
-            if ( cof && vreg ){
-
-
-                // TODO: here, we could first assume static friction applies
-                // and that the tangential relative velocity is zero.
-                // Then we could calculate the impulse and check if the
-                // tangential impulse is less than that allowed by static
-                // friction. If not, _then_ apply kinetic friction.
-
-                // instead we're just applying kinetic friction and making
-                // sure the impulse we apply is less than the maximum
-                // allowed amount
-
-                // maximum impulse allowed by kinetic friction
-                max = vreg / ( invMassA + invMassB + (invMoiA * rAproj * rAproj) + (invMoiB * rBproj * rBproj) );
-
-                if (!inContact){
-                    // the sign of vreg ( plus or minus 1 )
-                    sign = vreg < 0 ? -1 : 1;
-
-                    // get impulse due to friction
-                    impulse *= sign * cof;
-                    // make sure the impulse isn't giving the system energy
-                    impulse = (sign === 1) ? Math.min( impulse, max ) : Math.max( impulse, max );
-                    
-                } else {
-
-                    impulse = max;
-                }
-
-                if ( fixedA ){
-
-                    // apply frictional impulse
-                    bodyB.state.vel.vsub( perp.mult( impulse * invMassB ) );
-                    bodyB.state.angular.vel -= impulse * invMoiB * rBproj;
-                    
-                } else if ( fixedB ){
-
-                    // apply frictional impulse
-                    bodyA.state.vel.vadd( perp.mult( impulse * invMassA ) );
-                    bodyA.state.angular.vel += impulse * invMoiA * rAproj;
-
-                } else {
-
-                    // apply frictional impulse
-                    bodyB.state.vel.vsub( perp.mult( impulse * invMassB ) );
-                    bodyB.state.angular.vel -= impulse * invMoiB * rBproj;
-                    bodyA.state.vel.vadd( perp.mult( invMassA * bodyB.mass ) );
-                    bodyA.state.angular.vel += impulse * invMoiA * rAproj;
-                }  
-            }
-
-            scratch.done();
-        },
-
-        /**
-         * Respond to collision event
-         * @param  {Object} data Event data
-         * @return {void}
-         */
-        respond: function( data ){
-
-            var self = this
-                ,col
-                ,collisions = Physics.util.shuffle(data.collisions)
-                ;
-
-            for ( var i = 0, l = collisions.length; i < l; ++i ){
-                
-                col = collisions[ i ];
-                self.collideBodies( 
-                    col.bodyA,
-                    col.bodyB,
-                    col.norm,
-                    col.pos,
-                    col.mtv
-                );
-            }
-        }
-    };
-});
-
-
-// ---
-// inside: src/behaviors/constant-acceleration.js
-
-/**
- * Constant acceleration behavior
- * @module behaviors/constant-acceleration
- */
-Physics.behavior('constant-acceleration', function( parent ){
-
-    var defaults = {
-
-        acc: { x : 0, y: 0.0004 }
-    };
-
-    return {
-
-        /**
-         * Initialization
-         * @param  {Object} options Configuration object
-         * @return {void}
-         */
-        init: function( options ){
-
-            parent.init.call(this, options);
-
-            // extend options
-            this.options = Physics.util.extend(this.options, defaults, options);
-            this._acc = Physics.vector();
-            this.setAcceleration( this.options.acc );
-        },
-
-        /**
-         * Set the acceleration of the behavior
-         * @param {Vectorish} acc The acceleration vector
-         * @return {self}
-         */
-        setAcceleration: function( acc ){
-
-            this._acc.clone( acc );
-            return this;
-        },
-
-        /**
-         * Callback run on integrate:positions event
-         * @param  {Object} data Event data
-         * @return {void}
-         */
-        behave: function( data ){
-
-            var bodies = data.bodies;
-
-            for ( var i = 0, l = bodies.length; i < l; ++i ){
-                
-                bodies[ i ].accelerate( this._acc );
-            }
-        }
-    };
-});
-
-// ---
-// inside: src/behaviors/edge-collision-detection.js
-
-/**
- * Edge collision detection.
- * Used to detect collisions with the boundaries of an AABB
- * @module behaviors/edge-collision-detection
- */
-Physics.behavior('edge-collision-detection', function( parent ){
-
-    var PUBSUB_COLLISION = 'collisions:detected';
-
-    /**
-     * Check if a body collides with the boundary
-     * @param  {Object} body   The body to check
-     * @param  {AABB} bounds The aabb representing the boundary
-     * @param  {Object} dummy  Dummy body supplied to the collision event
-     * @return {Object}        Collision data
-     */
-    var checkGeneral = function checkGeneral( body, bounds, dummy ){
-
-        var overlap
-            ,aabb = body.aabb()
-            ,scratch = Physics.scratchpad()
-            ,trans = scratch.transform()
-            ,dir = scratch.vector()
-            ,result = scratch.vector()
-            ,collision = false
-            ,collisions = []
-            ;
-
-        // right
-        overlap = (aabb.pos.x + aabb.x) - bounds.max.x;
-
-        if ( overlap >= 0 ){
-
-            dir.set( 1, 0 ).rotateInv( trans.setRotation( body.state.angular.pos ) );
-
-            collision = {
-                bodyA: body,
-                bodyB: dummy,
-                overlap: overlap,
-                norm: {
-                    x: 1,
-                    y: 0
-                },
-                mtv: {
-                    x: overlap,
-                    y: 0
-                },
-                pos: body.geometry.getFarthestHullPoint( dir, result ).rotate( trans ).values()
+        }), t.behavior("newtonian", function(e) {
+            var n = {
+                strength: 1
             };
-
-            collisions.push(collision);
-        }
-
-        // bottom
-        overlap = (aabb.pos.y + aabb.y) - bounds.max.y;
-
-        if ( overlap >= 0 ){
-
-            dir.set( 0, 1 ).rotateInv( trans.setRotation( body.state.angular.pos ) );
-
-            collision = {
-                bodyA: body,
-                bodyB: dummy,
-                overlap: overlap,
-                norm: {
+            return {
+                init: function(i) {
+                    e.init.call(this, i), i = t.util.extend({}, n, i), this.strength = i.strength, this.tolerance = i.tolerance || 100 * this.strength
+                },
+                behave: function(e) {
+                    for (var n, i, o, r, s = e.bodies, a = this.strength, c = this.tolerance, l = t.scratchpad(), u = l.vector(), h = 0, d = s.length; h < d; h++) {
+                        n = s[h];
+                        for (var f = h + 1; f < d; f++) i = s[f], u.clone(i.state.pos), u.vsub(n.state.pos), (o = u.normSq()) > c && (r = a / o, n.accelerate(u.normalize().mult(r * i.mass)), i.accelerate(u.mult(n.mass / i.mass).negate()))
+                    }
+                    l.done()
+                }
+            }
+        }), t.behavior("rigid-constraint-manager", function(e) {
+            var n = {
+                targetLength: 20
+            };
+            return {
+                init: function(i) {
+                    e.init.call(this, i), t.util.extend(this.options, n, i), this._constraints = []
+                },
+                connect: function(t) {
+                    var e = t.integrator();
+                    if (e && e.name.indexOf("verlet") < 0) throw 'The rigid constraint manager needs a world with a "verlet" compatible integrator.';
+                    t.subscribe("integrate:positions", this.resolve, this)
+                },
+                disconnect: function(t) {
+                    t.unsubscribe("integrate:positions", this.resolve)
+                },
+                drop: function() {
+                    return this._constraints = [], this
+                },
+                constrain: function(e, n, i) {
+                    var o;
+                    return !(!e || !n) && (this._constraints.push(o = {
+                        id: t.util.uniqueId("rigid-constraint"),
+                        bodyA: e,
+                        bodyB: n,
+                        targetLength: i || this.options.targetLength
+                    }), o)
+                },
+                remove: function(e) {
+                    var n, i = this._constraints;
+                    if ("number" == typeof e) return i.splice(e, 1), this;
+                    n = t.util.isObject(e);
+                    for (var o = 0, r = i.length; o < r; ++o)
+                        if (n && i[o] === e || !n && i[o].id === e) return i.splice(o, 1), this;
+                    return this
+                },
+                resolve: function() {
+                    for (var e, n, i, o, r = this._constraints, s = t.scratchpad(), a = s.vector(), c = s.vector(), l = 0, u = r.length; l < u; ++l) e = r[l], a.clone(e.bodyA.state.pos), c.clone(e.bodyB.state.pos).vsub(a), i = ((n = c.norm()) - e.targetLength) / n, c.mult(i), o = e.bodyB.mass / (e.bodyA.mass + e.bodyB.mass), e.bodyA.fixed || (c.mult(o), e.bodyA.state.pos.vadd(c), c.mult(1 / o)), e.bodyB.fixed || (c.mult(1 - o), e.bodyB.state.pos.vsub(c));
+                    s.done()
+                },
+                getConstraints: function() {
+                    return [].concat(this._constraints)
+                }
+            }
+        }), t.behavior("sweep-prune", function(e) {
+            var n = 1,
+                i = {
                     x: 0,
                     y: 1
-                },
-                mtv: {
-                    x: 0,
-                    y: overlap
-                },
-                pos: body.geometry.getFarthestHullPoint( dir, result ).rotate( trans ).values()
-            };
-
-            collisions.push(collision);
-        }
-
-        // left
-        overlap = bounds.min.x - (aabb.pos.x - aabb.x);
-
-        if ( overlap >= 0 ){
-
-            dir.set( -1, 0 ).rotateInv( trans.setRotation( body.state.angular.pos ) );
-
-            collision = {
-                bodyA: body,
-                bodyB: dummy,
-                overlap: overlap,
-                norm: {
-                    x: -1,
-                    y: 0
-                },
-                mtv: {
-                    x: -overlap,
-                    y: 0
-                },
-                pos: body.geometry.getFarthestHullPoint( dir, result ).rotate( trans ).values()
-            };
-
-            collisions.push(collision);
-        }
-
-        // top
-        overlap = bounds.min.y - (aabb.pos.y - aabb.y);
-
-        if ( overlap >= 0 ){
-
-            dir.set( 0, -1 ).rotateInv( trans.setRotation( body.state.angular.pos ) );
-
-            collision = {
-                bodyA: body,
-                bodyB: dummy,
-                overlap: overlap,
-                norm: {
-                    x: 0,
-                    y: -1
-                },
-                mtv: {
-                    x: 0,
-                    y: -overlap
-                },
-                pos: body.geometry.getFarthestHullPoint( dir, result ).rotate( trans ).values()
-            };
-
-            collisions.push(collision);
-        }
-
-        scratch.done();
-        return collisions;
-    };
-
-    /**
-     * Check if a body collides with the boundary
-     * @param  {Object} body   The body to check
-     * @param  {AABB} bounds The aabb representing the boundary
-     * @param  {Object} dummy  Dummy body supplied to the collision event
-     * @return {Object}        Collision data
-     */
-    var checkEdgeCollide = function checkEdgeCollide( body, bounds, dummy ){
-
-        return checkGeneral( body, bounds, dummy );
-    };
-
-    var defaults = {
-
-        aabb: null,
-        restitution: 0.99,
-        cof: 1.0
-    };
-
-    return {
-
-        /**
-         * Initialization
-         * @param  {Object} options Configuration object
-         * @return {void}
-         */
-        init: function( options ){
-
-            parent.init.call(this, options);
-
-            this.options = Physics.util.extend({}, this.options, defaults, options);
-
-            this.setAABB( options.aabb );
-            this.restitution = options.restitution;
-            
-            this._dummy = Physics.body('_dummy', function(){}, { 
-                fixed: true,
-                restitution: this.options.restitution,
-                cof: this.options.cof
-            });
-        },
-
-        /**
-         * Set the boundaries of the edge
-         * @param {AABB} aabb The aabb of the boundary
-         * @return {void}
-         */
-        setAABB: function( aabb ){
-
-            if (!aabb) {
-                throw 'Error: aabb not set';
-            }
-
-            aabb = aabb.get && aabb.get() || aabb;
-
-            this._edges = {
-                min: {
-                    x: (aabb.pos.x - aabb.x),
-                    y: (aabb.pos.y - aabb.y)
-                },
-                max: {
-                    x: (aabb.pos.x + aabb.x),
-                    y: (aabb.pos.y + aabb.y)  
-                }
-            };
-        },
-
-        /**
-         * Connect to world. Automatically called when added to world by the setWorld method
-         * @param  {Object} world The world to connect to
-         * @return {void}
-         */
-        connect: function( world ){
-
-            world.subscribe( 'integrate:velocities', this.checkAll, this );
-        },
-
-        /**
-         * Disconnect from world
-         * @param  {Object} world The world to disconnect from
-         * @return {void}
-         */
-        disconnect: function( world ){
-
-            world.unsubscribe( 'integrate:velocities', this.checkAll );
-        },
-
-        /**
-         * Check all bodies for collisions with the edge
-         * @param  {Object} data Event data
-         * @return {void}
-         */
-        checkAll: function( data ){
-            
-            var bodies = data.bodies
-                ,dt = data.dt
-                ,body
-                ,collisions = []
-                ,ret
-                ,bounds = this._edges
-                ,dummy = this._dummy
-                ;
-
-            for ( var i = 0, l = bodies.length; i < l; i++ ){
-
-                body = bodies[ i ];
-
-                // don't detect fixed bodies
-                if ( !body.fixed ){
-                    
-                    ret = checkEdgeCollide( body, bounds, dummy );
-
-                    if ( ret ){
-                        collisions.push.apply( collisions, ret );
-                    }
-                }
-            }
-
-            if ( collisions.length ){
-
-                this._world.publish({
-                    topic: PUBSUB_COLLISION,
-                    collisions: collisions
-                });
-            }
-        }
-    };
-
-});
-
-// ---
-// inside: src/behaviors/newtonian.js
-
-/**
- * Newtonian attraction between bodies (inverse square law)
- * @module behaviors/newtonian
- */
-Physics.behavior('newtonian', function( parent ){
-
-    var defaults = {
-
-        strength: 1
-    };
-
-    return {
-
-        /**
-         * Initialization
-         * @param  {Object} options Configuration object
-         * @return {void}
-         */
-        init: function( options ){
-
-            // call parent init method
-            parent.init.call(this, options);
-
-            options = Physics.util.extend({}, defaults, options);
-
-            this.strength = options.strength;
-            this.tolerance = options.tolerance || 100 * this.strength;
-        },
-        
-        /**
-         * Apply newtonian acceleration between all bodies
-         * @param  {Object} data Event data
-         * @return {void}
-         */
-        behave: function( data ){
-
-            var bodies = data.bodies
-                ,body
-                ,other
-                ,strength = this.strength
-                ,tolerance = this.tolerance
-                ,scratch = Physics.scratchpad()
-                ,pos = scratch.vector()
-                ,normsq
-                ,g
-                ;
-
-            for ( var j = 0, l = bodies.length; j < l; j++ ){
-                
-                body = bodies[ j ];
-
-                for ( var i = j + 1; i < l; i++ ){
-                    
-                    other = bodies[ i ];
-                    // clone the position
-                    pos.clone( other.state.pos );
-                    pos.vsub( body.state.pos );
-                    // get the square distance
-                    normsq = pos.normSq();
-
-                    if (normsq > tolerance){
-
-                        g = strength / normsq;
-
-                        body.accelerate( pos.normalize().mult( g * other.mass ) );
-                        other.accelerate( pos.mult( body.mass/other.mass ).negate() );
-                    }
-                }
-            }
-
-            scratch.done();
-        }
-    };
-});
-
-
-// ---
-// inside: src/behaviors/rigid-constraint-manager.js
-
-/**
- * Rigid constraints manager.
- * Handles distance constraints
- * @module behaviors/rigid-constraint-manager
- */
-Physics.behavior('rigid-constraint-manager', function( parent ){
-
-    var defaults = {
-
-        // set a default target length
-        targetLength: 20
-    };
-
-    return {
-
-        /**
-         * Initialization
-         * @param  {Object} options Configuration object
-         * @return {void}
-         */
-        init: function( options ){
-
-            parent.init.call(this, options);
-
-            Physics.util.extend(this.options, defaults, options);
-
-            this._constraints = [];
-        },
-
-        /**
-         * Connect to world. Automatically called when added to world by the setWorld method
-         * @param  {Object} world The world to connect to
-         * @return {void}
-         */
-        connect: function( world ){
-
-            var intg = world.integrator();
-
-            if ( intg && intg.name.indexOf('verlet') < 0 ){
-
-                throw 'The rigid constraint manager needs a world with a "verlet" compatible integrator.';
-            }
-
-            world.subscribe('integrate:positions', this.resolve, this);
-        },
-
-        /**
-         * Disconnect from world
-         * @param  {Object} world The world to disconnect from
-         * @return {void}
-         */
-        disconnect: function( world ){
-
-            world.unsubscribe('integrate:positions', this.resolve);
-        },
-
-        /**
-         * Remove all constraints
-         * @return {self}
-         */
-        drop: function(){
-
-            // drop the current constraints
-            this._constraints = [];
-            return this;
-        },
-
-        /**
-         * Constrain two bodies to a target relative distance
-         * @param  {Object} bodyA        First body
-         * @param  {Object} bodyB        Second body
-         * @param  {Number} targetLength (optional) Target length. defaults to target length specified in configuration options
-         * @return {object}              The constraint object, which holds .bodyA and .bodyB references to the bodies, .id the string ID of the constraint, .targetLength the target length
-         */
-        constrain: function( bodyA, bodyB, targetLength ){
-
-            var cst;
-
-            if (!bodyA || !bodyB){
-
-                return false;
-            }
-
-            this._constraints.push(cst = {
-                id: Physics.util.uniqueId('rigid-constraint'),
-                bodyA: bodyA,
-                bodyB: bodyB,
-                targetLength: targetLength || this.options.targetLength
-            });
-
-            return cst;
-        },
-
-        /**
-         * Remove a constraint
-         * @param  {Mixed} indexCstrOrId Either the constraint object, the constraint id, or the numeric index of the constraint
-         * @return {self}
-         */
-        remove: function( indexCstrOrId ){
-
-            var constraints = this._constraints
-                ,isObj
-                ;
-
-            if (typeof indexCstrOrId === 'number'){
-
-                constraints.splice( indexCstrOrId, 1 );
-                return this;   
-            }
-
-            isObj = Physics.util.isObject( indexCstrOrId );
-            
-            for ( var i = 0, l = constraints.length; i < l; ++i ){
-                
-                if ( (isObj && constraints[ i ] === indexCstrOrId) ||
-                    ( !isObj && constraints[ i ].id === indexCstrOrId) ){
-
-                    constraints.splice( i, 1 );
-                    return this;
-                }
-            }
-
-            return this;
-        },
-
-        /**
-         * Resolve constraints
-         * @return {void}
-         */
-        resolve: function(){
-
-            var constraints = this._constraints
-                ,scratch = Physics.scratchpad()
-                ,A = scratch.vector()
-                ,BA = scratch.vector()
-                ,con
-                ,len
-                ,corr
-                ,proportion
-                ;
-
-            for ( var i = 0, l = constraints.length; i < l; ++i ){
-            
-                con = constraints[ i ];
-
-                // move constrained bodies to target length based on their
-                // mass proportions
-                A.clone( con.bodyA.state.pos );
-                BA.clone( con.bodyB.state.pos ).vsub( A );
-                len = BA.norm();
-                corr = ( len - con.targetLength ) / len;
-                
-                BA.mult( corr );
-                proportion = con.bodyB.mass / (con.bodyA.mass + con.bodyB.mass);
-
-                if ( !con.bodyA.fixed ){
-
-                    BA.mult( proportion );
-                    con.bodyA.state.pos.vadd( BA );
-                    BA.mult( 1 / proportion );
-                }
-
-                if ( !con.bodyB.fixed ){
-
-                    BA.mult( 1 - proportion );
-                    con.bodyB.state.pos.vsub( BA );
-                }
-            }
-
-            scratch.done();
-        },
-
-        /**
-         * Get an array of all constraints
-         * @return {Array} The array of constraint objects
-         */
-        getConstraints: function(){
-
-            return [].concat(this._constraints);
-        }
-    };
-});
-
-
-// ---
-// inside: src/behaviors/sweep-prune.js
-
-/**
- * Sweep and Prune implementation for broad phase collision detection
- * @module behaviors/sweep-prune
- */
-Physics.behavior('sweep-prune', function( parent ){
-
-    var PUBSUB_CANDIDATES = 'collisions:candidates';
-    var uid = 1;
-
-    /**
-     * Get a unique numeric id for internal use
-     * @return {Number} Unique id
-     */
-    var getUniqueId = function getUniqueId(){
-
-        return uid++;
-    };
-
-    // add z: 2 to get this to work in 3D
-    var dof = { x: 0, y: 1 }; // degrees of freedom
-
-    /**
-     * return hash for a pair of ids
-     * @param  {Number} id1 First id
-     * @param  {Number} id2 Second id
-     * @return {Number}     Hash id
-     */
-    function pairHash( id1, id2 ){
-
-        if ( id1 === id2 ){
-
-            return false;
-        }
-
-        // valid for values < 2^16
-        return id1 > id2? 
-            (id1 << 16) | (id2 & 0xFFFF) : 
-            (id2 << 16) | (id1 & 0xFFFF)
-            ;
-    }
-    
-    return {
-
-        /**
-         * Initialization
-         * @param  {Object} options Configuration object
-         * @return {void}
-         */
-        init: function( options ){
-
-            parent.init.call(this, options);
-
-            this.clear();
-        },
-
-        /**
-         * Refresh tracking data
-         * @return {void}
-         */
-        clear: function(){
-
-            this.tracked = [];
-            this.pairs = []; // pairs selected as candidate collisions by broad phase
-            this.intervalLists = {}; // stores lists of aabb projection intervals to be sorted
-            
-            // init intervalLists
-            for ( var xyz in dof ){
-
-                this.intervalLists[ xyz ] = [];
-            }
-        },
-
-        /**
-         * Connect to world. Automatically called when added to world by the setWorld method
-         * @param  {Object} world The world to connect to
-         * @return {void}
-         */
-        connect: function( world ){
-
-            world.subscribe( 'add:body', this.trackBody, this );
-            world.subscribe( 'remove:body', this.untrackBody, this );
-            world.subscribe( 'integrate:velocities', this.sweep, this );
-
-            // add current bodies
-            var bodies = world.getBodies();
-            for ( var i = 0, l = bodies.length; i < l; ++i ){
-                
-                this.trackBody({ body: bodies[ i ] });
-            }
-        },
-
-        /**
-         * Disconnect from world
-         * @param  {Object} world The world to disconnect from
-         * @return {void}
-         */
-        disconnect: function( world ){
-
-            world.unsubscribe( 'add:body', this.trackBody );
-            world.unsubscribe( 'remove:body', this.untrackBody );
-            world.unsubscribe( 'integrate:velocities', this.sweep );
-            this.clear();
-        },
-
-        /**
-         * Execute the broad phase and get candidate collisions
-         * @return {Array} List of candidates
-         */
-        broadPhase: function(){
-
-            this.updateIntervals();
-            this.sortIntervalLists();
-            return this.checkOverlaps();
-        },
-
-        /**
-         * Simple insertion sort for each axis
-         * @return {void}
-         */
-        sortIntervalLists: function(){
-
-            var list
-                ,len
-                ,i
-                ,hole
-                ,bound
-                ,boundVal
-                ,left
-                ,leftVal
-                ,axis
-                ;
-
-            // for each axis...
-            for ( var xyz in dof ){
-
-                // get the intervals for that axis
-                list = this.intervalLists[ xyz ];
-                i = 0;
-                len = list.length;
-                axis = dof[ xyz ];
-
-                // for each interval bound...
-                while ( (++i) < len ){
-
-                    // store bound
-                    bound = list[ i ];
-                    boundVal = bound.val.get( axis );
-                    hole = i;
-
-                    left = list[ hole - 1 ];
-                    leftVal = left && left.val.get( axis );
-
-                    // while others are greater than bound...
-                    while ( 
-                        hole > 0 && 
-                        (
-                            leftVal > boundVal ||
-                            // if it's an equality, only move it over if 
-                            // the hole was created by a minimum
-                            // and the previous is a maximum
-                            // so that we detect contacts also
-                            leftVal === boundVal &&
-                            ( left.type && !bound.type )
-                        )
-                    ) {
-
-                        // move others greater than bound to the right
-                        list[ hole ] = left;
-                        hole--;
-                        left = list[ hole - 1 ];
-                        leftVal = left && left.val.get( axis );
-                    }
-
-                    // insert bound in the hole
-                    list[ hole ] = bound;
-                }
-            }
-        },
-
-        /**
-         * Get a pair object for the tracker objects
-         * @param  {Object} tr1      First tracker
-         * @param  {Object} tr2      Second tracker
-         * @param  {Boolean} doCreate Create if not already found
-         * @return {Mixed}          Pair object or null if not found
-         */
-        getPair: function(tr1, tr2, doCreate){
-
-            var hash = pairHash( tr1.id, tr2.id );
-
-            if ( hash === false ){
-                return null;
-            }
-
-            var c = this.pairs[ hash ];
-
-            if ( !c ){
-
-                if ( !doCreate ){
-                    return null;
-                }
-
-                c = this.pairs[ hash ] = {
-                    bodyA: tr1.body,
-                    bodyB: tr2.body,
-                    flag: 0
                 };
-            }
-
-            return c;
-        },
-
-        /**
-         * Check each axis for overlaps of bodies AABBs
-         * @return {Array} List of candidate collisions 
-         */
-        checkOverlaps: function(){
-
-            var isX
-                ,hash
-                ,tr1
-                ,tr2
-                ,bound
-                ,list
-                ,len
-                ,i
-                ,j
-                ,c
-                // determine which axis is the last we need to check
-                ,collisionFlag = ( dof.z || dof.y || dof.x )
-                ,encounters = []
-                ,enclen = 0
-                ,candidates = []
-                ;
-
-            for ( var xyz in dof ){
-
-                // is the x coord
-                isX = (xyz === 'x');
-                // get the interval list for this axis
-                list = this.intervalLists[ xyz ];
-                i = -1;
-                len = list.length;
-
-                // for each interval bound
-                while ( (++i) < len ){
-                    
-                    bound = list[ i ];
-                    tr1 = bound.tracker;
-
-                    if ( bound.type ){
-
-                        // is a max
-
-                        j = enclen;
-
-                        while ( (--j) >= 0 ){
-
-                            tr2 = encounters[ j ];
-
-                            // if they are the same tracked interval
-                            if ( tr2 === tr1 ){
-
-                                // remove the interval from the encounters list
-                                // faster than .splice()
-                                if ( j < enclen - 1 ) {
-                                    
-                                    encounters[ j ] = encounters.pop();
-
-                                } else {
-
-                                    // encountered a max right after a min... no overlap
-                                    encounters.pop();
-                                }
-
-                                enclen--;
-
-                            } else {
-
-                                // check if we have flagged this pair before
-                                // if it's the x axis, create a pair
-                                c = this.getPair( tr1, tr2, isX );
-
-                                if ( c ){
-                                    
-                                    // if it's the x axis, set the flag
-                                    // to = 1.
-                                    // if not, increment the flag by one.
-                                    c.flag = isX? 0 : c.flag + 1;
-
-                                    // c.flag will equal collisionFlag 
-                                    // if we've incremented the flag
-                                    // enough that all axes are overlapping
-                                    if ( c.flag === collisionFlag ){
-
-                                        // overlaps on all axes.
-                                        // add it to possible collision
-                                        // candidates list for narrow phase
-
-                                        candidates.push( c );
-                                    }
-                                }
-                            }
-                        }
-
-                    } else {
-
-                        // is a min
-                        // just add this minimum to the encounters list
-                        enclen = encounters.push( tr1 );
-                    }
-                }
-            }
-
-            return candidates;
-        },
-
-        /**
-         * Update position intervals on each axis
-         * @return {[type]} [description]
-         */
-        updateIntervals: function(){
-
-            var tr
-                ,intr
-                ,scratch = Physics.scratchpad()
-                ,pos = scratch.vector()
-                ,aabb = scratch.vector()
-                ,list = this.tracked
-                ,i = list.length
-                ;
-
-            // for all tracked bodies
-            while ( (--i) >= 0 ){
-
-                tr = list[ i ];
-                intr = tr.interval;
-                pos.clone( tr.body.state.pos );
-                aabb.clone( tr.body.aabb() );
-
-                // copy the position (plus or minus) the aabb bounds
-                // into the min/max intervals
-                intr.min.val.clone( pos ).vsub( aabb );
-                intr.max.val.clone( pos ).vadd( aabb );
-            }
-
-            scratch.done();
-        },
-
-        /**
-         * Add body to list of those tracked by sweep and prune
-         * @param  {Object} data Event data
-         * @return {void}
-         */
-        trackBody: function( data ){
-
-            var body = data.body
-                ,tracker = {
-
-                    id: getUniqueId(),
-                    body: body
-                }
-                ,intr = {
-
-                    min: {
-                        type: false, //min
-                        val: Physics.vector(),
-                        tracker: tracker
-                    },
-
-                    max: {
-                        type: true, //max
-                        val: Physics.vector(),
-                        tracker: tracker
-                    }
-                }
-                ;
-
-            tracker.interval = intr;
-            this.tracked.push( tracker );
-            
-            for ( var xyz in dof ){
-
-                this.intervalLists[ xyz ].push( intr.min, intr.max );
-            }
-        },
-
-        /**
-         * Remove body from list of those tracked
-         * @param  {Object} data Event data
-         * @return {void}
-         */
-        untrackBody: function( data ){
-
-            var body = data.body
-                ,list
-                ,minmax
-                ,trackedList = this.tracked
-                ,tracker
-                ,count
-                ;
-
-            for ( var i = 0, l = trackedList.length; i < l; ++i ){
-
-                tracker = trackedList[ i ];
-                
-                if ( tracker.body === body ){
-
-                    // remove the tracker at this index
-                    trackedList.splice(i, 1);
-
-                    for ( var xyz in dof ){
-
-                        count = 0;
-                        list = this.intervalLists[ xyz ];
-
-                        for ( var j = 0, m = list.length; j < m; ++j ){
-                                
-                            minmax = list[ j ];
-
-                            if ( minmax === tracker.interval.min || minmax === tracker.interval.max ){
-
-                                // remove interval from list
-                                list.splice(j, 1);
-                                j--;
-                                l--;
-
-                                if (count > 0){
-                                    break;
-                                }
-
-                                count++;
-                            }
-                        }
-                    }
-
-                    break;
-                }
-            }            
-        },
-
-        /**
-         * Sweep and publish event if any candidate collisions are found
-         * @param  {Object} data Event data
-         * @return {void}
-         */
-        sweep: function( data ){
-
-            var self = this
-                ,bodies = data.bodies
-                ,dt = data.dt
-                ,candidates
-                ;
-
-            candidates = self.broadPhase();
-            
-            if ( candidates.length ){
-
-                this._world.publish({
-                    topic: PUBSUB_CANDIDATES,
-                    candidates: candidates
-                });
-            }
-        }
-    };
-});
-
-// ---
-// inside: src/behaviors/verlet-constraints.js
-
-/**
- * Verlet constraints manager.
- * Handles distance constraints, and angle constraints
- * @module behaviors/rigid-constraint-manager
- */
-Physics.behavior('verlet-constraints', function( parent ){
-
-    var TWOPI = 2 * Math.PI;
-
-    var defaults = {
-
-        // number of iterations to resolve constraints
-        iterations: 2
-    };
-
-    return {
-
-        /**
-         * Initialization
-         * @param  {Object} options Configuration object
-         * @return {void}
-         */
-        init: function( options ){
-
-            parent.init.call(this, options);
-
-            Physics.util.extend(this.options, defaults, options);
-
-            this._distanceConstraints = [];
-            this._angleConstraints = [];
-        },
-
-        /**
-         * Connect to world. Automatically called when added to world by the setWorld method
-         * @param  {Object} world The world to connect to
-         * @return {void}
-         */
-        connect: function( world ){
-
-            var intg = world.integrator();
-
-            if ( intg && intg.name.indexOf('verlet') < 0 ){
-
-                throw 'The rigid constraint manager needs a world with a "verlet" compatible integrator.';
-            }
-
-            world.subscribe('integrate:positions', this.resolve, this);
-        },
-
-        /**
-         * Disconnect from world
-         * @param  {Object} world The world to disconnect from
-         * @return {void}
-         */
-        disconnect: function( world ){
-
-            world.unsubscribe('integrate:positions', this.resolve);
-        },
-
-        /**
-         * Remove all constraints
-         * @return {self}
-         */
-        drop: function(){
-
-            // drop the current constraints
-            this._distanceConstraints = [];
-            this._angleConstraints = [];
-            return this;
-        },
-
-        /**
-         * Constrain two bodies to a target relative distance
-         * @param  {Object} bodyA        First body
-         * @param  {Object} bodyB        Second body
-         * @param  {Number} targetLength (optional) Target length. defaults to target length specified in configuration options
-         * @return {object}              The constraint object, which holds .bodyA and .bodyB references to the bodies, .id the string ID of the constraint, .targetLength the target length
-         */
-        distanceConstraint: function( bodyA, bodyB, stiffness, targetLength ){
-
-            var cst;
-
-            if (!bodyA || !bodyB){
-
-                return false;
-            }
-
-            cst = {
-                id: Physics.util.uniqueId('dis-constraint'),
-                type: 'dis',
-                bodyA: bodyA,
-                bodyB: bodyB,
-                stiffness: stiffness || 0.5,
-                targetLength: targetLength || bodyB.state.pos.dist( bodyA.state.pos )
-            };
-
-            cst.targetLengthSq = cst.targetLength * cst.targetLength;
-
-            this._distanceConstraints.push( cst );
-            return cst;
-        },
-
-        /**
-         * Constrain three bodies to a target relative angle
-         * @param  {Object} bodyA        First body
-         * @param  {Object} bodyB        Second body
-         * @param  {Object} bodyC        Third body
-         * @param  {Number} targetLength (optional) Target length. defaults to target length specified in configuration options
-         * @return {object}              The constraint object, which holds .bodyA and .bodyB references to the bodies, .id the string ID of the constraint, .targetLength the target length
-         */
-        angleConstraint: function( bodyA, bodyB, bodyC, stiffness, targetAngle ){
-
-            var cst;
-
-            if (!bodyA || !bodyB){
-
-                return false;
-            }
-
-            cst = {
-                id: Physics.util.uniqueId('ang-constraint'),
-                type: 'ang',
-                bodyA: bodyA,
-                bodyB: bodyB,
-                bodyC: bodyC,
-                stiffness: stiffness || 0.5,
-                targetAngle: targetAngle || bodyB.state.pos.angle2( bodyA.state.pos, bodyC.state.pos )
-            };
-
-            this._angleConstraints.push( cst );
-            return cst;
-        },
-
-        /**
-         * Remove a constraint
-         * @param  {Mixed} indexCstrOrId Either the constraint object or the constraint id
-         * @return {self}
-         */
-        remove: function( cstrOrId ){
-
-            var constraints
-                ,type
-                ,isObj
-                ,i
-                ,l
-                ;
-
-            isObj = Physics.util.isObject( cstrOrId );
-
-            type = (isObj) ? cstrOrId.type : cstrOrId.substr(0, 3);
-            constraints = ( type === 'ang' ) ? this._angleConstraints : this._distanceConstraints;
-
-            if ( isObj ){
-
-                for ( i = 0, l = constraints.length; i < l; ++i ){
-                    
-                    if ( constraints[ i ] === cstrOrId ){
-
-                        constraints.splice( i, 1 );
-                        return this;
-                    }
-                }
-            } else {
-
-                for ( i = 0, l = constraints.length; i < l; ++i ){
-                    
-                    if ( constraints[ i ].id === cstrOrId ){
-
-                        constraints.splice( i, 1 );
-                        return this;
-                    }
-                }
-            }
-
-            return this;
-        },
-
-        resolveAngleConstraints: function( coef ){
-
-            var constraints = this._angleConstraints
-                ,scratch = Physics.scratchpad()
-                ,trans = scratch.transform()
-                ,con
-                ,ang
-                ,corr
-                ,proportion
-                ,invMassSum
-                ;
-
-            for ( var i = 0, l = constraints.length; i < l; ++i ){
-            
-                con = constraints[ i ];
-
-                ang = con.bodyB.state.pos.angle2( con.bodyA.state.pos, con.bodyC.state.pos );
-                corr = ang - con.targetAngle;
-
-                if (!corr){
-
-                    continue;
-
-                } else if (corr <= -Math.PI){
-                
-                    corr += TWOPI;
-
-                } else if (corr >= Math.PI){
-                
-                    corr -= TWOPI;
-                }
-
-                trans.setTranslation( con.bodyB.state.pos );
-
-                corr *= -coef * con.stiffness;
-
-                if ( !con.bodyA.fixed && !con.bodyB.fixed && !con.bodyC.fixed ){
-                    invMassSum = 1 / (con.bodyA.mass + con.bodyB.mass + con.bodyC.mass);
-                }
-
-                if ( !con.bodyA.fixed ){
-
-                    if ( !con.bodyB.fixed && !con.bodyC.fixed ){
-                        
-                        ang = corr * (con.bodyB.mass + con.bodyC.mass) * invMassSum;
-
-                    } else if ( con.bodyB.fixed ){
-
-                        ang = corr * con.bodyC.mass / ( con.bodyC.mass + con.bodyA.mass );
-
-                    } else {
-
-                        ang = corr * con.bodyB.mass / ( con.bodyB.mass + con.bodyA.mass );
-                    }
-
-                    // ang = corr;
-
-                    trans.setRotation( ang );
-                    con.bodyA.state.pos.translateInv( trans );
-                    con.bodyA.state.pos.rotate( trans );
-                    con.bodyA.state.pos.translate( trans );
-                }
-
-                if ( !con.bodyC.fixed ){
-
-                    if ( !con.bodyA.fixed && !con.bodyB.fixed ){
-                        
-                        ang = -corr * (con.bodyB.mass + con.bodyA.mass) * invMassSum;
-
-                    } else if ( con.bodyB.fixed ){
-
-                        ang = -corr * con.bodyA.mass / ( con.bodyC.mass + con.bodyA.mass );
-                        
-                    } else {
-
-                        ang = -corr * con.bodyB.mass / ( con.bodyB.mass + con.bodyC.mass );
-                    }
-
-                    // ang = -corr;
-
-                    trans.setRotation( ang );
-                    con.bodyC.state.pos.translateInv( trans );
-                    con.bodyC.state.pos.rotate( trans );
-                    con.bodyC.state.pos.translate( trans );
-                }
-
-                if ( !con.bodyB.fixed ){
-
-                    if ( !con.bodyA.fixed && !con.bodyC.fixed ){
-                        
-                        ang = corr * (con.bodyA.mass + con.bodyC.mass) * invMassSum;
-
-                    } else if ( con.bodyA.fixed ){
-
-                        ang = corr * con.bodyC.mass / ( con.bodyC.mass + con.bodyB.mass );
-                        
-                    } else {
-
-                        ang = corr * con.bodyA.mass / ( con.bodyA.mass + con.bodyC.mass );
-                    }
-
-                    // ang = corr;
-
-                    trans.setRotation( ang ).setTranslation( con.bodyA.state.pos );
-                    con.bodyB.state.pos.translateInv( trans );
-                    con.bodyB.state.pos.rotate( trans );
-                    con.bodyB.state.pos.translate( trans );
-
-                    trans.setTranslation( con.bodyC.state.pos );
-                    con.bodyB.state.pos.translateInv( trans );
-                    con.bodyB.state.pos.rotateInv( trans );
-                    con.bodyB.state.pos.translate( trans );
-                }
-            }
-
-            scratch.done();
-        },
-
-        resolveDistanceConstraints: function( coef ){
-
-            var constraints = this._distanceConstraints
-                ,scratch = Physics.scratchpad()
-                ,BA = scratch.vector()
-                ,con
-                ,len
-                ,corr
-                ,proportion
-                ;
-
-            for ( var i = 0, l = constraints.length; i < l; ++i ){
-            
-                con = constraints[ i ];
-
-                // move constrained bodies to target length based on their
-                // mass proportions
-                BA.clone( con.bodyB.state.pos ).vsub( con.bodyA.state.pos );
-                len = BA.normSq() || Math.random() * 0.0001;
-                corr = coef * con.stiffness * ( len - con.targetLengthSq ) / len;
-                
-                BA.mult( corr );
-                proportion = (con.bodyA.fixed || con.bodyB.fixed) ? 1 : con.bodyB.mass / (con.bodyA.mass + con.bodyB.mass);
-
-                if ( !con.bodyA.fixed ){
-
-                    if ( !con.bodyB.fixed ){
-                        BA.mult( proportion );
-                    }
-
-                    con.bodyA.state.pos.vadd( BA );
-
-                    if ( !con.bodyB.fixed ){
-                        BA.mult( 1 / proportion );
-                    }
-                }
-
-                if ( !con.bodyB.fixed ){
-
-                    if ( !con.bodyA.fixed ){
-                        BA.mult( 1 - proportion );
-                    }
-
-                    con.bodyB.state.pos.vsub( BA );
-                }
-            }
-
-            scratch.done();
-        },
-
-        shuffleConstraints: function(){
-
-            this._distanceConstraints = Physics.util.shuffle( this._distanceConstraints );
-            this._angleConstraints = Physics.util.shuffle( this._angleConstraints );
-        },
-
-        /**
-         * Resolve constraints
-         * @return {void}
-         */
-        resolve: function(){
-
-            var its = this.options.iterations
-                ,coef = 1 / its
-                ;
-
-            for (var i = 0; i < its; i++){
-
-                // this.shuffleConstraints();
-                this.resolveDistanceConstraints( coef );
-                this.resolveAngleConstraints( coef );
-            }
-        },
-
-        /**
-         * Get all constraints
-         * @return {Object} The object containing copied arrays of the constraints
-         */
-        getConstraints: function(){
-
             return {
-                distanceConstraints: [].concat(this._distanceConstraints),
-                angleConstraints: [].concat(this._angleConstraints)
-            };
-        }
-    };
-});
-
-
-// ---
-// inside: src/integrators/improved-euler.js
-
-Physics.integrator('improved-euler', function( parent ){
-
-    return {
-
-        /**
-         * Initialization
-         * @param  {Object} options Configuration options
-         * @return {void}
-         */
-        init: function( options ){
-
-            // call parent init
-            parent.init.call(this, options);
-        },
-
-        /**
-         * Velocity integration
-         * @param  {Array} bodies Array of bodies to integrate
-         * @param  {Number} dt     Timestep size
-         * @return {void}
-         */
-        integrateVelocities: function( bodies, dt ){
-
-            // half the timestep squared
-            var drag = 1 - this.options.drag
-                ,body = null
-                ,state
-                ;
-
-            for ( var i = 0, l = bodies.length; i < l; ++i ){
-
-                body = bodies[ i ];
-                state = body.state;
-
-                // only integrate if the body isn't fixed
-                if ( !body.fixed ){
-
-                    // Inspired from https://github.com/soulwire/Coffee-Physics
-                    // @licence MIT
-                    // 
-                    // x += (v * dt) + (a * 0.5 * dt * dt)
-                    // v += a * dt
-
-                    
-                    // Scale force to mass.
-                    // state.acc.mult( body.massInv );
-
-                    // Remember velocity for future use.
-                    state.old.vel.clone( state.vel );
-
-                    // remember original acc
-                    state.old.acc.clone( state.acc );
-
-                    // Update velocity first so we can reuse the acc vector.
-                    // a *= dt
-                    // v += a ...
-                    state.vel.vadd( state.acc.mult( dt ) );
-
-                    // Apply "air resistance".
-                    if ( drag ){
-
-                        state.vel.mult( drag );
+                init: function(t) {
+                    e.init.call(this, t), this.clear()
+                },
+                clear: function() {
+                    for (var t in this.tracked = [], this.pairs = [], this.intervalLists = {}, i) this.intervalLists[t] = []
+                },
+                connect: function(t) {
+                    t.subscribe("add:body", this.trackBody, this), t.subscribe("remove:body", this.untrackBody, this), t.subscribe("integrate:velocities", this.sweep, this);
+                    for (var e = t.getBodies(), n = 0, i = e.length; n < i; ++n) this.trackBody({
+                        body: e[n]
+                    })
+                },
+                disconnect: function(t) {
+                    t.unsubscribe("add:body", this.trackBody), t.unsubscribe("remove:body", this.untrackBody), t.unsubscribe("integrate:velocities", this.sweep), this.clear()
+                },
+                broadPhase: function() {
+                    return this.updateIntervals(), this.sortIntervalLists(), this.checkOverlaps()
+                },
+                sortIntervalLists: function() {
+                    var t, e, n, o, r, s, a, c, l;
+                    for (var u in i)
+                        for (n = 0, e = (t = this.intervalLists[u]).length, l = i[u]; ++n < e;) {
+                            for (s = (r = t[n]).val.get(l), c = (a = t[(o = n) - 1]) && a.val.get(l); o > 0 && (c > s || c === s && a.type && !r.type);) t[o] = a, c = (a = t[--o - 1]) && a.val.get(l);
+                            t[o] = r
+                        }
+                },
+                getPair: function(t, e, n) {
+                    var i, o, r = (i = t.id, o = e.id, i !== o && (i > o ? i << 16 | 65535 & o : o << 16 | 65535 & i));
+                    if (!1 === r) return null;
+                    var s = this.pairs[r];
+                    if (!s) {
+                        if (!n) return null;
+                        s = this.pairs[r] = {
+                            bodyA: t.body,
+                            bodyB: e.body,
+                            flag: 0
+                        }
                     }
-
-                    // Reset accel
-                    state.acc.zero();
-
-                    //
-                    // Angular components
-                    // 
-
-                    state.old.angular.vel = state.angular.vel;
-                    state.angular.vel += state.angular.acc * dt;
-                    state.angular.acc = 0;
-
-                } else {
-                    // set the velocity and acceleration to zero!
-                    state.vel.zero();
-                    state.acc.zero();
-                    state.angular.vel = 0;
-                    state.angular.acc = 0;
+                    return s
+                },
+                checkOverlaps: function() {
+                    var t, e, n, o, r, s, a, c, l, u = i.z || i.y || i.x,
+                        h = [],
+                        d = 0,
+                        f = [];
+                    for (var p in i)
+                        for (t = "x" === p, a = -1, s = (r = this.intervalLists[p]).length; ++a < s;)
+                            if (e = (o = r[a]).tracker, o.type)
+                                for (c = d; --c >= 0;)(n = h[c]) === e ? (c < d - 1 ? h[c] = h.pop() : h.pop(), d--) : (l = this.getPair(e, n, t)) && (l.flag = t ? 0 : l.flag + 1, l.flag === u && f.push(l));
+                            else d = h.push(e);
+                    return f
+                },
+                updateIntervals: function() {
+                    for (var e, n, i = t.scratchpad(), o = i.vector(), r = i.vector(), s = this.tracked, a = s.length; --a >= 0;) n = (e = s[a]).interval, o.clone(e.body.state.pos), r.clone(e.body.aabb()), n.min.val.clone(o).vsub(r), n.max.val.clone(o).vadd(r);
+                    i.done()
+                },
+                trackBody: function(e) {
+                    var o = e.body,
+                        r = {
+                            id: n++,
+                            body: o
+                        },
+                        s = {
+                            min: {
+                                type: !1,
+                                val: t.vector(),
+                                tracker: r
+                            },
+                            max: {
+                                type: !0,
+                                val: t.vector(),
+                                tracker: r
+                            }
+                        };
+                    for (var a in r.interval = s, this.tracked.push(r), i) this.intervalLists[a].push(s.min, s.max)
+                },
+                untrackBody: function(t) {
+                    for (var e, n, o, r, s = t.body, a = this.tracked, c = 0, l = a.length; c < l; ++c)
+                        if ((o = a[c]).body === s) {
+                            for (var u in a.splice(c, 1), i) {
+                                r = 0;
+                                for (var h = 0, d = (e = this.intervalLists[u]).length; h < d; ++h)
+                                    if ((n = e[h]) === o.interval.min || n === o.interval.max) {
+                                        if (e.splice(h, 1), h--, l--, r > 0) break;
+                                        r++
+                                    }
+                            }
+                            break
+                        }
+                },
+                sweep: function(t) {
+                    var e;
+                    t.bodies, t.dt;
+                    (e = this.broadPhase()).length && this._world.publish({
+                        topic: "collisions:candidates",
+                        candidates: e
+                    })
                 }
             }
-        },
-
-        /**
-         * Position integration
-         * @param  {Array} bodies Array of bodies to integrate
-         * @param  {Number} dt     Timestep size
-         * @return {void}
-         */
-        integratePositions: function( bodies, dt ){
-
-            // half the timestep squared
-            var halfdtdt = 0.5 * dt * dt
-                ,body = null
-                ,state
-                // use cached vector instances
-                // so we don't need to recreate them in a loop
-                ,scratch = Physics.scratchpad()
-                ,vel = scratch.vector()
-                ,angVel
-                ;
-
-            for ( var i = 0, l = bodies.length; i < l; ++i ){
-
-                body = bodies[ i ];
-                state = body.state;
-
-                // only integrate if the body isn't fixed
-                if ( !body.fixed ){
-
-
-                    // Store previous location.
-                    state.old.pos.clone( state.pos );
-
-                    // Update position.
-                    // ...
-                    // oldV *= dt
-                    // a *= 0.5 * dt
-                    // x += oldV + a
-                    vel.clone( state.old.vel );
-                    state.pos.vadd( vel.mult( dt ) ).vadd( state.old.acc.mult( halfdtdt ) );
-
-                    state.old.acc.zero();
-
-                    //
-                    // Angular components
-                    // 
-
-                    state.old.angular.pos = state.angular.pos;
-                    state.angular.pos += state.old.angular.vel * dt + state.old.angular.acc * halfdtdt;
-                    state.old.angular.acc = 0;
-
+        }), t.behavior("verlet-constraints", function(e) {
+            var n = 2 * Math.PI,
+                i = {
+                    iterations: 2
+                };
+            return {
+                init: function(n) {
+                    e.init.call(this, n), t.util.extend(this.options, i, n), this._distanceConstraints = [], this._angleConstraints = []
+                },
+                connect: function(t) {
+                    var e = t.integrator();
+                    if (e && e.name.indexOf("verlet") < 0) throw 'The rigid constraint manager needs a world with a "verlet" compatible integrator.';
+                    t.subscribe("integrate:positions", this.resolve, this)
+                },
+                disconnect: function(t) {
+                    t.unsubscribe("integrate:positions", this.resolve)
+                },
+                drop: function() {
+                    return this._distanceConstraints = [], this._angleConstraints = [], this
+                },
+                distanceConstraint: function(e, n, i, o) {
+                    var r;
+                    return !(!e || !n) && ((r = {
+                        id: t.util.uniqueId("dis-constraint"),
+                        type: "dis",
+                        bodyA: e,
+                        bodyB: n,
+                        stiffness: i || .5,
+                        targetLength: o || n.state.pos.dist(e.state.pos)
+                    }).targetLengthSq = r.targetLength * r.targetLength, this._distanceConstraints.push(r), r)
+                },
+                angleConstraint: function(e, n, i, o, r) {
+                    var s;
+                    return !(!e || !n) && (s = {
+                        id: t.util.uniqueId("ang-constraint"),
+                        type: "ang",
+                        bodyA: e,
+                        bodyB: n,
+                        bodyC: i,
+                        stiffness: o || .5,
+                        targetAngle: r || n.state.pos.angle2(e.state.pos, i.state.pos)
+                    }, this._angleConstraints.push(s), s)
+                },
+                remove: function(e) {
+                    var n, i, o, r;
+                    if (n = "ang" === ((i = t.util.isObject(e)) ? e.type : e.substr(0, 3)) ? this._angleConstraints : this._distanceConstraints, i) {
+                        for (o = 0, r = n.length; o < r; ++o)
+                            if (n[o] === e) return n.splice(o, 1), this
+                    } else
+                        for (o = 0, r = n.length; o < r; ++o)
+                            if (n[o].id === e) return n.splice(o, 1), this;
+                    return this
+                },
+                resolveAngleConstraints: function(e) {
+                    for (var i, o, r, s, a = this._angleConstraints, c = t.scratchpad(), l = c.transform(), u = 0, h = a.length; u < h; ++u)(r = (o = (i = a[u]).bodyB.state.pos.angle2(i.bodyA.state.pos, i.bodyC.state.pos)) - i.targetAngle) && (r <= -Math.PI ? r += n : r >= Math.PI && (r -= n), l.setTranslation(i.bodyB.state.pos), r *= -e * i.stiffness, i.bodyA.fixed || i.bodyB.fixed || i.bodyC.fixed || (s = 1 / (i.bodyA.mass + i.bodyB.mass + i.bodyC.mass)), i.bodyA.fixed || (o = i.bodyB.fixed || i.bodyC.fixed ? i.bodyB.fixed ? r * i.bodyC.mass / (i.bodyC.mass + i.bodyA.mass) : r * i.bodyB.mass / (i.bodyB.mass + i.bodyA.mass) : r * (i.bodyB.mass + i.bodyC.mass) * s, l.setRotation(o), i.bodyA.state.pos.translateInv(l), i.bodyA.state.pos.rotate(l), i.bodyA.state.pos.translate(l)), i.bodyC.fixed || (o = i.bodyA.fixed || i.bodyB.fixed ? i.bodyB.fixed ? -r * i.bodyA.mass / (i.bodyC.mass + i.bodyA.mass) : -r * i.bodyB.mass / (i.bodyB.mass + i.bodyC.mass) : -r * (i.bodyB.mass + i.bodyA.mass) * s, l.setRotation(o), i.bodyC.state.pos.translateInv(l), i.bodyC.state.pos.rotate(l), i.bodyC.state.pos.translate(l)), i.bodyB.fixed || (o = i.bodyA.fixed || i.bodyC.fixed ? i.bodyA.fixed ? r * i.bodyC.mass / (i.bodyC.mass + i.bodyB.mass) : r * i.bodyA.mass / (i.bodyA.mass + i.bodyC.mass) : r * (i.bodyA.mass + i.bodyC.mass) * s, l.setRotation(o).setTranslation(i.bodyA.state.pos), i.bodyB.state.pos.translateInv(l), i.bodyB.state.pos.rotate(l), i.bodyB.state.pos.translate(l), l.setTranslation(i.bodyC.state.pos), i.bodyB.state.pos.translateInv(l), i.bodyB.state.pos.rotateInv(l), i.bodyB.state.pos.translate(l)));
+                    c.done()
+                },
+                resolveDistanceConstraints: function(e) {
+                    for (var n, i, o, r, s = this._distanceConstraints, a = t.scratchpad(), c = a.vector(), l = 0, u = s.length; l < u; ++l) n = s[l], c.clone(n.bodyB.state.pos).vsub(n.bodyA.state.pos), i = c.normSq() || 1e-4 * Math.random(), o = e * n.stiffness * (i - n.targetLengthSq) / i, c.mult(o), r = n.bodyA.fixed || n.bodyB.fixed ? 1 : n.bodyB.mass / (n.bodyA.mass + n.bodyB.mass), n.bodyA.fixed || (n.bodyB.fixed || c.mult(r), n.bodyA.state.pos.vadd(c), n.bodyB.fixed || c.mult(1 / r)), n.bodyB.fixed || (n.bodyA.fixed || c.mult(1 - r), n.bodyB.state.pos.vsub(c));
+                    a.done()
+                },
+                shuffleConstraints: function() {
+                    this._distanceConstraints = t.util.shuffle(this._distanceConstraints), this._angleConstraints = t.util.shuffle(this._angleConstraints)
+                },
+                resolve: function() {
+                    for (var t = this.options.iterations, e = 1 / t, n = 0; n < t; n++) this.resolveDistanceConstraints(e), this.resolveAngleConstraints(e)
+                },
+                getConstraints: function() {
+                    return {
+                        distanceConstraints: [].concat(this._distanceConstraints),
+                        angleConstraints: [].concat(this._angleConstraints)
+                    }
                 }
             }
-
-            scratch.done();
-        }
-    };
-});
-
-
-
-// ---
-// inside: src/renderers/canvas.js
-
-/**
- * A simple canvas renderer.
- * Renders circles and convex-polygons
- */
-Physics.renderer('canvas', function( proto ){
-
-    var Pi2 = Math.PI * 2
-        // helper to create new dom elements
-        ,newEl = function( node, content ){
-            var el = document.createElement(node || 'div');
-            if (content){
-                el.innerHTML = content;
-            }
-            return el;
-        }
-        ;
-
-    var defaults = {
-
-        // draw aabbs of bodies for debugging
-        debug: false,
-        // the element to place meta data into
-        metaEl: null,
-        // default styles of drawn objects
-        styles: {
-
-            'point' : 'rgba(80, 50, 100, 0.7)',
-
-            'circle' : {
-                strokeStyle: 'rgba(70, 50, 100, 0.7)',
-                lineWidth: 1,
-                fillStyle: 'rgba(44, 105, 44, 0.7)',
-                angleIndicator: 'rgba(69, 51, 78, 0.7)'
-            },
-
-            'convex-polygon' : {
-                strokeStyle: 'rgba(80, 50, 100, 0.7)',
-                lineWidth: 1,
-                fillStyle: 'rgba(114, 105, 124, 0.7)',
-                angleIndicator: 'rgba(69, 51, 78, 0.7)'
-            }
-        },
-        offset: {x: 0, y: 0}
-    };
-
-    // deep copy callback to extend deeper into options
-    var deep = function( a, b ){
-
-        if ( Physics.util.isPlainObject( b ) ){
-
-            return Physics.util.extend({}, a, b, deep );
-        }
-
-        return b !== undefined ? b : a;
-    };
-
-    return {
-
-        /**
-         * Initialization
-         * @param  {Object} options Config options passed by initializer
-         * @return {void}
-         */
-        init: function( options ){
-
-            // call proto init
-            proto.init.call(this, options);
-
-            // further options
-            this.options = Physics.util.extend({}, defaults, this.options, deep);
-            this.options.offset = Physics.vector( this.options.offset );
-
-
-            // hidden canvas
-            this.hiddenCanvas = document.createElement('canvas');
-            this.hiddenCanvas.width = this.hiddenCanvas.height = 100;
-            
-            if (!this.hiddenCanvas.getContext){
-                throw "Canvas not supported";
-            }
-
-            this.hiddenCtx = this.hiddenCanvas.getContext('2d');
-
-            // actual viewport
-            var viewport = this.el;
-            if (viewport.nodeName.toUpperCase() !== "CANVAS"){
-
-                viewport = document.createElement('canvas');
-                this.el.appendChild( viewport );
-                this.el = viewport;
-            }
-
-            viewport.width = this.options.width;
-            viewport.height = this.options.height;
-
-            this.ctx = viewport.getContext("2d");
-
-            this.els = {};
-
-            if (this.options.meta){
-                var stats = this.options.metaEl || newEl();
-                stats.className = 'pjs-meta';
-                this.els.fps = newEl('span');
-                this.els.ipf = newEl('span');
-                stats.appendChild(newEl('span', 'fps: '));
-                stats.appendChild(this.els.fps);
-                stats.appendChild(newEl('br'));
-                stats.appendChild(newEl('span', 'ipf: '));
-                stats.appendChild(this.els.ipf);
-
-                viewport.parentNode.insertBefore(stats, viewport);
-            }
-        },
-
-        /**
-         * Set the styles of specified context
-         * @param {Object|String} styles Styles configuration for body drawing
-         * @param {Canvas2DContext} ctx    (optional) Defaults to visible canvas context
-         */
-        setStyle: function( styles, ctx ){
-
-            ctx = ctx || this.ctx;
-
-            if ( Physics.util.isObject(styles) ){
-
-                ctx.strokeStyle = styles.strokeStyle;
-                ctx.fillStyle = styles.fillStyle;
-                ctx.lineWidth = styles.lineWidth;
-
-            } else {
-
-                ctx.fillStyle = ctx.strokeStyle = styles;
-                ctx.lineWidth = 1;
-            }
-        },
-
-        /**
-         * Draw a circle to specified canvas context
-         * @param  {Number} x      The x coord
-         * @param  {Number} y      The y coord
-         * @param  {Number} r      The circle radius
-         * @param  {Object|String} styles The styles configuration
-         * @param  {Canvas2DContext} ctx    (optional) The canvas context
-         * @return {void}
-         */
-        drawCircle: function(x, y, r, styles, ctx){
-
-            ctx = ctx || this.ctx;
-
-            ctx.beginPath();
-            this.setStyle( styles, ctx );
-            ctx.arc(x, y, r, 0, Pi2, false);
-            ctx.closePath();
-            ctx.stroke();
-            ctx.fill();
-        },
-
-        /**
-         * Draw a polygon to specified canvas context
-         * @param  {Array} verts  Array of vectorish vertices
-         * @param  {Object|String} styles The styles configuration
-         * @param  {Canvas2DContext} ctx    (optional) The canvas context
-         * @return {void}
-         */
-        drawPolygon: function(verts, styles, ctx){
-
-            var vert = verts[0]
-                ,x = vert.x === undefined ? vert.get(0) : vert.x
-                ,y = vert.y === undefined ? vert.get(1) : vert.y
-                ,l = verts.length
-                ;
-
-            ctx = ctx || this.ctx;
-            ctx.beginPath();
-            this.setStyle( styles, ctx );
-
-            ctx.moveTo(x, y);
-
-            for ( var i = 1; i < l; ++i ){
-                
-                vert = verts[ i ];
-                x = vert.x === undefined ? vert.get(0) : vert.x;
-                y = vert.y === undefined ? vert.get(1) : vert.y;
-                ctx.lineTo(x, y);
-            }
-
-            if (l > 2){
-                ctx.closePath();
-            }
-
-            ctx.stroke();
-            ctx.fill();
-        },
-
-        /**
-         * Draw a line onto specified canvas context
-         * @param  {Vectorish} from   Starting point
-         * @param  {Vectorish} to     Ending point
-         * @param  {Object|String} styles The styles configuration
-         * @param  {Canvas2DContext} ctx    (optional) The canvas context
-         * @return {void}
-         */
-        drawLine: function(from, to, styles, ctx){
-
-            var x = from.x === undefined ? from.get(0) : from.x
-                ,y = from.y === undefined ? from.get(1) : from.y
-                ;
-
-            ctx = ctx || this.ctx;
-
-            ctx.beginPath();
-            this.setStyle( styles, ctx );
-
-            ctx.moveTo(x, y);
-
-            x = to.x === undefined ? to.get(0) : to.x;
-            y = to.y === undefined ? to.get(1) : to.y;
-            
-            ctx.lineTo(x, y);
-            
-            ctx.stroke();
-            ctx.fill();
-        },
-
-        /**
-         * Create a view for specified geometry.
-         * @param  {Geometry} geometry The geometry
-         * @param  {Object|String} styles The styles configuration
-         * @return {Image}          An image cache of the geometry
-         */
-        createView: function( geometry, styles ){
-
-            var view = new Image()
-                ,aabb = geometry.aabb()
-                ,hw = aabb.halfWidth + Math.abs(aabb.pos.x)
-                ,hh = aabb.halfHeight + Math.abs(aabb.pos.y)
-                ,x = hw + 1
-                ,y = hh + 1
-                ,hiddenCtx = this.hiddenCtx
-                ,hiddenCanvas = this.hiddenCanvas
-                ,name = geometry.name
-                ;
-
-            styles = styles || this.options.styles[ name ];
-
-            x += styles.lineWidth | 0;
-            y += styles.lineWidth | 0;
-            
-            // clear
-            hiddenCanvas.width = 2 * hw + 2 + (2 * styles.lineWidth|0);
-            hiddenCanvas.height = 2 * hh + 2 + (2 * styles.lineWidth|0);
-
-            hiddenCtx.save();
-            hiddenCtx.translate(x, y);
-
-            if (name === 'circle'){
-
-                this.drawCircle(0, 0, geometry.radius, styles, hiddenCtx);
-
-            } else if (name === 'convex-polygon'){
-
-                this.drawPolygon(geometry.vertices, styles, hiddenCtx);
-            }
-
-            if (styles.angleIndicator){
-
-                hiddenCtx.beginPath();
-                this.setStyle( styles.angleIndicator, hiddenCtx );
-                hiddenCtx.moveTo(0, 0);
-                hiddenCtx.lineTo(hw, 0);
-                hiddenCtx.closePath();
-                hiddenCtx.stroke();
-            }
-
-            hiddenCtx.restore();
-
-            view.src = hiddenCanvas.toDataURL("image/png");
-            view.width = hiddenCanvas.width;
-            view.height = hiddenCanvas.height;
-            return view;
-        },
-
-        /**
-         * Draw the meta data
-         * @param  {Object} meta The meta data
-         * @return {void}
-         */
-        drawMeta: function( meta ){
-
-            this.els.fps.innerHTML = meta.fps.toFixed(2);
-            this.els.ipf.innerHTML = meta.ipf;
-        },
-
-        /**
-         * Callback to be run before rendering
-         * @private
-         * @return {void}
-         */
-        beforeRender: function(){
-
-            // clear canvas
-            this.el.width = this.el.width;
-        },
-
-        /**
-         * Draw a body to canvas
-         * @param  {Body} body The body to draw
-         * @param  {Image} view The view for that body
-         * @return {void}
-         */
-        drawBody: function( body, view ){
-
-            var ctx = this.ctx
-                ,pos = body.state.pos
-                ,offset = this.options.offset
-                ,aabb = body.aabb()
-                ;
-
-            ctx.save();
-            ctx.translate(pos.get(0) + offset.get(0), pos.get(1) + offset.get(1));
-            ctx.rotate(body.state.angular.pos);
-            ctx.drawImage(view, -view.width/2, -view.height/2);
-            ctx.restore();
-
-            if ( this.options.debug ){
-                // draw bounding boxes
-                ctx.save();
-                ctx.translate(offset.get(0), offset.get(1));
-                this.drawPolygon([
-                        { x: aabb.pos.x - aabb.x, y: aabb.pos.y - aabb.y },
-                        { x: aabb.pos.x + aabb.x, y: aabb.pos.y - aabb.y },
-                        { x: aabb.pos.x + aabb.x, y: aabb.pos.y + aabb.y },
-                        { x: aabb.pos.x - aabb.x, y: aabb.pos.y + aabb.y }
-                    ], 'rgba(100, 255, 100, 0.3)');
-                ctx.restore();
-            }
-        }
-    };
-});
-
-
-// ---
-// inside: src/renderers/dom.js
-
-/**
- * A pathetically simple dom renderer
- */
-Physics.renderer('dom', function( proto ){
-
-    // utility methods
-    var thePrefix = {}
-        ,tmpdiv = document.createElement("div")
-        ,toTitleCase = function toTitleCase(str) {
-            return str.replace(/(?:^|\s)\w/g, function(match) {
-                return match.toUpperCase();
-            });
-        }
-        // return the prefixed name for the specified css property
-        ,pfx = function pfx(prop) {
-
-            if (thePrefix[prop]){
-                return thePrefix[prop];
-            }
-
-            var arrayOfPrefixes = ['Webkit', 'Moz', 'Ms', 'O']
-                ,name
-                ;
-
-            for (var i = 0, l = arrayOfPrefixes.length; i < l; ++i) {
-
-                name = arrayOfPrefixes[i] + toTitleCase(prop);
-
-                if (name in tmpdiv.style){
-                    return thePrefix[prop] = name;
+        }), t.integrator("improved-euler", function(e) {
+            return {
+                init: function(t) {
+                    e.init.call(this, t)
+                },
+                integrateVelocities: function(t, e) {
+                    for (var n, i = 1 - this.options.drag, o = null, r = 0, s = t.length; r < s; ++r) n = (o = t[r]).state, o.fixed ? (n.vel.zero(), n.acc.zero(), n.angular.vel = 0, n.angular.acc = 0) : (n.old.vel.clone(n.vel), n.old.acc.clone(n.acc), n.vel.vadd(n.acc.mult(e)), i && n.vel.mult(i), n.acc.zero(), n.old.angular.vel = n.angular.vel, n.angular.vel += n.angular.acc * e, n.angular.acc = 0)
+                },
+                integratePositions: function(e, n) {
+                    for (var i, o = .5 * n * n, r = null, s = t.scratchpad(), a = s.vector(), c = 0, l = e.length; c < l; ++c) i = (r = e[c]).state, r.fixed || (i.old.pos.clone(i.pos), a.clone(i.old.vel), i.pos.vadd(a.mult(n)).vadd(i.old.acc.mult(o)), i.old.acc.zero(), i.old.angular.pos = i.angular.pos, i.angular.pos += i.old.angular.vel * n + i.old.angular.acc * o, i.old.angular.acc = 0);
+                    s.done()
                 }
             }
-
-            if (name in tmpdiv.style){
-                return thePrefix[prop] = prop;
+        }), t.renderer("canvas", function(e) {
+            var n = 2 * Math.PI,
+                i = function(t, e) {
+                    var n = document.createElement(t || "div");
+                    return e && (n.innerHTML = e), n
+                },
+                o = {
+                    debug: !1,
+                    metaEl: null,
+                    styles: {
+                        point: "rgba(80, 50, 100, 0.7)",
+                        circle: {
+                            strokeStyle: "rgba(70, 50, 100, 0.7)",
+                            lineWidth: 1,
+                            fillStyle: "rgba(44, 105, 44, 0.7)",
+                            angleIndicator: "rgba(69, 51, 78, 0.7)"
+                        },
+                        "convex-polygon": {
+                            strokeStyle: "rgba(80, 50, 100, 0.7)",
+                            lineWidth: 1,
+                            fillStyle: "rgba(114, 105, 124, 0.7)",
+                            angleIndicator: "rgba(69, 51, 78, 0.7)"
+                        }
+                    },
+                    offset: {
+                        x: 0,
+                        y: 0
+                    }
+                },
+                r = function(e, n) {
+                    return t.util.isPlainObject(n) ? t.util.extend({}, e, n, r) : void 0 !== n ? n : e
+                };
+            return {
+                init: function(n) {
+                    if (e.init.call(this, n), this.options = t.util.extend({}, o, this.options, r), this.options.offset = t.vector(this.options.offset), this.hiddenCanvas = document.createElement("canvas"), this.hiddenCanvas.width = this.hiddenCanvas.height = 100, !this.hiddenCanvas.getContext) throw "Canvas not supported";
+                    this.hiddenCtx = this.hiddenCanvas.getContext("2d");
+                    var s = this.el;
+                    if ("CANVAS" !== s.nodeName.toUpperCase() && (s = document.createElement("canvas"), this.el.appendChild(s), this.el = s), s.width = this.options.width, s.height = this.options.height, this.ctx = s.getContext("2d"), this.els = {}, this.options.meta) {
+                        var a = this.options.metaEl || i();
+                        a.className = "pjs-meta", this.els.fps = i("span"), this.els.ipf = i("span"), a.appendChild(i("span", "fps: ")), a.appendChild(this.els.fps), a.appendChild(i("br")), a.appendChild(i("span", "ipf: ")), a.appendChild(this.els.ipf), s.parentNode.insertBefore(a, s)
+                    }
+                },
+                setStyle: function(e, n) {
+                    n = n || this.ctx, t.util.isObject(e) ? (n.strokeStyle = e.strokeStyle, n.fillStyle = e.fillStyle, n.lineWidth = e.lineWidth) : (n.fillStyle = n.strokeStyle = e, n.lineWidth = 1)
+                },
+                drawCircle: function(t, e, i, o, r) {
+                    (r = r || this.ctx).beginPath(), this.setStyle(o, r), r.arc(t, e, i, 0, n, !1), r.closePath(), r.stroke(), r.fill()
+                },
+                drawPolygon: function(t, e, n) {
+                    var i = t[0],
+                        o = void 0 === i.x ? i.get(0) : i.x,
+                        r = void 0 === i.y ? i.get(1) : i.y,
+                        s = t.length;
+                    (n = n || this.ctx).beginPath(), this.setStyle(e, n), n.moveTo(o, r);
+                    for (var a = 1; a < s; ++a) o = void 0 === (i = t[a]).x ? i.get(0) : i.x, r = void 0 === i.y ? i.get(1) : i.y, n.lineTo(o, r);
+                    s > 2 && n.closePath(), n.stroke(), n.fill()
+                },
+                drawLine: function(t, e, n, i) {
+                    var o = void 0 === t.x ? t.get(0) : t.x,
+                        r = void 0 === t.y ? t.get(1) : t.y;
+                    (i = i || this.ctx).beginPath(), this.setStyle(n, i), i.moveTo(o, r), o = void 0 === e.x ? e.get(0) : e.x, r = void 0 === e.y ? e.get(1) : e.y, i.lineTo(o, r), i.stroke(), i.fill()
+                },
+                createView: function(t, e) {
+                    var n = new Image,
+                        i = t.aabb(),
+                        o = i.halfWidth + Math.abs(i.pos.x),
+                        r = i.halfHeight + Math.abs(i.pos.y),
+                        s = o + 1,
+                        a = r + 1,
+                        c = this.hiddenCtx,
+                        l = this.hiddenCanvas,
+                        u = t.name;
+                    return s += 0 | (e = e || this.options.styles[u]).lineWidth, a += 0 | e.lineWidth, l.width = 2 * o + 2 + (2 * e.lineWidth | 0), l.height = 2 * r + 2 + (2 * e.lineWidth | 0), c.save(), c.translate(s, a), "circle" === u ? this.drawCircle(0, 0, t.radius, e, c) : "convex-polygon" === u && this.drawPolygon(t.vertices, e, c), e.angleIndicator && (c.beginPath(), this.setStyle(e.angleIndicator, c), c.moveTo(0, 0), c.lineTo(o, 0), c.closePath(), c.stroke()), c.restore(), n.src = l.toDataURL("image/png"), n.width = l.width, n.height = l.height, n
+                },
+                drawMeta: function(t) {
+                    this.els.fps.innerHTML = t.fps.toFixed(2), this.els.ipf.innerHTML = t.ipf
+                },
+                beforeRender: function() {
+                    this.el.width = this.el.width
+                },
+                drawBody: function(t, e) {
+                    var n = this.ctx,
+                        i = t.state.pos,
+                        o = this.options.offset,
+                        r = t.aabb();
+                    n.save(), n.translate(i.get(0) + o.get(0), i.get(1) + o.get(1)), n.rotate(t.state.angular.pos), n.drawImage(e, -e.width / 2, -e.height / 2), n.restore(), this.options.debug && (n.save(), n.translate(o.get(0), o.get(1)), this.drawPolygon([{
+                        x: r.pos.x - r.x,
+                        y: r.pos.y - r.y
+                    }, {
+                        x: r.pos.x + r.x,
+                        y: r.pos.y - r.y
+                    }, {
+                        x: r.pos.x + r.x,
+                        y: r.pos.y + r.y
+                    }, {
+                        x: r.pos.x - r.x,
+                        y: r.pos.y + r.y
+                    }], "rgba(100, 255, 100, 0.3)"), n.restore())
+                }
             }
-
-            return false;
-        }
-        ;
-
-    var classpfx = 'pjs-'
-        ,px = 'px'
-        ,cssTransform = pfx('transform')
-        ;
-
-    var newEl = function( node, content ){
-            var el = document.createElement(node || 'div');
-            if (content){
-                el.innerHTML = content;
+        }), t.renderer("dom", function(t) {
+            var e = {},
+                n = document.createElement("div"),
+                i = "px",
+                o = function(t) {
+                    if (e[t]) return e[t];
+                    for (var i, o = ["Webkit", "Moz", "Ms", "O"], r = 0, s = o.length; r < s; ++r)
+                        if ((i = o[r] + t.replace(/(?:^|\s)\w/g, function(t) {
+                                return t.toUpperCase()
+                            })) in n.style) return e[t] = i;
+                    return i in n.style && (e[t] = t)
+                }("transform"),
+                r = function(t, e) {
+                    var n = document.createElement(t || "div");
+                    return e && (n.innerHTML = e), n
+                };
+            return {
+                init: function(e) {
+                    t.init.call(this, e);
+                    var n = this.el;
+                    if (n.style.position = "relative", n.style.overflow = "hidden", n.style.width = this.options.width + i, n.style.height = this.options.height + i, this.els = {}, e.meta) {
+                        var o = r();
+                        o.className = "pjs-meta", this.els.fps = r("span"), this.els.ipf = r("span"), o.appendChild(r("span", "fps: ")), o.appendChild(this.els.fps), o.appendChild(r("br")), o.appendChild(r("span", "ipf: ")), o.appendChild(this.els.ipf), n.appendChild(o)
+                    }
+                },
+                circleProperties: function(t, e) {
+                    var n = e.aabb();
+                    t.style.width = 2 * n.halfWidth + i, t.style.height = 2 * n.halfHeight + i, t.style.marginLeft = -n.halfWidth + i, t.style.marginTop = -n.halfHeight + i
+                },
+                createView: function(t) {
+                    var e = r(),
+                        n = t.name + "Properties";
+                    return e.className = "pjs-" + t.name, e.style.position = "absolute", e.style.top = "0px", e.style.left = "0px", this[n] && this[n](e, t), this.el.appendChild(e), e
+                },
+                drawMeta: function(t) {
+                    this.els.fps.innerHTML = t.fps.toFixed(2), this.els.ipf.innerHTML = t.ipf
+                },
+                drawBody: o ? function(t, e) {
+                    var n = t.state.pos;
+                    e.style[o] = "translate(" + n.get(0) + "px," + n.get(1) + "px) rotate(" + t.state.angular.pos + "rad)"
+                } : function(t, e) {
+                    var n = t.state.pos;
+                    e.style.left = n.get(0) + i, e.style.top = n.get(1) + i
+                }
             }
-            return el;
-        }
-        ,drawBody
-        ;
-
-    // determine which drawBody method we can use
-    if (cssTransform){
-        drawBody = function( body, view ){
-
-            var pos = body.state.pos;
-            view.style[cssTransform] = 'translate('+pos.get(0)+'px,'+pos.get(1)+'px) rotate('+body.state.angular.pos+'rad)';
-        };
-    } else {
-        drawBody = function( body, view ){
-
-            var pos = body.state.pos;
-            view.style.left = pos.get(0) + px;
-            view.style.top = pos.get(1) + px;
-        };
-    }
-
-    return {
-
-        /**
-         * Initialization
-         * @param  {Object} options Config options passed by initializer
-         * @return {void}
-         */
-        init: function( options ){
-
-            // call proto init
-            proto.init.call(this, options);
-
-            var viewport = this.el;
-            viewport.style.position = 'relative';
-            viewport.style.overflow = 'hidden';
-            viewport.style.width = this.options.width + px;
-            viewport.style.height = this.options.height + px;
-
-            this.els = {};
-
-            if (options.meta){
-                var stats = newEl();
-                stats.className = 'pjs-meta';
-                this.els.fps = newEl('span');
-                this.els.ipf = newEl('span');
-                stats.appendChild(newEl('span', 'fps: '));
-                stats.appendChild(this.els.fps);
-                stats.appendChild(newEl('br'));
-                stats.appendChild(newEl('span', 'ipf: '));
-                stats.appendChild(this.els.ipf);
-
-                viewport.appendChild(stats);
-            }
-        },
-
-        /**
-         * Set dom element style properties for a circle
-         * @param  {HTMLElement} el       The element
-         * @param  {Geometry} geometry The bodie's geometry
-         * @return {void}
-         */
-        circleProperties: function( el, geometry ){
-
-            var aabb = geometry.aabb();
-
-            el.style.width = (aabb.halfWidth * 2) + px;
-            el.style.height = (aabb.halfHeight * 2) + px;
-            el.style.marginLeft = (-aabb.halfWidth) + px;
-            el.style.marginTop = (-aabb.halfHeight) + px;
-        },
-
-        /**
-         * Create a dom element for the specified geometry
-         * @param  {Geometry} geometry The bodie's geometry
-         * @return {HTMLElement}          The element
-         */
-        createView: function( geometry ){
-
-            var el = newEl()
-                ,fn = geometry.name + 'Properties'
-                ;
-
-            el.className = classpfx + geometry.name;
-            el.style.position = 'absolute';            
-            el.style.top = '0px';
-            el.style.left = '0px';
-            
-            if (this[ fn ]){
-                this[ fn ](el, geometry);
-            }
-            
-            this.el.appendChild( el );
-            return el;
-        },
-
-        /**
-         * Draw the meta data
-         * @param  {Object} meta The meta data
-         * @return {void}
-         */
-        drawMeta: function( meta ){
-
-            this.els.fps.innerHTML = meta.fps.toFixed(2);
-            this.els.ipf.innerHTML = meta.ipf;
-        },
-
-        /**
-         * Update dom element to reflect bodie's current state
-         * @param  {Body} body The body to draw
-         * @param  {HTMLElement} view The view for that body
-         * @return {void}
-         */
-        drawBody: drawBody
-    };
+        }), t
 });
 
-// ---
-// inside: src/outro.js
-
-return Physics;
-}));
+/*
+/// JSON stuff
+{
+  "indent_size": "4",
+  "indent_char": " ",
+  "max_preserve_newlines": "5",
+  "preserve_newlines": true,
+  "keep_array_indentation": false,
+  "break_chained_methods": false,
+  "indent_scripts": "normal",
+  "brace_style": "collapse",
+  "space_before_conditional": true,
+  "unescape_strings": false,
+  "jslint_happy": false,
+  "end_with_newline": false,
+  "wrap_line_length": "0",
+  "indent_inner_html": false,
+  "comma_first": false,
+  "e4x": false,
+  "indent_empty_lines": false
+}
+*/
