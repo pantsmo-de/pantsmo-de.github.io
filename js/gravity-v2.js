@@ -1,3 +1,34 @@
+/*
+MMMMMMMMMMMMMMMN0d:;;:oONMMMMMMMMMMMMMMM
+MMMMMMMMMMMWXkl'.      .'ckKWMMMMMMMMMMM
+MMMMMMMMN0d:.              .;d0NMMMMMMMM
+MMMMWXkl,.                    .'lkXWMMMM
+MMNk:.             ..             .:xNMM
+MMk.           .;oOKKOd:.           .xWM
+MWd         'cxKWMMMMMMWXkl,.       ;0MM
+MWd       .oXMMMMMMMMWNXXXX0xollllokXMMM
+MWd       .OMMMMMMMKxl'............'oXMM
+MWd       'OMMMMMMWl.               .dWM
+MWd       .OMMMMMMNl.                oWM
+MWd       .kMMMMMMMOl,.              oWM
+MWd        'd0WMMMMMWN0kkxl,.        oWM
+MWd          .,lkXWMMMNOo;.          oWM
+MM0;             .:cc:'             ;0MM
+MMMNOl,.                        .,lkNMMM
+MMMMMMW0d:.                  .:d0NMMMMMM
+MMMMMMMMMWXkl,.          .,lkXWMMMMMMMMM
+MMMMMMMMMMMMMN0d:.    .:d0NMMMMMMMMMMMMM
+MMMMMMMMMMMMMMMMWKdlld0WMMMMMMMMMMMMMMMM
+                   
+GRAVITY-v2.JS by the Pantsmo.de team, led by Mikko Salovaara (https://github.com/pantsmode/)
+
+Based on:
+jGravity by tinybigideas (https://github.com/tinybigideas/jGravity) 
+and PhysicsJS by Jasper Palfree (wellcaffeinated.net)
+
+Both licensed under the MIT License
+*/
+
 var delta = [0, 0],
     stage = [window.screenX, window.screenY, window.innerWidth, window.innerHeight];
 getBrowserDimensions();
