@@ -22,6 +22,9 @@ MMMMMMMMMMMMMMMMWKdlld0WMMMMMMMMMMMMMMMM
                    
 GRAVITY-v2.JS by the Pantsmo.de team, led by Mikko Salovaara (https://github.com/pantsmode/)
 
+Requires:
+jQuery
+
 Based on:
 jGravity by tinybigideas (https://github.com/tinybigideas/jGravity) 
 and PhysicsJS by Jasper Palfree (wellcaffeinated.net)
