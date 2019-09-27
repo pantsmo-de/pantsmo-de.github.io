@@ -96,12 +96,12 @@ button {
 
 #navigation {
 	margin: 10px;
+	font-size: 2vw;
 }
 
 #navigation a {
 	color: black;
 	font-weight: lighter;
-	font-size: 20px;
 }
 
 #logInButton{

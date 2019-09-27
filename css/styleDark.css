@@ -98,12 +98,12 @@ button {
 
 #navigation {
 	margin: 10px;
+	font-size: 2vw;
 }
 
 #navigation a {
 	color: white;
 	font-weight: lighter;
-	font-size: 20px;
 }
 
 @keyframes fadein {
