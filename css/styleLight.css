@@ -2,7 +2,10 @@ body {
 	text-align: center;
 	font-family: 'Open Sans', sans-serif;
 	color: black;
-	background-color: #e2dabe;
+	height: 100%;
+	background-image: linear-gradient(#f8f6ef, #e2dabe);
+	background-repeat: no-repeat;
+    background-attachment: fixed;
 	overflow: hidden;
 	margin: 0px;
 } 
@@ -77,7 +80,7 @@ button {
 
 .separator {
 	display: inline-block;
-	width: 50%;
+	width: 40%;
 	height: 2px;
 	background: #d0c9af;
 	margin: 10px;

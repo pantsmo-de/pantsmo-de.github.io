@@ -2,7 +2,10 @@ body {
 	text-align: center;
 	font-family: 'Open Sans', sans-serif;
 	color: white;
-	background-color: #212938;
+	height: 100%;
+	background-image: linear-gradient(#212938, #070910);
+	background-repeat: no-repeat;
+    background-attachment: fixed;
 	overflow: hidden;
 	margin: 0px;
 } 
